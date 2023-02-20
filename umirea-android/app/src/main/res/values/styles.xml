@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BottomNavigation" parent="Widget.Design.BottomNavigationView">
+        <item name="android:background">@drawable/bottom_navigation</item>
+        <item name="android:colorBackgroundFloating">@color/white</item>
+        <item name="background">@color/white</item>
+    </style>
+</resources>

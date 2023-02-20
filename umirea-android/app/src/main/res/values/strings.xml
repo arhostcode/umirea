@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Umirea</string>
+    <string name="app_name_upper">UMIREA</string>
+    <string name="auth">Авторизация</string>
+    <string name="title_activity_app">AppActivity</string>
+
+    <string name="title_home">Главная</string>
+    <string name="title_dashboard">Рассписание</string>
+    <string name="title_chat">Чат</string>
+    <string name="title_info">Новости</string>
+    <string name="title_cloud">Облако</string>
+
+
+    <string name="enter">Войти</string>
+    <string name="reset_password">Восстановить пароль</string>
+    <string name="sign_up">Зарегестрироваться</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+
+
+
+</resources>

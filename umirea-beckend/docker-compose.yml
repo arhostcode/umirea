@@ -1,0 +1,43 @@
+version: "3.9"
+services:
+  umirea_db:
+    image: "mariadb:latest"
+    restart: "always"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: umirea_db
+      MYSQL_USER: ardyc
+      MYSQL_PASSWORD: 123
+  auth-service:
+    build:
+      context: auth-service/
+      dockerfile: src/main/docker/Dockerfile.jvm
+    depends_on:
+      - umirea_db
+      - mail-service
+    environment:
+      DATABASE: umirea_db
+      MAIL-SERVICE: mail-service
+    ports:
+      - "8081:8081"
+    links:
+      - umirea_db
+      - mail-service
+  mail-service:
+    build:
+      context: mail-service/
+      dockerfile: src/main/docker/Dockerfile.native
+    ports:
+      - "8083:8083"
+  group-service:
+    build:
+      context: group-service/
+      dockerfile: src/main/docker/Dockerfile.jvm
+    ports:
+      - "8084:8084"
+    depends_on:
+      - umirea_db
+      - auth-service
+    environment:
+      DATABASE: umirea_db
+      AUTH-SERVICE: auth-service
