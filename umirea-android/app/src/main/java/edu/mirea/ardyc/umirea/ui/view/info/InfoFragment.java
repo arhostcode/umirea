@@ -4,14 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import edu.mirea.ardyc.umirea.databinding.FragmentChatBinding;
 import edu.mirea.ardyc.umirea.databinding.FragmentInfoBinding;
+import edu.mirea.ardyc.umirea.ui.viewModel.info.InfoViewModel;
 
 public class InfoFragment extends Fragment {
 

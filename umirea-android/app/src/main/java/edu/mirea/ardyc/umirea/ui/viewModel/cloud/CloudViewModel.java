@@ -1,16 +1,16 @@
-package edu.mirea.ardyc.umirea.ui.view.info;
+package edu.mirea.ardyc.umirea.ui.viewModel.cloud;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class InfoViewModel extends ViewModel {
+public class CloudViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public InfoViewModel() {
+    public CloudViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is chat fragment");
+        mText.setValue("This is account fragment");
     }
 
     public LiveData<String> getText() {

@@ -1,4 +1,4 @@
-package edu.mirea.ardyc.umirea.ui.view.home;
+package edu.mirea.ardyc.umirea.ui.viewModel.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

@@ -5,31 +5,639 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/midnight_express"
+    android:orientation="vertical"
     tools:context=".ui.view.home.HomeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingTop="10dp"
-        android:paddingEnd="15dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
 
-        <TextView
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:paddingStart="30dp"
-            android:text="@string/title_home"
-            android:textAlignment="textStart"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_weight="0.8"
+            android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:src="@drawable/logo" />
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.01"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="15dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="5"
+                            android:paddingStart="30dp"
+                            android:text="@string/title_home"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/white"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/logo" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="92"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Сейчас"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="5dp"
+                                android:layout_weight="5"
+                                android:alpha="1"
+                                android:background="@drawable/home_element"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="4"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:paddingStart="10dp"
+                                    android:paddingTop="5dp"
+                                    android:paddingEnd="10dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Системы и алгорвы авы ыв аыв аыв ыв аыва итмы обработки данных "
+                                        android:textColor="@color/white"
+                                        android:textSize="12sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:layout_marginEnd="20dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:gravity="end"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
+                                        android:src="@drawable/hw_icon" />
+
+                                    <ImageView
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
+                                        android:layout_marginStart="3dp"
+                                        android:src="@drawable/note_icon" />
+
+                                    <ImageView
+                                        android:layout_width="40dp"
+                                        android:layout_height="15dp"
+                                        android:layout_marginStart="3dp"
+                                        android:src="@drawable/lec_icon" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="92"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Потом"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="5dp"
+                                android:layout_weight="5"
+                                android:alpha="1"
+                                android:background="@drawable/home_element"
+                                android:orientation="vertical"
+                                android:paddingTop="5dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="4"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="10dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Системы и алгорвы авы ыв аыв аыв ыв аыва итмы обработки данных "
+                                        android:textColor="@color/white"
+                                        android:textSize="12sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:layout_marginEnd="20dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:gravity="end"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
+                                        android:src="@drawable/hw_icon" />
+
+                                    <ImageView
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
+                                        android:layout_marginStart="3dp"
+                                        android:src="@drawable/note_icon" />
+
+                                    <ImageView
+                                        android:layout_width="40dp"
+                                        android:layout_height="15dp"
+                                        android:layout_marginStart="3dp"
+                                        android:src="@drawable/lec_icon" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:weightSum="100">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="92"
+
+
+                            android:gravity="right">
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/gray_button"
+                                android:text="Полностью"
+                                android:textColor="@color/white"
+                                android:textSize="8sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="92"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Сообщения"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="5dp"
+                                android:layout_weight="5"
+                                android:alpha="1"
+                                android:background="@drawable/home_element"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="4"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="10dp">
+
+                                    <ImageView
+                                        android:layout_width="35dp"
+                                        android:layout_height="35dp"
+                                        android:src="@drawable/hw_icon" />
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Дмитрий Кашеваров"
+                                            android:textColor="@color/white"
+                                            android:textSize="12sp"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="3dp"
+                                            android:text="Системы и алгорвы авы ыв аыв аыв ыв аыва итмы обработки данных "
+                                            android:textColor="@color/white"
+                                            android:textSize="10sp" />
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="92"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Новости"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="5dp"
+                                android:layout_weight="5"
+                                android:alpha="1"
+                                android:background="@drawable/home_element"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="4"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="10dp">
+
+                                    <ImageView
+                                        android:layout_width="35dp"
+                                        android:layout_height="35dp"
+                                        android:src="@drawable/note_icon" />
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal"
+                                            android:weightSum="10">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="8"
+                                                android:text="Общий сбор"
+                                                android:textColor="@color/white"
+                                                android:textSize="12sp"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="2"
+                                                android:text="Дмитрий Кашеваров"
+                                                android:textColor="@color/teal_200"
+                                                android:textSize="8sp"
+                                                android:textStyle="bold" />
+
+                                        </LinearLayout>
+
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="3dp"
+                                            android:text="Системы и алгорвы авы ыв аыв аыв ыв аыва итмы обработки данных "
+                                            android:textColor="@color/white"
+                                            android:textSize="10sp" />
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:weightSum="100">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="92"
+
+
+                            android:gravity="right">
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/gray_button"
+                                android:text="Все"
+                                android:textColor="@color/white"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="92"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Файлы"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="5dp"
+                                android:layout_weight="5"
+                                android:alpha="1"
+                                android:background="@drawable/home_element"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="4"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="10dp">
+
+                                    <ImageView
+                                        android:layout_width="35dp"
+                                        android:layout_height="35dp"
+                                        android:src="@drawable/note_icon" />
+
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_weight="8"
+                                        android:text="Лекция по матану.pdf"
+                                        android:textColor="@color/white"
+                                        android:textSize="12sp"
+                                        android:textStyle="bold" />
+
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:weightSum="100">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="92"
+
+
+                            android:gravity="right">
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/gray_button"
+                                android:text="Все"
+                                android:textColor="@color/white"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="92"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Файлы"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="5dp"
+                                android:layout_weight="5"
+                                android:alpha="1"
+                                android:background="@drawable/home_element"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="4"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="10dp">
+
+                                    <ImageView
+                                        android:layout_width="35dp"
+                                        android:layout_height="35dp"
+                                        android:src="@drawable/note_icon" />
+
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_weight="8"
+                                        android:text="Лекция по матану.pdf"
+                                        android:textColor="@color/white"
+                                        android:textSize="12sp"
+                                        android:textStyle="bold" />
+
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:weightSum="100">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="92"
+
+
+                            android:gravity="right">
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/gray_button"
+                                android:text="Все"
+                                android:textColor="@color/white"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:orientation="vertical" />
+                </LinearLayout>
+            </ScrollView>
+
+        </LinearLayout>
+
+
     </LinearLayout>
+
+
 </LinearLayout>

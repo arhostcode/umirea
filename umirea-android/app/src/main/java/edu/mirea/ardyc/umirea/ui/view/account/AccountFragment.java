@@ -1,4 +1,4 @@
-package edu.mirea.ardyc.umirea.ui.view.cloud;
+package edu.mirea.ardyc.umirea.ui.view.account;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,19 +9,19 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import edu.mirea.ardyc.umirea.databinding.FragmentCloudBinding;
-import edu.mirea.ardyc.umirea.ui.viewModel.cloud.CloudViewModel;
+import edu.mirea.ardyc.umirea.databinding.FragmentAccountBinding;
+import edu.mirea.ardyc.umirea.ui.viewModel.chat.ChatViewModel;
 
-public class CloudFragment extends Fragment {
+public class AccountFragment extends Fragment {
 
-    private FragmentCloudBinding binding;
+    private FragmentAccountBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        CloudViewModel cloudViewModel =
-                new ViewModelProvider(this).get(CloudViewModel.class);
+        ChatViewModel accountViewModel =
+                new ViewModelProvider(this).get(ChatViewModel.class);
 
-        binding = FragmentCloudBinding.inflate(inflater, container, false);
+        binding = FragmentAccountBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         return root;

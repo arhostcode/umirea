@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import edu.mirea.ardyc.umirea.databinding.FragmentDashboardBinding;
+import edu.mirea.ardyc.umirea.ui.viewModel.dashboard.DashboardViewModel;
 
 public class DashboardFragment extends Fragment {
 

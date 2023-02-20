@@ -1,14 +1,14 @@
-package edu.mirea.ardyc.umirea.ui.view.cloud;
+package edu.mirea.ardyc.umirea.ui.viewModel.account;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class CloudViewModel extends ViewModel {
+public class AccountViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public CloudViewModel() {
+    public AccountViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is account fragment");
     }
