@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
 public class DigestUtils {
 
     public static String encodeMD5(String value) {
-        MessageDigest md5 = null;
+        MessageDigest md5;
         try {
             md5 = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {

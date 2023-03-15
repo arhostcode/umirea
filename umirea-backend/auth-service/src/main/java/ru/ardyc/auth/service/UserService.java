@@ -73,17 +73,4 @@ public class UserService {
         return MessageResponse.create(User.fromEntity(userEntity));
     }
 
-    public Response setImage(String token, String imageId) {
-        if (RequestUtils.isInvalid(token, imageId)) {
-            return new AuthError("Not all of fields was been provided. Required token, imageId.");
-        }
-        Optional<UserEntity> optionalUserEntity = usersRepository.findByToken(token);
-        if (optionalUserEntity.isEmpty())
-            return new UserNotFoundError();
-        UserEntity userEntity = optionalUserEntity.get();
-        userEntity.setImageId(imageId);
-        usersRepository.save(userEntity);
-        return MessageResponse.create(User.fromEntity(userEntity));
-    }
-
 }

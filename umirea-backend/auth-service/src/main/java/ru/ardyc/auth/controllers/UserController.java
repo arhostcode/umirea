@@ -34,9 +34,4 @@ public class UserController {
         return userService.setGroup(token, group);
     }
 
-    @PostMapping(path = "/setImage")
-    public Response setImage(@RequestParam String token, @RequestParam String imageId) {
-        return userService.setImage(token, imageId);
-    }
-
 }

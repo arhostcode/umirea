@@ -10,7 +10,7 @@ public class VerificationUtils {
         int secondNum = seedRandomCodeGenerator.nextInt(10);
         int thirdNum = seedRandomCodeGenerator.nextInt(10);
         int fourthNum = seedRandomCodeGenerator.nextInt(10);
-        return String.valueOf(firstNum) + String.valueOf(secondNum) + String.valueOf(thirdNum) + String.valueOf(fourthNum);
+        return String.valueOf(firstNum) + secondNum + thirdNum + fourthNum;
     }
 
 

@@ -14,14 +14,12 @@ public class UserEntity {
     private String educationGroup;
     private String token;
     private String uniqueID;
-    private String imageId;
-
     private String role;
 
     public UserEntity() {
     }
 
-    public UserEntity(String firstName, String lastName, String login, String password, String educationGroup, String token, String uniqueID, String imageId, String role) {
+    public UserEntity(String firstName, String lastName, String login, String password, String educationGroup, String token, String uniqueID, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
@@ -29,7 +27,6 @@ public class UserEntity {
         this.educationGroup = educationGroup;
         this.token = token;
         this.uniqueID = uniqueID;
-        this.imageId = imageId;
         this.role = role;
     }
 
@@ -95,14 +92,6 @@ public class UserEntity {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public String getImageId() {
-        return imageId;
-    }
-
-    public void setImageId(String imageId) {
-        this.imageId = imageId;
     }
 
     public String getRole() {

@@ -48,7 +48,7 @@ public class AuthService {
         return new AuthError("Password is not correct.");
     }
 
-    public Response register(String login, String password, String educationGroup, String firstName, String lastName, String imageId, String role, String verificationCode) {
+    public Response register(String login, String password, String educationGroup, String firstName, String lastName, String role, String verificationCode) {
         if (RequestUtils.isInvalid(login, password, lastName, firstName, verificationCode)) {
             return new AuthError("Not all of fields was been provided. Required login, password, firstName, lastname, verificationCode.");
         }
@@ -58,7 +58,7 @@ public class AuthService {
         if (!verificator.isRightVerificationCode(verificationCode, DigestUtils.encodeMD5(login + password))) {
             return new NotSuccessfulVerificationError();
         }
-        UserEntity user = new UserEntity(firstName, lastName, login, DigestUtils.encodeMD5(password), educationGroup, DigestUtils.encodeMD5(login + password), UUID.randomUUID().toString(), imageId, role);
+        UserEntity user = new UserEntity(firstName, lastName, login, DigestUtils.encodeMD5(password), educationGroup, DigestUtils.encodeMD5(login + password), UUID.randomUUID().toString(), role);
         usersRepository.save(user);
         return MessageResponse.create(User.fromEntity(user));
     }

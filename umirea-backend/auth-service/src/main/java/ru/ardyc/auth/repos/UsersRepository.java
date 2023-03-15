@@ -10,4 +10,5 @@ public interface UsersRepository extends CrudRepository<UserEntity, Long> {
     Optional<UserEntity> findByLogin(String login);
 
     Optional<UserEntity> findByToken(String token);
+
 }

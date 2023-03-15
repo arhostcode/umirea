@@ -11,22 +11,20 @@ public class User {
     private String educationGroup;
     private String token;
     private String uniqueID;
-    private String imageId;
     private String role;
 
-    public User(String firstName, String lastName, String login, String educationGroup, String token, String uniqueID, String imageId, String role) {
+    public User(String firstName, String lastName, String login, String educationGroup, String token, String uniqueID, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
         this.educationGroup = educationGroup;
         this.token = token;
         this.uniqueID = uniqueID;
-        this.imageId = imageId;
         this.role = role;
     }
 
     public static User fromEntity(UserEntity entity) {
-        return new User(entity.getFirstName(), entity.getLastName(), entity.getLogin(), entity.getEducationGroup(), entity.getToken(), entity.getUniqueID(), entity.getImageId(), entity.getRole());
+        return new User(entity.getFirstName(), entity.getLastName(), entity.getLogin(), entity.getEducationGroup(), entity.getToken(), entity.getUniqueID(),  entity.getRole());
     }
 
     public String getFirstName() {
@@ -51,10 +49,6 @@ public class User {
 
     public String getUniqueID() {
         return uniqueID;
-    }
-
-    public String getImageId() {
-        return imageId;
     }
 
     public String getRole() {
