@@ -11,7 +11,7 @@ services:
   auth-service:
     build:
       context: auth-service/
-      dockerfile: src/main/docker/Dockerfile.jvm
+      dockerfile: src/main/docker/Dockerfile.native
     depends_on:
       - umirea_db
       - mail-service
