@@ -1,18 +1,37 @@
 package edu.mirea.ardyc.umirea.ui.view;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+
+import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.databinding.ActivityLoginBinding;
+import edu.mirea.ardyc.umirea.ui.viewModel.LoginViewModel;
 
 public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding activityLoginBinding;
+    private LoginViewModel loginViewModel;
 
     private final float MIN_LAYOUT_WEIGHT = 3f;
     private final float MAX_LAYOUT_WEIGHT = 50f;
@@ -22,10 +41,28 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
         activityLoginBinding = ActivityLoginBinding.inflate(getLayoutInflater());
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        loginViewModel.init();
         setContentView(activityLoginBinding.getRoot());
+        activityLoginBinding.enterButton.setOnClickListener(view -> {
+            loginViewModel.loginToServer(activityLoginBinding.loginText.getText().toString(), activityLoginBinding.passwordText.getText().toString());
+        });
+        activityLoginBinding.createAccount.setOnClickListener(view -> {
+            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            finish();
+        });
+        loginViewModel.getErrorText().observe(this, s -> Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show());
+        loginViewModel.getUserMutableLiveData().observe(this, s -> {
+            startActivity(new Intent(LoginActivity.this, AppActivity.class));
+            finish();
+        });
+
         animateInitialization();
+
     }
+
 
     private void animateInitialization() {
         ValueAnimator anim = ValueAnimator.ofFloat(MAX_LAYOUT_WEIGHT * 2, MIN_LAYOUT_WEIGHT * 2);
@@ -39,10 +76,6 @@ public class LoginActivity extends AppCompatActivity {
         });
         anim.setDuration(2000);
         anim.start();
-
-        activityLoginBinding.enterButton.setOnClickListener((v) -> {
-            startActivity(new Intent(LoginActivity.this, AppActivity.class));
-        });
     }
 
     private void setIconImageParams(float val) {
