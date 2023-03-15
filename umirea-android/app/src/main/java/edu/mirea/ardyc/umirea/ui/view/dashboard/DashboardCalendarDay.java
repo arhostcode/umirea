@@ -1,6 +1,7 @@
 package edu.mirea.ardyc.umirea.ui.view.dashboard;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Layout;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -11,31 +12,50 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 
+import edu.mirea.ardyc.umirea.data.model.timetable.Lesson;
+import edu.mirea.ardyc.umirea.data.model.timetable.TimetableDay;
+
 public class DashboardCalendarDay extends LinearLayout {
 
     private TextView mainText;
+    private Context context;
+    private TimetableDay day;
     private LinearLayout lessons;
 
     public DashboardCalendarDay(Context context) {
         super(context);
-        init(context);
+        this.context = context;
+        init();
     }
 
     public DashboardCalendarDay(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        this.context = context;
+        init();
     }
 
     public DashboardCalendarDay(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
+        this.context = context;
+        init();
     }
 
-    private void init(Context context) {
+    private void init() {
         removeAllViews();
         initLayout();
         addMainText(context);
         addLessonsView(context);
+        if (day != null) {
+            mainText.setText(String.valueOf(day.getDay()));
+            for (Lesson l : day.getLessons()) {
+                addLesson(l.getLessonIconMini());
+            }
+        }
+    }
+
+    public void setDay(TimetableDay day) {
+        this.day = day;
+        init();
     }
 
     private void initLayout() {
@@ -55,6 +75,7 @@ public class DashboardCalendarDay extends LinearLayout {
     private void addMainText(Context context) {
         mainText = new TextView(context);
         mainText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        mainText.setTextColor(Color.WHITE);
         addView(mainText);
     }
 
@@ -75,5 +96,9 @@ public class DashboardCalendarDay extends LinearLayout {
 
     public void setTextColor(int color) {
         mainText.setTextColor(color);
+    }
+
+    public TimetableDay getDay() {
+        return day;
     }
 }

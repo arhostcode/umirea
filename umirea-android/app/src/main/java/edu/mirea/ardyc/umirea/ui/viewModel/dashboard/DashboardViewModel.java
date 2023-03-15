@@ -4,16 +4,23 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import edu.mirea.ardyc.umirea.data.model.timetable.Timetable;
+import edu.mirea.ardyc.umirea.data.repository.impl.timetable.TimetableLocalRepository;
+import edu.mirea.ardyc.umirea.data.repository.impl.timetable.TimetableRepository;
+
 public class DashboardViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private MutableLiveData<Timetable> timetableMutableLiveData = new MutableLiveData<>();
+    private TimetableRepository timetableRepository;
 
     public DashboardViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        timetableRepository = new TimetableLocalRepository();
+        new Thread(() -> {
+            timetableMutableLiveData.postValue(timetableRepository.getData());
+        }).start();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public MutableLiveData<Timetable> getTimetableMutableLiveData() {
+        return timetableMutableLiveData;
     }
 }
