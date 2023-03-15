@@ -13,7 +13,6 @@ import javax.ws.rs.GET;
 public class MailController {
     @Inject
     Mailer mailer;
-
     @PostMapping(path = "/send", consumes = "application/json")
     public String sendEmail(@RequestBody MailMessage mailMessage) {
         mailer.send(Mail.withText(mailMessage.getAddress(), mailMessage.getTheme(), mailMessage.getDescription()));
