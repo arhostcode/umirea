@@ -2,6 +2,7 @@
     <string name="app_name">Umirea</string>
     <string name="app_name_upper">UMIREA</string>
     <string name="auth">Авторизация</string>
+    <string name="registration">Регистрация</string>
     <string name="title_activity_app">AppActivity</string>
 
     <string name="title_home">Главная</string>
@@ -13,11 +14,17 @@
 
 
     <string name="enter">Войти</string>
+    <string name="verify">Получить код</string>
     <string name="reset_password">Восстановить пароль</string>
     <string name="sign_up">Зарегестрироваться</string>
-    <string name="login">Логин</string>
+    <string name="mail">Почта</string>
     <string name="password">Пароль</string>
+    <string name="code">Код</string>
+    <string name="firstName">Имя</string>
+    <string name="lastName">Фамилия</string>
+    <string name="server_client_id">513930978985-ssveiamqf85mmb010kothj81qs125tkt.apps.googleusercontent.com</string>
 
+    <string name="server_url">192.168.118.234</string>
 
 
 </resources>

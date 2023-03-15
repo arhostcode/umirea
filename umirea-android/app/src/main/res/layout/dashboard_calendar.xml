@@ -8,13 +8,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="100"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/left"
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
+            android:layout_width="50dp"
+            android:layout_height="70dp"
             android:layout_weight="1"
+            android:background="@drawable/arrow_left"
             android:layout_gravity="center" />
 
         <LinearLayout
@@ -174,8 +176,9 @@
 
         <Button
             android:id="@+id/right"
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
+            android:layout_width="50dp"
+            android:layout_height="70dp"
+            android:background="@drawable/arrow_right"
             android:layout_weight="1"
             android:layout_gravity="center" />
     </LinearLayout>

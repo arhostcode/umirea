@@ -38,11 +38,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
+        android:layout_marginBottom="55dp"
         android:orientation="vertical">
         <edu.mirea.ardyc.umirea.ui.view.dashboard.DashboardCalendar
-            android:layout_width="300dp"
-            android:layout_height="match_parent"/>
+            android:id="@+id/calendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lessons"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
+
 
 
 
