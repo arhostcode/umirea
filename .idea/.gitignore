@@ -1,3 +1,10 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+/gradle.xml
+/misc.xml
+/modules.xml
+/SamsungAcademyProject.iml
+/.name
+/vcs.xml
+
