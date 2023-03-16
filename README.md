@@ -36,7 +36,7 @@ Umirea - Learning activities manager
 
 ## How To Build
 
-To clone and build this application, you'll need [Git](https://git-scm.com) and [Intellij Idea](https://www.jetbrains.com/idea/) or [Android Studio](https://developer.android.com/studio)  installed on your computer. 
+To clone and build this application, you'll need [Git](https://git-scm.com) and [Intellij Idea](https://www.jetbrains.com/idea/) or [Android Studio](https://developer.android.com/studio)  installed on your computer.
 From your command line
 
 ```bash
