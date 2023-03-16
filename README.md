@@ -11,7 +11,6 @@ ___
 <h4 align="center">
 Umirea - Learning activities manager
 
-
 <p align="center">
   <a href="#key-features">Key Features</a> •
   <a href="#how-to-use">How To Use</a> •
