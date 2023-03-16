@@ -37,7 +37,11 @@ Umirea - Learning activities manager
 
 ## How To Build
 
+<<<<<<< HEAD
 To clone and build this application, you'll need [Git](https://git-scm.com) and [Intellij Idea](https://www.jetbrains.com/idea/) or [Android Studio](https://developer.android.com/studio)  installed on your computer.
+=======
+To clone and build this application, you'll need [Git](https://git-scm.com) and [Intellij Idea](https://www.jetbrains.com/idea/) or [Android Studio](https://developer.android.com/studio)  installed on your computer. 
+>>>>>>> develop
 From your command line
 
 ```bash
@@ -46,7 +50,11 @@ $ git clone https://github.com/ArhostCode/umirea
 ```
 * Open umirea-android project in Android Studio to build android app.
 * Open umirea-backend project in Intellij Idea to build backend.
+<<<<<<< HEAD
   <br> Use docker-compose to up backend
+=======
+<br> Use docker-compose to up backend
+>>>>>>> develop
 ```bash
 # Clone this repository
 $ cd umirea-backend
