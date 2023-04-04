@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import edu.mirea.ardyc.umirea.data.model.timetable.Timetable;
 import edu.mirea.ardyc.umirea.data.repository.impl.timetable.TimetableLocalRepository;
+import edu.mirea.ardyc.umirea.data.repository.impl.timetable.TimetableRemoteRepository;
 import edu.mirea.ardyc.umirea.data.repository.impl.timetable.TimetableRepository;
 
 public class DashboardViewModel extends ViewModel {
@@ -14,7 +15,7 @@ public class DashboardViewModel extends ViewModel {
     private TimetableRepository timetableRepository;
 
     public DashboardViewModel() {
-        timetableRepository = new TimetableLocalRepository();
+        timetableRepository = new TimetableRemoteRepository();
         new Thread(() -> {
             timetableMutableLiveData.postValue(timetableRepository.getData());
         }).start();
