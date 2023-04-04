@@ -31,43 +31,11 @@ public class AppActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityAppBinding.inflate(getLayoutInflater());
         appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
         setContentView(binding.getRoot());
-        initFragments();
-
-
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        navView.setOnItemSelectedListener(item -> {
-                    Fragment newFragment = appViewModel.chooseFragment(item.getItemId());
-                    displayFragment(newFragment);
-                    return true;
-                }
-        );
-        getSupportFragmentManager().beginTransaction().show(appViewModel.homeFragment);
-        navView.setSelectedItemId(R.id.navigation_dashboard);
-    }
-
-    private void initFragments() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        for (Fragment f : appViewModel.getNavigationList()) {
-            ft.add(R.id.navFragment, f);
-            ft.hide(f);
-        }
-        ft.commit();
-    }
-
-    protected void displayFragment(Fragment fragment) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        for (Fragment f : appViewModel.getNavigationList()) {
-            if (f == fragment) {
-                ft.show(f);
-            } else {
-                ft.hide(f);
-            }
-        }
-        ft.commit();
+        NavController navController = Navigation.findNavController(this, R.id.navFragment);
+        NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
 }

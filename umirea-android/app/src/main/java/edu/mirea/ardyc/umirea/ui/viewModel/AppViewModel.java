@@ -1,7 +1,12 @@
 package edu.mirea.ardyc.umirea.ui.viewModel;
 
+import android.widget.LinearLayout;
+
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
+import androidx.navigation.NavGraph;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.FragmentNavigator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,36 +23,8 @@ import edu.mirea.ardyc.umirea.R;
 
 public class AppViewModel extends ViewModel {
 
-    public AccountFragment accountFragment;
-    public DashboardFragment dashboardFragment;
-    public ChatFragment chatFragment;
-    public InfoFragment infoFragment;
-    public HomeFragment homeFragment;
-    public CloudFragment cloudFragment;
-
-    private final HashMap<Integer, Fragment> navigationMap = new HashMap<>();
-
     public AppViewModel() {
-        homeFragment = new HomeFragment();
-        accountFragment = new AccountFragment();
-        dashboardFragment = new DashboardFragment();
-//        infoFragment = new InfoFragment();
-        cloudFragment = new CloudFragment();
-        chatFragment = new ChatFragment();
 
-//        navigationMap.put(R.id.navigation_info, infoFragment);
-        navigationMap.put(R.id.navigation_home, homeFragment);
-        navigationMap.put(R.id.navigation_account, accountFragment);
-        navigationMap.put(R.id.navigation_dashboard, dashboardFragment);
-        navigationMap.put(R.id.navigation_chat, chatFragment);
-        navigationMap.put(R.id.navigation_cloud, cloudFragment);
     }
 
-    public Fragment chooseFragment(int fragmentId) {
-        return navigationMap.get(fragmentId);
-    }
-
-    public List<Fragment> getNavigationList() {
-        return new ArrayList<>(navigationMap.values());
-    }
 }
