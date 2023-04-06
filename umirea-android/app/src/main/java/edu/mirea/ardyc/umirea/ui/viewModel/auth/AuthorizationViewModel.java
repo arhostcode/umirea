@@ -1,6 +1,7 @@
-package edu.mirea.ardyc.umirea.ui.viewModel;
+package edu.mirea.ardyc.umirea.ui.viewModel.auth;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -16,7 +17,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RegisterViewModel extends ViewModel {
+public class AuthorizationViewModel extends ViewModel {
 
     private String authServer;
     private AuthService authService;
@@ -40,9 +41,8 @@ public class RegisterViewModel extends ViewModel {
         authService = retrofit.create(AuthService.class);
     }
 
-
-    public void register(String login, String password, String firstName, String lastName, String verificationCode) {
-        Call<JsonObject> loginCall = authService.register(login, password, firstName, lastName, verificationCode);
+    public void loginToServer(String login, String password) {
+        Call<JsonObject> loginCall = authService.login(login, password);
         loginCall.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
@@ -58,29 +58,9 @@ public class RegisterViewModel extends ViewModel {
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                System.out.println(t.getMessage());
+//                System.out.println(t.getMessage());
             }
         });
     }
-
-    public void verify(String login, String password, String firstName, String lastName) {
-        Call<JsonObject> loginCall = authService.verify(login, password, firstName, lastName);
-        loginCall.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                JsonElement code = response.body().get("code");
-                JsonElement message = response.body().get("message");
-                if (code.getAsInt() != 0) {
-                    errorText.postValue(message.getAsString());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                System.out.println(t.getMessage());
-            }
-        });
-    }
-
 
 }

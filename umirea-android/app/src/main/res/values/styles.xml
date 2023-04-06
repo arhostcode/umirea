@@ -6,6 +6,7 @@
         <item name="android:colorBackgroundFloating">@color/white</item>
         <item name="background">@color/white</item>
         <item name="itemIconTint">@color/bottom_nav_color</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 <!--    <style name="TransparentDialog" parent="Theme.AppCompat.Dialog">-->
 <!--        <item name="android:windowBackground">@color/transparent</item>-->

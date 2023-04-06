@@ -9,10 +9,12 @@ import edu.mirea.ardyc.umirea.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static String APP_TAG_LOGS = "UMIREA_LOGS";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+//        startActivity(new Intent(MainActivity.this, LoginActivity.class));
     }
 }

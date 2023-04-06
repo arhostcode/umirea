@@ -25,6 +25,8 @@
     <string name="server_client_id">513930978985-ssveiamqf85mmb010kothj81qs125tkt.apps.googleusercontent.com</string>
 
     <string name="server_url">192.168.118.234</string>
+    <string name="title_activity_authorization">AuthorizationActivity</string>
+    <string name="title_notifications">Notifications</string>
 
 
 </resources>
