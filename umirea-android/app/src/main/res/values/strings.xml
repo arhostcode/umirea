@@ -10,7 +10,7 @@
     <string name="title_chat">Чат</string>
     <string name="title_info">Новости</string>
     <string name="title_cloud">Облако</string>
-    <string name="title_account">Акаунт</string>
+    <string name="title_account">Аккаунт</string>
 
 
     <string name="enter">Войти</string>
@@ -27,6 +27,14 @@
     <string name="server_url">192.168.118.234</string>
     <string name="title_activity_authorization">AuthorizationActivity</string>
     <string name="title_notifications">Notifications</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pasword_verification">Подтверждение пароля</string>
+    <string name="password_reset_title">Восстановление пароля</string>
+    <string name="group_settings">Настройка группы</string>
+    <string name="delete_account">Удалить аккаунт</string>
+    <string name="change_for_all"><u>Изменить для всех</u></string>
+    <string name="change_for_me"><u>Изменить</u></string>
 
 
 </resources>

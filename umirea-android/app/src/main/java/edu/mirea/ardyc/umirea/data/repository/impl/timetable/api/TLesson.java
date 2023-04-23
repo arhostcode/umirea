@@ -21,6 +21,21 @@ public class TLesson {
         this.room = room;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public String getRoom() {
+        return room;
+    }
 
     @Override
     public String toString() {

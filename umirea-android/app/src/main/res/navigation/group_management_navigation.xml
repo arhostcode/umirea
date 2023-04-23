@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/group_management_navigation"
+    app:startDestination="@id/navigation_group_settings">
+
+    <fragment
+        android:id="@+id/navigation_group_settings"
+        android:name="edu.mirea.ardyc.umirea.ui.view.group.fragments.GroupSettings"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_group_settings" />
+
+    <fragment
+        android:id="@+id/navigation_group_member_settings"
+        android:name="edu.mirea.ardyc.umirea.ui.view.group.fragments.memberSettings.GroupMemberSettings"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_group_member_settings" />
+
+    <fragment
+        android:id="@+id/navigation_group_schedule_settings"
+        android:name="edu.mirea.ardyc.umirea.ui.view.group.fragments.ChangeScheduleFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_change_schedule" />
+
+
+</navigation>

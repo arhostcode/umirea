@@ -7,4 +7,9 @@ public class LabLesson extends Lesson {
         setLessonIconMini(R.drawable.note_icon);
         setLessonIcon(R.drawable.lab_icon);
     }
+
+    @Override
+    public int getType() {
+        return 1;
+    }
 }

@@ -1,45 +1,57 @@
 package edu.mirea.ardyc.umirea.data.repository.impl.timetable;
 
-import java.util.ArrayList;
+import android.content.Context;
 
-import edu.mirea.ardyc.umirea.data.model.timetable.LabLesson;
+import androidx.lifecycle.MutableLiveData;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import edu.mirea.ardyc.umirea.data.dataSources.room.dashboard.entities.LessonAndTimetableDay;
+import edu.mirea.ardyc.umirea.data.dataSources.room.UmireaDatabase;
 import edu.mirea.ardyc.umirea.data.model.timetable.LectionLesson;
 import edu.mirea.ardyc.umirea.data.model.timetable.Lesson;
-import edu.mirea.ardyc.umirea.data.model.timetable.SeminarLesson;
 import edu.mirea.ardyc.umirea.data.model.timetable.Timetable;
 import edu.mirea.ardyc.umirea.data.model.timetable.TimetableDay;
+import edu.mirea.ardyc.umirea.data.model.timetable.data.DateLesson;
+import edu.mirea.ardyc.umirea.data.repository.LocalRepository;
 
 
-public class TimetableLocalRepository extends TimetableRepository {
-    @Override
-    public Timetable getData() {
-        Lesson rus = new Lesson.Builder(new LabLesson())
-                .withName("Русский язык")
-                .withRoom("302A")
-                .withTeacher("Красман О.Г.")
-                .build();
-
-        Lesson ang = new Lesson.Builder(new SeminarLesson())
-                .withName("Английский язык")
-                .withRoom("302A")
-                .withTeacher("Красман О.Г.")
-                .withLessonTime(2)
-                .build();
-        TimetableDay day = new TimetableDay.Builder()
-                .withDate(4, 3, 2023)
-                .addLesson(rus).addLesson(ang)
-                .build();
-
-        TimetableDay day2 = new TimetableDay.Builder()
-                .withDate(5, 3, 2023)
-                .addLesson(rus).addLesson(ang)
-                .build();
-
-        TimetableDay day3 = new TimetableDay.Builder()
-                .withDate(6, 2, 2023)
-                .addLesson(rus).addLesson(ang)
-                .build();
-
-        return new Timetable.Builder().addDay(day).addDay(day2).addDay(day3).build();
+public class TimetableLocalRepository extends LocalRepository<Timetable> {
+    public TimetableLocalRepository(Context context) {
+        super(context);
     }
+
+    @Override
+    public MutableLiveData<Timetable> getData() {
+        MutableLiveData<Timetable> timetableMutableLiveData = new MutableLiveData<>();
+        UmireaDatabase.databaseWriteExecutor.execute(() -> {
+            List<TimetableDay> dayList = UmireaDatabase.getDatabase(context).timetableDao().getTimetableDays().stream().map(LessonAndTimetableDay::toTimetableDay).collect(Collectors.toList());
+            timetableMutableLiveData.postValue(Timetable.fromDaysList(dayList));
+        });
+        return timetableMutableLiveData;
+    }
+
+    public void getDataAndPerform(TimetableAction action) {
+        UmireaDatabase.databaseWriteExecutor.execute(() -> {
+            List<TimetableDay> dayList = UmireaDatabase.getDatabase(context).timetableDao().getTimetableDays().stream().map(LessonAndTimetableDay::toTimetableDay).collect(Collectors.toList());
+            action.perform(Timetable.fromDaysList(dayList));
+        });
+    }
+
+
+    public void updateData(Timetable timetable) {
+        UmireaDatabase.databaseWriteExecutor.execute(() -> {
+            UmireaDatabase.getDatabase(context).timetableDao().deleteAll();
+            List<LessonAndTimetableDay> lessonAndTimetableDays = timetable.toDaysList().stream().map(LessonAndTimetableDay::fromTimetableDay).collect(Collectors.toList());
+            lessonAndTimetableDays.forEach(UmireaDatabase.getDatabase(context).timetableDao()::insert);
+        });
+    }
+
+    public void updateLesson(DateLesson dateLesson) {
+        UmireaDatabase.databaseWriteExecutor.execute(() -> {
+            UmireaDatabase.getDatabase(context).timetableDao().updateLesson(dateLesson);
+        });
+    }
+
 }

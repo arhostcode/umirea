@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.data.model.timetable.Lesson;
 import edu.mirea.ardyc.umirea.data.model.timetable.Timetable;
 import edu.mirea.ardyc.umirea.data.model.timetable.TimetableDay;
+import edu.mirea.ardyc.umirea.data.model.timetable.TimetableMonth;
 import edu.mirea.ardyc.umirea.databinding.DashboardCalendarBinding;
 
 public class DashboardCalendar extends LinearLayout {
@@ -29,6 +31,7 @@ public class DashboardCalendar extends LinearLayout {
 
     private Timetable timetable = null;
 
+    private boolean isInitialized = false;
     private DashboardCalendarBinding dashboardCalendarBinding;
     private TextView currentDateTextView;
     private TextView currentMonthTextView;
@@ -43,24 +46,28 @@ public class DashboardCalendar extends LinearLayout {
 
     public DashboardCalendar(Context context) {
         super(context);
-        init(context);
+//        init(context);
     }
 
     public DashboardCalendar(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+//        init(context);
     }
 
     public DashboardCalendar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
+//        init(context);
+    }
+
+    public boolean isInitialized() {
+        return isInitialized;
     }
 
     public void setTimetable(Timetable timetable) {
         this.timetable = timetable;
     }
 
-    private void init(Context context) {
+    public void init(Context context) {
         dashboardCalendarBinding = DashboardCalendarBinding.inflate(LayoutInflater.from(context), this, true);
         dashboardCalendarBinding.left.setOnClickListener((v) -> {
             if (chosenMonth > 1) {
@@ -130,9 +137,9 @@ public class DashboardCalendar extends LinearLayout {
         LocalDate date = LocalDate.of(year, month, 1);
         YearMonth ym = YearMonth.of(date.getYear(), date.getMonth());
 
-        List<TimetableDay> timetableDays = null;
+        TimetableMonth monthModel = null;
         if (timetable != null)
-            timetableDays = timetable.getForMonthYear(month.getValue(), year);
+            monthModel = timetable.getForMonthYear(month.getValue(), year);
 
         int daysInCurrentMonth = ym.lengthOfMonth();
         int daysInPastMonth = ym.minusMonths(1).lengthOfMonth();
@@ -149,26 +156,26 @@ public class DashboardCalendar extends LinearLayout {
                 } else if (day - firstDayOfCurrentMonth <= daysInCurrentMonth) {
                     DashboardCalendarDay currentMonthDay = createDashboardDayButtonWithAction(day - firstDayOfCurrentMonth, chosenMonth);
                     currentMonthDay.setTextColor(Color.WHITE);
+
+                    if (monthModel != null) {
+                        TimetableDay d = monthModel.getDay(day - firstDayOfCurrentMonth);
+                        if (d != null) {
+                            currentMonthDay.setDay(d);
+                        }
+                    }
                     if (day - firstDayOfCurrentMonth == currentDay && currentMonth == ym.getMonth().getValue()) {
                         currentMonthDay.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.current_day_shape, null));
                         currentCalendarDayView = currentMonthDay;
                         if (onClickCalendarDay != null)
                             onClickCalendarDay.click(currentMonthDay);
-
                     }
+
                     if (day - firstDayOfCurrentMonth == chosenDay && chosenMonth == ym.getMonth().getValue()) {
                         currentMonthDay.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.round_calendar_button, null));
                         chosenCalendarDayView = currentMonthDay;
-                        if (onClickCalendarDay != null)
+                        if (onClickCalendarDay != null) {
                             onClickCalendarDay.click(currentMonthDay);
-                    }
-                    if (timetableDays != null) {
-                        for (TimetableDay d : timetableDays) {
-                            if (day - firstDayOfCurrentMonth == d.getDay()) {
-                                currentMonthDay.setDay(d);
-                            }
                         }
-
                     }
                     weeks[week].addView(currentMonthDay);
                 } else {
@@ -187,7 +194,8 @@ public class DashboardCalendar extends LinearLayout {
         if (chosenCalendarDayView == currentCalendarDayView) {
             chosenCalendarDayView.setBackground(getDrawableById(R.drawable.current_day_shape));
         } else {
-            chosenCalendarDayView.setBackground(null);
+            if (!(this.chosenDay == chosenDay && chosenMonth == this.chosenMonth))
+                chosenCalendarDayView.setBackground(null);
         }
         chosenCalendarDayView = day;
         this.chosenDay = chosenDay;

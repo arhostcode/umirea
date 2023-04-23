@@ -24,9 +24,6 @@ public class AuthorizationActivity extends AppCompatActivity {
 
         binding = ActivityAuthorizationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_authorization);
-//        NavigationUI.setupWithNavController(binding.navViewAuth, navController);
     }
 
 }
