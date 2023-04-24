@@ -17,7 +17,7 @@ public class GroupSharedViewModel extends AndroidViewModel {
 
     public GroupSharedViewModel(@NonNull Application application) {
         super(application);
-        groupMutableLiveData = ((UmireaApplication) application).getGroupProcessor().getGroupMutableLiveData();
+        groupMutableLiveData = ((UmireaApplication) application).getGroupProcessor().loadGroup();
     }
 
     public MutableLiveData<Group> getGroupMutableLiveData() {

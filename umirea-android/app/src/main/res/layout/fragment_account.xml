@@ -118,7 +118,7 @@
         <Button
             android:id="@+id/exit_account"
             style="@style/ColoredButton"
-            android:layout_width="150dp"
+            android:layout_width="160dp"
             android:layout_height="25dp"
             android:layout_marginTop="15dp"
             android:paddingHorizontal="10dp"
@@ -127,7 +127,7 @@
 
         <Button
             style="@style/ColoredButton"
-            android:layout_width="150dp"
+            android:layout_width="160dp"
             android:layout_height="25dp"
             android:layout_marginTop="10dp"
             android:paddingHorizontal="10dp"
@@ -138,7 +138,7 @@
         <Button
             android:id="@+id/group_settings"
             style="@style/ColoredButton"
-            android:layout_width="150dp"
+            android:layout_width="160dp"
             android:layout_height="25dp"
             android:layout_marginTop="10dp"
             android:paddingHorizontal="10dp"

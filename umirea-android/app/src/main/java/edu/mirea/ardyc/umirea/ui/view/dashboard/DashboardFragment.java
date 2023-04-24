@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import java.util.ArrayList;
 
 import edu.mirea.ardyc.umirea.R;
+import edu.mirea.ardyc.umirea.data.model.timetable.date.DateTask;
 import edu.mirea.ardyc.umirea.databinding.FragmentDashboardBinding;
 import edu.mirea.ardyc.umirea.ui.view.dashboard.dialogs.LessonAdderDialog;
 import edu.mirea.ardyc.umirea.ui.view.dashboard.adapters.FullLessonItems;
@@ -43,12 +44,14 @@ public class DashboardFragment extends Fragment {
         AppSharedViewModel appSharedViewModel = new ViewModelProvider(requireActivity()).get(AppSharedViewModel.class);
         appSharedViewModel.getTimetableMutableLiveData().observe(getViewLifecycleOwner(), (val) -> {
             binding.calendar.reInit(val);
+            System.out.println("Reinited");
         });
+        dashboardViewModel.setTimetableMutableLiveData(appSharedViewModel.getTimetableMutableLiveData());
 
-        binding.lessons.setAdapter(new FullLessonItems(new ArrayList<>()));
+        binding.lessons.setAdapter(new FullLessonItems(new ArrayList<>(), this::updateHomework, this::updateTask));
         binding.calendar.setOnClickCalendarDay((day) -> {
             if (day.getDay() != null)
-                ((LessonItems) binding.lessons.getAdapter()).update(day.getDay().getLessons());
+                ((LessonItems) binding.lessons.getAdapter()).update(day.getDay());
             else
                 ((LessonItems) binding.lessons.getAdapter()).update(new ArrayList<>());
         });
@@ -70,5 +73,13 @@ public class DashboardFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void updateHomework(DateTask dateTask) {
+        dashboardViewModel.updateHomework(dateTask);
+    }
+
+    private void updateTask(DateTask dateTask) {
+        dashboardViewModel.updateTask(dateTask);
     }
 }

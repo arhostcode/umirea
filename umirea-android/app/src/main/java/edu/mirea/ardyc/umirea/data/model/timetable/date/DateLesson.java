@@ -1,4 +1,4 @@
-package edu.mirea.ardyc.umirea.data.model.timetable.data;
+package edu.mirea.ardyc.umirea.data.model.timetable.date;
 
 import edu.mirea.ardyc.umirea.data.model.timetable.Lesson;
 

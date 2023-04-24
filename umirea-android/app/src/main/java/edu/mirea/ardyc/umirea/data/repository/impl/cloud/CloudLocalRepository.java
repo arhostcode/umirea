@@ -4,16 +4,16 @@ import android.content.Context;
 
 import java.util.List;
 
-import edu.mirea.ardyc.umirea.data.dataSources.cloud.LocalCloudDataSource;
+import edu.mirea.ardyc.umirea.data.dataSources.cloud.MemoryCloudDataSource;
 import edu.mirea.ardyc.umirea.data.model.cloud.CloudFolder;
 
 public class CloudLocalRepository extends CloudRepository {
 
-    private LocalCloudDataSource dataSource;
+    private MemoryCloudDataSource dataSource;
 
     public CloudLocalRepository(Context context) {
         super(context);
-        this.dataSource = new LocalCloudDataSource(context);
+        this.dataSource = new MemoryCloudDataSource(context);
     }
 
     @Override

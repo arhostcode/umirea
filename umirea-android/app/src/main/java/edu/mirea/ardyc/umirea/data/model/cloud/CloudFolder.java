@@ -5,10 +5,12 @@ import java.util.List;
 
 public class CloudFolder {
     private String folderName;
+    private String uuid;
     private final List<CloudFile> files = new ArrayList<>();
 
-    public CloudFolder(String folderName) {
+    public CloudFolder(String uuid, String folderName) {
         this.folderName = folderName;
+        this.uuid = uuid;
     }
 
     public String getFolderName() {
@@ -19,4 +21,7 @@ public class CloudFolder {
         return files;
     }
 
+    public String getUuid() {
+        return uuid;
+    }
 }

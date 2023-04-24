@@ -24,17 +24,17 @@ public class ScheduleController {
     @Inject
     ScheduleService scheduleService;
 
-    @GetMapping(path = "/getAllGroups")
+    @GetMapping(path = "/get/groups/all")
     public Response getAllGroups() {
         return scheduleService.getAllGroups();
     }
 
-    @GetMapping(path = "/getGroupBaseSchedule")
+    @GetMapping(path = "/get/group/base")
     public Response getGroupBaseSchedule(@RequestParam String groupName) {
         return scheduleService.getGroupBaseSchedule(groupName);
     }
 
-    @GetMapping(path = "/getUserBaseSchedule")
+    @GetMapping(path = "/get/user/base")
     public Response getUserBaseSchedule(@RequestParam String userToken) {
         return scheduleService.getGroupBaseSchedule(userToken);
     }

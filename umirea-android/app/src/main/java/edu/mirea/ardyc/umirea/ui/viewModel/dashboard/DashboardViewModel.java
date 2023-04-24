@@ -4,30 +4,26 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.mirea.ardyc.umirea.data.model.timetable.Lesson;
 import edu.mirea.ardyc.umirea.data.model.timetable.Timetable;
-import edu.mirea.ardyc.umirea.data.model.timetable.data.DateLesson;
-import edu.mirea.ardyc.umirea.data.repository.impl.timetable.TimetableLocalRepository;
-import edu.mirea.ardyc.umirea.data.repository.impl.timetable.TimetableRemoteRepository;
-import edu.mirea.ardyc.umirea.data.repository.impl.timetable.TimetableRepository;
+import edu.mirea.ardyc.umirea.data.model.timetable.date.DateLesson;
+import edu.mirea.ardyc.umirea.data.model.timetable.date.DateTask;
 import edu.mirea.ardyc.umirea.ui.viewModel.UmireaApplication;
 
 public class DashboardViewModel extends AndroidViewModel {
 
+    private MutableLiveData<Timetable> timetableMutableLiveData;
     private DashboardProcessor dashboardProcessor;
 
     public DashboardViewModel(@NonNull Application application) {
         super(application);
         dashboardProcessor = ((UmireaApplication) application).getDashboardProcessor();
     }
-
 
     public void addLesson(String name, String teacherName, String room, int lessonType, List<Integer> times, List<String> dates) {
         List<DateLesson> lessons = new ArrayList<>();
@@ -41,7 +37,18 @@ public class DashboardViewModel extends AndroidViewModel {
                 lessons.add(new DateLesson(day, month, year, builder.cloned().withLessonTime(times.get(j)).build()));
             }
         }
-        System.out.println(lessons);
-        dashboardProcessor.addLessons(lessons);
+        dashboardProcessor.addLessons(lessons, timetableMutableLiveData);
+    }
+
+    public void setTimetableMutableLiveData(MutableLiveData<Timetable> timetableMutableLiveData) {
+        this.timetableMutableLiveData = timetableMutableLiveData;
+    }
+
+    public void updateHomework(DateTask dateTask){
+        dashboardProcessor.updateHomework(dateTask, timetableMutableLiveData);
+    }
+
+    public void updateTask(DateTask dateTask){
+        dashboardProcessor.updateTask(dateTask, timetableMutableLiveData);
     }
 }

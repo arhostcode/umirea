@@ -12,15 +12,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.data.model.timetable.Lesson;
 import edu.mirea.ardyc.umirea.data.model.timetable.LessonTime;
+import edu.mirea.ardyc.umirea.data.model.timetable.Task;
+import edu.mirea.ardyc.umirea.data.model.timetable.TimetableDay;
+import edu.mirea.ardyc.umirea.data.model.timetable.date.DateTask;
 import edu.mirea.ardyc.umirea.ui.view.dashboard.dialogs.TimetableDialog;
 
 public class LessonItems extends RecyclerView.Adapter<LessonItems.ViewHolder> {
 
     private List<Lesson> lessons;
+    private Consumer<DateTask> homeworkConsumer;
+    private Consumer<DateTask> taskConsumer;
+    private TimetableDay day;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView lessonName;
@@ -78,8 +85,10 @@ public class LessonItems extends RecyclerView.Adapter<LessonItems.ViewHolder> {
     }
 
 
-    public LessonItems(List<Lesson> lessons) {
+    public LessonItems(List<Lesson> lessons, Consumer<DateTask> homeworkConsumer, Consumer<DateTask> taskConsumer) {
         this.lessons = new ArrayList<>(lessons);
+        this.homeworkConsumer = homeworkConsumer;
+        this.taskConsumer = taskConsumer;
     }
 
     @Override
@@ -108,10 +117,25 @@ public class LessonItems extends RecyclerView.Adapter<LessonItems.ViewHolder> {
             viewHolder.getNoteIcon().setImageDrawable(ResourcesCompat.getDrawable(viewHolder.noteIcon.getResources(), R.drawable.note_icon, null));
         viewHolder.getLessonType().setImageResource(lesson.getLessonIcon());
         if (!lesson.getName().equals("Нет пары"))
-            viewHolder.lessonElement.setOnClickListener(view -> new TimetableDialog(view.getContext(), lesson).show());
+            viewHolder.lessonElement.setOnClickListener(view -> new TimetableDialog(view.getContext(), lesson, (val) -> {
+                homeworkConsumer.accept(new DateTask(day.getDay(), day.getMonth(), day.getYear(), lesson.getLessonTime(), new Task(val)));
+            }, (val) -> {
+                taskConsumer.accept(new DateTask(day.getDay(), day.getMonth(), day.getYear(), lesson.getLessonTime(), new Task(val)));
+            }).show());
         else viewHolder.lessonElement.setOnClickListener(view -> {
         });
 
+    }
+
+    public void update(TimetableDay day) {
+        this.lessons = day.getLessons();
+        this.day = day;
+        notifyDataSetChanged();
+    }
+
+    public void update() {
+        this.lessons = day.getLessons();
+        notifyDataSetChanged();
     }
 
     public void update(List<Lesson> lessons) {

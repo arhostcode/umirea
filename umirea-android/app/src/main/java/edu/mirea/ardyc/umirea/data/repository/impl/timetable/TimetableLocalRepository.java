@@ -9,11 +9,10 @@ import java.util.stream.Collectors;
 
 import edu.mirea.ardyc.umirea.data.dataSources.room.dashboard.entities.LessonAndTimetableDay;
 import edu.mirea.ardyc.umirea.data.dataSources.room.UmireaDatabase;
-import edu.mirea.ardyc.umirea.data.model.timetable.LectionLesson;
-import edu.mirea.ardyc.umirea.data.model.timetable.Lesson;
 import edu.mirea.ardyc.umirea.data.model.timetable.Timetable;
 import edu.mirea.ardyc.umirea.data.model.timetable.TimetableDay;
-import edu.mirea.ardyc.umirea.data.model.timetable.data.DateLesson;
+import edu.mirea.ardyc.umirea.data.model.timetable.date.DateLesson;
+import edu.mirea.ardyc.umirea.data.model.timetable.date.DateTask;
 import edu.mirea.ardyc.umirea.data.repository.LocalRepository;
 
 
@@ -51,6 +50,18 @@ public class TimetableLocalRepository extends LocalRepository<Timetable> {
     public void updateLesson(DateLesson dateLesson) {
         UmireaDatabase.databaseWriteExecutor.execute(() -> {
             UmireaDatabase.getDatabase(context).timetableDao().updateLesson(dateLesson);
+        });
+    }
+
+    public void updateHomework(DateTask dateTask) {
+        UmireaDatabase.databaseWriteExecutor.execute(() -> {
+            UmireaDatabase.getDatabase(context).timetableDao().updateHomework(dateTask);
+        });
+    }
+
+    public void updateTask(DateTask dateTask) {
+        UmireaDatabase.databaseWriteExecutor.execute(() -> {
+            UmireaDatabase.getDatabase(context).timetableDao().updateTask(dateTask);
         });
     }
 

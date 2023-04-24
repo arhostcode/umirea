@@ -2,12 +2,10 @@ package edu.mirea.ardyc.umirea.data.dataSources.dashboard;
 
 import android.content.Context;
 
-import androidx.lifecycle.MutableLiveData;
-
 import edu.mirea.ardyc.umirea.data.model.timetable.HomeWork;
-import edu.mirea.ardyc.umirea.data.model.timetable.LabLesson;
+import edu.mirea.ardyc.umirea.data.model.timetable.lessons.LabLesson;
 import edu.mirea.ardyc.umirea.data.model.timetable.Lesson;
-import edu.mirea.ardyc.umirea.data.model.timetable.SeminarLesson;
+import edu.mirea.ardyc.umirea.data.model.timetable.lessons.SeminarLesson;
 import edu.mirea.ardyc.umirea.data.model.timetable.Task;
 import edu.mirea.ardyc.umirea.data.model.timetable.Timetable;
 import edu.mirea.ardyc.umirea.data.model.timetable.TimetableDay;

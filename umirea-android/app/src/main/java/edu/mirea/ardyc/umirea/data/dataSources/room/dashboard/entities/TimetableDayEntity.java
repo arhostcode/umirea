@@ -59,7 +59,7 @@ public class TimetableDayEntity {
         this.year = year;
     }
 
-
+    @Ignore
     public TimetableDayEntity(int day, int month, int year) {
         this.day = day;
         this.month = month;

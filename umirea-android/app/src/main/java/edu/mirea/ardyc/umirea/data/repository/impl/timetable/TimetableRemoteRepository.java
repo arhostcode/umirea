@@ -2,8 +2,6 @@ package edu.mirea.ardyc.umirea.data.repository.impl.timetable;
 
 import android.content.Context;
 
-import androidx.lifecycle.MutableLiveData;
-
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
@@ -11,12 +9,12 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
 
-import edu.mirea.ardyc.umirea.data.model.timetable.LectionLesson;
+import edu.mirea.ardyc.umirea.data.model.timetable.lessons.LectionLesson;
 import edu.mirea.ardyc.umirea.data.model.timetable.Lesson;
 import edu.mirea.ardyc.umirea.data.model.timetable.Timetable;
 import edu.mirea.ardyc.umirea.data.model.timetable.TimetableDay;
 import edu.mirea.ardyc.umirea.data.model.timetable.TimetableMonth;
-import edu.mirea.ardyc.umirea.data.model.timetable.data.DateLesson;
+import edu.mirea.ardyc.umirea.data.model.timetable.date.DateLesson;
 import edu.mirea.ardyc.umirea.data.net.auth.DashboardService;
 import edu.mirea.ardyc.umirea.data.repository.impl.timetable.api.TLesson;
 import edu.mirea.ardyc.umirea.data.repository.impl.timetable.api.TParser;

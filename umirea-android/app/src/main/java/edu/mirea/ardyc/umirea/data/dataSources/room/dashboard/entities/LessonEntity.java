@@ -6,10 +6,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import edu.mirea.ardyc.umirea.data.model.timetable.HomeWork;
-import edu.mirea.ardyc.umirea.data.model.timetable.LabLesson;
-import edu.mirea.ardyc.umirea.data.model.timetable.LectionLesson;
 import edu.mirea.ardyc.umirea.data.model.timetable.Lesson;
-import edu.mirea.ardyc.umirea.data.model.timetable.SeminarLesson;
 import edu.mirea.ardyc.umirea.data.model.timetable.Task;
 
 @Entity(tableName = "timetable_lessons")
@@ -20,8 +17,7 @@ public class LessonEntity {
     int id;
 
     @ColumnInfo(name = "timetable_day_id")
-    public
-    int timetableDayId;
+    public int timetableDayId;
 
     @ColumnInfo(name = "time")
     private int lessonTime = 0;
@@ -45,7 +41,7 @@ public class LessonEntity {
     public LessonEntity() {
     }
 
-
+    @Ignore
     public LessonEntity(int lessonTime, int lessonType, String name, String teacherName, String room, HomeWork homeWork, Task task) {
         this.lessonTime = lessonTime;
         this.lessonType = lessonType;
@@ -56,6 +52,7 @@ public class LessonEntity {
         this.task = task;
     }
 
+    @Ignore
     public LessonEntity(int lessonTime, int lessonType, String name, String teacherName, String room) {
         this.lessonTime = lessonTime;
         this.lessonType = lessonType;

@@ -13,6 +13,7 @@ import edu.mirea.ardyc.umirea.data.model.chat.Chat;
 import edu.mirea.ardyc.umirea.data.model.cloud.CloudFolder;
 import edu.mirea.ardyc.umirea.data.model.group.Group;
 import edu.mirea.ardyc.umirea.data.model.timetable.Timetable;
+import edu.mirea.ardyc.umirea.ui.viewModel.group.GroupProcessor;
 
 public class AppSharedViewModel extends ViewModel {
 

@@ -5,6 +5,9 @@ import androidx.annotation.NonNull;
 import java.util.Objects;
 
 import edu.mirea.ardyc.umirea.R;
+import edu.mirea.ardyc.umirea.data.model.timetable.lessons.LabLesson;
+import edu.mirea.ardyc.umirea.data.model.timetable.lessons.LectionLesson;
+import edu.mirea.ardyc.umirea.data.model.timetable.lessons.SeminarLesson;
 
 public class Lesson implements Cloneable {
 

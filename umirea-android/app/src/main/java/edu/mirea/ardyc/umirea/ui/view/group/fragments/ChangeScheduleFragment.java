@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.databinding.FragmentChangeScheduleBinding;
 import edu.mirea.ardyc.umirea.ui.viewModel.group.GroupChangeScheduleViewModel;
+import edu.mirea.ardyc.umirea.ui.viewModel.group.GroupSharedViewModel;
 
 public class ChangeScheduleFragment extends Fragment {
 
@@ -29,6 +30,8 @@ public class ChangeScheduleFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentChangeScheduleBinding.inflate(getLayoutInflater());
         GroupChangeScheduleViewModel viewModel = new ViewModelProvider(requireActivity()).get(GroupChangeScheduleViewModel.class);
+        GroupSharedViewModel groupSharedViewModel = new ViewModelProvider(requireActivity()).get(GroupSharedViewModel.class);
+        viewModel.setGroupMutableLiveData(groupSharedViewModel.getGroupMutableLiveData());
         viewModel.getGroups().observe(getViewLifecycleOwner(), (val) -> {
             if (val != null)
                 binding.schedulesList.setAdapter(new ArrayAdapter<>(getContext(), R.layout.group_item, val));

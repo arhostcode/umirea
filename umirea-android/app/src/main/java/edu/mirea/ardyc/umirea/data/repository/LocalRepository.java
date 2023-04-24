@@ -4,13 +4,11 @@ import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
 
-public class LocalRepository<T> extends Repository<MutableLiveData<T>> {
+public abstract class LocalRepository<T> extends Repository<MutableLiveData<T>> {
     public LocalRepository(Context context) {
         super(context);
     }
 
     @Override
-    public MutableLiveData<T> getData() {
-        return null;
-    }
+    public abstract MutableLiveData<T> getData();
 }

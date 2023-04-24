@@ -17,14 +17,14 @@ public class Lesson {
 
 
     public Lesson oddWeeks() {
-        for (int i = 1; i < 16; i += 2) {
+        for (int i = 0; i < 16; i += 2) {
             weeks.add(i);
         }
         return this;
     }
 
     public Lesson evenWeeks() {
-        for (int i = 0; i < 16; i += 2) {
+        for (int i = 1; i < 16; i += 2) {
             weeks.add(i);
         }
         return this;
@@ -56,7 +56,7 @@ public class Lesson {
         if (weeksValue.getValueType() != JsonValue.ValueType.NULL) {
             JsonArray weeksArray = lessonObject.getJsonArray("weeks");
             for (int i = 0; i < weeksArray.size(); i++) {
-                lesson.weeks.add(weeksArray.getInt(i));
+                lesson.weeks.add(weeksArray.getInt(i) - 1);
             }
         } else {
             lesson.evenWeeks();
@@ -71,7 +71,7 @@ public class Lesson {
         if (weeksValue.getValueType() != JsonValue.ValueType.NULL) {
             JsonArray weeksArray = lessonObject.getJsonArray("weeks");
             for (int i = 0; i < weeksArray.size(); i++) {
-                lesson.weeks.add(weeksArray.getInt(i));
+                lesson.weeks.add(weeksArray.getInt(i) - 1);
             }
         } else {
             lesson.oddWeeks();

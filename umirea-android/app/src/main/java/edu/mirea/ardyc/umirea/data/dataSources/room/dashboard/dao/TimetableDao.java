@@ -13,7 +13,9 @@ import java.util.List;
 import edu.mirea.ardyc.umirea.data.dataSources.room.dashboard.entities.LessonAndTimetableDay;
 import edu.mirea.ardyc.umirea.data.dataSources.room.dashboard.entities.LessonEntity;
 import edu.mirea.ardyc.umirea.data.dataSources.room.dashboard.entities.TimetableDayEntity;
-import edu.mirea.ardyc.umirea.data.model.timetable.data.DateLesson;
+import edu.mirea.ardyc.umirea.data.model.timetable.HomeWork;
+import edu.mirea.ardyc.umirea.data.model.timetable.date.DateLesson;
+import edu.mirea.ardyc.umirea.data.model.timetable.date.DateTask;
 
 @Dao
 public abstract class TimetableDao {
@@ -69,6 +71,40 @@ public abstract class TimetableDao {
         LessonEntity l = LessonEntity.fromLesson(dateLesson.getLesson());
         l.timetableDayId = day.timetableDay.getId();
         insert(l);
+    }
+
+    @Transaction
+    public void updateHomework(DateTask homework) {
+        LessonAndTimetableDay day = getByDay(homework.getDay(), homework.getMonth(), homework.getYear());
+        if (day == null) {
+            return;
+        }
+        for (int i = 0; i < day.lessonEntities.size(); i++) {
+            if (day.lessonEntities.get(i).getLessonTime() == homework.getLesson()) {
+                if (homework.getTask().equals(day.lessonEntities.get(i).getHomeWork()))
+                    return;
+                day.lessonEntities.get(i).setHomeWork(HomeWork.fromTask(homework.getTask()));
+                update(day.lessonEntities.get(i));
+                return;
+            }
+        }
+    }
+
+    @Transaction
+    public void updateTask(DateTask task) {
+        LessonAndTimetableDay day = getByDay(task.getDay(), task.getMonth(), task.getYear());
+        if (day == null) {
+            return;
+        }
+        for (int i = 0; i < day.lessonEntities.size(); i++) {
+            if (day.lessonEntities.get(i).getLessonTime() == task.getLesson()) {
+                if (task.getTask().equals(day.lessonEntities.get(i).getTask()))
+                    return;
+                day.lessonEntities.get(i).setTask(task.getTask());
+                update(day.lessonEntities.get(i));
+                return;
+            }
+        }
     }
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

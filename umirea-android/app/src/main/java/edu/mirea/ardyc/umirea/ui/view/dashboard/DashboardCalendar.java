@@ -46,21 +46,14 @@ public class DashboardCalendar extends LinearLayout {
 
     public DashboardCalendar(Context context) {
         super(context);
-//        init(context);
     }
 
     public DashboardCalendar(Context context, AttributeSet attrs) {
         super(context, attrs);
-//        init(context);
     }
 
     public DashboardCalendar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-//        init(context);
-    }
-
-    public boolean isInitialized() {
-        return isInitialized;
     }
 
     public void setTimetable(Timetable timetable) {
@@ -78,6 +71,7 @@ public class DashboardCalendar extends LinearLayout {
             }
             chosenDay = 1;
             setCalendarMonth(year, Month.of(chosenMonth));
+            onClickCalendarDay.click(chosenCalendarDayView);
         });
         dashboardCalendarBinding.right.setOnClickListener((v) -> {
             if (chosenMonth < 12) {
@@ -88,6 +82,7 @@ public class DashboardCalendar extends LinearLayout {
             }
             chosenDay = 1;
             setCalendarMonth(year, Month.of(chosenMonth));
+            onClickCalendarDay.click(chosenCalendarDayView);
         });
         initCurrentDate();
         initializeDaysWeeks();
@@ -129,7 +124,6 @@ public class DashboardCalendar extends LinearLayout {
     public void reInit(Timetable timetable) {
         this.timetable = timetable;
         setCalendarMonth(year, Month.of(chosenMonth));
-        onClickCalendarDay.click(currentCalendarDayView);
     }
 
     private void setCalendarMonth(int year, Month month) {

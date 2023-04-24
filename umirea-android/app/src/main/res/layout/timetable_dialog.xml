@@ -97,14 +97,14 @@
             android:id="@+id/note_icon"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:src="@drawable/hw_icon" />
+            android:src="@drawable/note_icon" />
 
         <ImageView
             android:id="@+id/hw_icon"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_marginStart="3dp"
-            android:src="@drawable/note_icon" />
+            android:src="@drawable/hw_icon" />
 
         <ImageView
             android:id="@+id/lesson_type"
@@ -141,6 +141,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/change_hw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/change_for_all"
@@ -187,9 +188,9 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/change_note"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:text="@string/change_for_me"
                 android:textColor="#9B9B9B"
                 android:textSize="12sp"

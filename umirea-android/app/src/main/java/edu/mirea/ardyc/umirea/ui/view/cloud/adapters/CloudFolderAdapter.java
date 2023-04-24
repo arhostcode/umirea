@@ -13,14 +13,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.data.model.cloud.CloudFolder;
 
 public class CloudFolderAdapter extends RecyclerView.Adapter<CloudFolderAdapter.ViewHolder> {
 
-    public CloudFolderAdapter(List<CloudFolder> folders) {
+    private Consumer<String> action;
+
+    public CloudFolderAdapter(List<CloudFolder> folders, Consumer<String> action) {
         this.folders = folders;
+        this.action = action;
     }
 
     private List<CloudFolder> folders;
@@ -30,7 +35,6 @@ public class CloudFolderAdapter extends RecyclerView.Adapter<CloudFolderAdapter.
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cloud_list_item, parent, false);
-
         return new CloudFolderAdapter.ViewHolder(view);
     }
 
@@ -44,6 +48,9 @@ public class CloudFolderAdapter extends RecyclerView.Adapter<CloudFolderAdapter.
         } else {
             adapter.update(folders.get(position).getFiles());
         }
+        holder.uploadMore.setOnClickListener((v) -> {
+            action.accept(folders.get(position).getUuid());
+        });
     }
 
     @Override
@@ -59,6 +66,7 @@ public class CloudFolderAdapter extends RecyclerView.Adapter<CloudFolderAdapter.
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private View parent;
         private TextView folderName;
+        private TextView uploadMore;
         private RecyclerView files;
         private ImageView arrow;
         private View layout;
@@ -68,6 +76,7 @@ public class CloudFolderAdapter extends RecyclerView.Adapter<CloudFolderAdapter.
             super(view);
             parent = view;
             folderName = view.findViewById(R.id.folder_name);
+            uploadMore = view.findViewById(R.id.upload_more);
             files = view.findViewById(R.id.files);
             arrow = view.findViewById(R.id.files_list_button);
             layout = view.findViewById(R.id.files_layout);

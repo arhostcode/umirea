@@ -1,22 +1,23 @@
-package edu.mirea.ardyc.umirea.data.model.timetable.data;
+package edu.mirea.ardyc.umirea.data.model.timetable.date;
 
 import edu.mirea.ardyc.umirea.data.model.timetable.HomeWork;
+import edu.mirea.ardyc.umirea.data.model.timetable.Task;
 
-public class DateHomework {
+public class DateTask {
 
     private int day;
     private int month;
     private int year;
     private int lesson;
 
-    private HomeWork homeWork;
+    private Task task;
 
-    public DateHomework(int day, int month, int year, int lesson, HomeWork homeWork) {
+    public DateTask(int day, int month, int year, int lesson, Task homeWork) {
         this.day = day;
         this.month = month;
         this.year = year;
         this.lesson = lesson;
-        this.homeWork = homeWork;
+        this.task = homeWork;
     }
 
     public int getDay() {
@@ -35,7 +36,9 @@ public class DateHomework {
         return lesson;
     }
 
-    public HomeWork getHomeWork() {
-        return homeWork;
+    public Task getTask() {
+        return task;
     }
+
+
 }

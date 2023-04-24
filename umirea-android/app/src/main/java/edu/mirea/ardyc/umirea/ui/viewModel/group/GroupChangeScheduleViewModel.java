@@ -18,6 +18,7 @@ import edu.mirea.ardyc.umirea.ui.viewModel.dashboard.DashboardProcessor;
 
 public class GroupChangeScheduleViewModel extends AndroidViewModel {
 
+    private MutableLiveData<Group> groupMutableLiveData;
     public GroupChangeScheduleViewModel(Application application) {
         super(application);
     }
@@ -31,6 +32,13 @@ public class GroupChangeScheduleViewModel extends AndroidViewModel {
     }
 
     public void updateSchedule(String schedule) {
+        Group group = groupMutableLiveData.getValue();
+        group.setBaseSchedule(schedule);
+        groupMutableLiveData.postValue(group);
         ((UmireaApplication) getApplication()).getGroupProcessor().updateBaseSchedule(schedule);
+    }
+
+    public void setGroupMutableLiveData(MutableLiveData<Group> groupMutableLiveData) {
+        this.groupMutableLiveData = groupMutableLiveData;
     }
 }

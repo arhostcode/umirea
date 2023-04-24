@@ -2,15 +2,13 @@ package edu.mirea.ardyc.umirea.data.repository.impl.timetable;
 
 import android.content.Context;
 
-import androidx.lifecycle.MutableLiveData;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.mirea.ardyc.umirea.data.dataSources.dashboard.MemoryDashboardDataSource;
 import edu.mirea.ardyc.umirea.data.model.timetable.Lesson;
 import edu.mirea.ardyc.umirea.data.model.timetable.Timetable;
-import edu.mirea.ardyc.umirea.data.model.timetable.data.DateLesson;
+import edu.mirea.ardyc.umirea.data.model.timetable.date.DateLesson;
 
 public class TimetableMemoryRepository extends TimetableRepository {
     public TimetableMemoryRepository(Context context) {

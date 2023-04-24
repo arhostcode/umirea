@@ -9,6 +9,8 @@ public class Member {
 
     private String role;
 
+    private String imagePath;
+
     private String uuid;
 
     public Member(String firstName, String lastName, String role, String uuid) {
@@ -16,6 +18,11 @@ public class Member {
         this.lastName = lastName;
         this.role = role;
         this.uuid = uuid;
+    }
+
+    public Member(String firstName, String lastName, String role, String uuid, String imagePath) {
+        this(firstName, lastName, role, uuid);
+        this.imagePath = imagePath;
     }
 
     public String getFirstName() {
@@ -32,5 +39,9 @@ public class Member {
 
     public String getRole() {
         return role;
+    }
+
+    public String getImagePath() {
+        return imagePath;
     }
 }
