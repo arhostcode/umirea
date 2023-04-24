@@ -21,13 +21,7 @@ public class LocalGroupRepository extends LocalRepository<Group> {
     @Override
     public MutableLiveData<Group> getData() {
         MutableLiveData<Group> data = new MutableLiveData<>();
-        UmireaDatabase.databaseWriteExecutor.execute(() -> {
-            String groupName = context.getSharedPreferences("edu.mirea.ardyc.umirea", Context.MODE_PRIVATE).getString("group_name", null);
-            String groupToken = context.getSharedPreferences("edu.mirea.ardyc.umirea", Context.MODE_PRIVATE).getString("group_token", null);
-            String groupSchedule = context.getSharedPreferences("edu.mirea.ardyc.umirea", Context.MODE_PRIVATE).getString("group_baseschedule", null);
-            List<Member> members = UmireaDatabase.getDatabase(context).memberDao().getMembers().stream().map(MemberEntity::toMember).collect(Collectors.toList());
-            data.postValue(new Group(members, groupName, groupToken, groupSchedule));
-        });
+        getDataAndPerform(data::postValue);
         return data;
     }
 

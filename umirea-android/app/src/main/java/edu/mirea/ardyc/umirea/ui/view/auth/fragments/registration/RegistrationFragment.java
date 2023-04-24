@@ -37,18 +37,19 @@ public class RegistrationFragment extends Fragment {
     }
 
     private void initObservers() {
-        registerViewModel.getErrorText().observe(getViewLifecycleOwner(), s -> Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_SHORT).show());
+        registerViewModel.getErrorText().observe(getViewLifecycleOwner(), s -> Toast.makeText(requireActivity().getApplicationContext(), s, Toast.LENGTH_SHORT).show());
 
     }
 
     private void initButtons() {
         binding.verify.setOnClickListener(view -> registerViewModel.verify(binding.loginText.getText().toString(), binding.passwordText.getText().toString(), binding.firstName.getText().toString(), binding.lastName.getText().toString()));
         binding.enterButton.setOnClickListener(view -> {
-            if (binding.code.getText().toString().isEmpty()) {
-                Toast.makeText(getActivity().getApplicationContext(), "Получите код подтверждения на почту. Проверьте папку спам.", Toast.LENGTH_SHORT).show();
-            } else {
-                NavHostFragment.findNavController(this).navigate(R.id.navigation_chose_group);
-            }
+//            if (binding.code.getText().toString().isEmpty()) {
+//                Toast.makeText(getActivity().getApplicationContext(), "Получите код подтверждения на почту. Проверьте папку спам.", Toast.LENGTH_SHORT).show();
+//            } else {
+//
+//            }
+            NavHostFragment.findNavController(this).navigate(R.id.navigation_chose_group);
 //                registerViewModel.register(binding.loginText.getText().toString(), binding.passwordText.getText().toString(), binding.firstName.getText().toString(), binding.lastName.getText().toString(), binding.code.getText().toString());
         });
     }

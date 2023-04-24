@@ -21,7 +21,7 @@ import edu.mirea.ardyc.umirea.data.model.cloud.CloudFolder;
 
 public class CloudFolderAdapter extends RecyclerView.Adapter<CloudFolderAdapter.ViewHolder> {
 
-    private Consumer<String> action;
+    private final Consumer<String> action;
 
     public CloudFolderAdapter(List<CloudFolder> folders, Consumer<String> action) {
         this.folders = folders;

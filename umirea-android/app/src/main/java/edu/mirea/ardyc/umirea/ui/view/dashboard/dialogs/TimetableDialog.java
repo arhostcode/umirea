@@ -21,9 +21,9 @@ import edu.mirea.ardyc.umirea.databinding.TimetableDialogBinding;
 
 public class TimetableDialog extends AlertDialog {
 
-    private Lesson lesson;
-    private Consumer<String> homeWorkConsumer;
-    private Consumer<String> taskConsumer;
+    private final Lesson lesson;
+    private final Consumer<String> homeWorkConsumer;
+    private final Consumer<String> taskConsumer;
     private TimetableDialogBinding binding;
 
     public TimetableDialog(@NonNull Context context, Lesson lesson, Consumer<String> homeWorkConsumer, Consumer<String> taskConsumer) {
@@ -39,6 +39,11 @@ public class TimetableDialog extends AlertDialog {
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         setView(binding.getRoot());
 
+        initTextFields();
+        initButtons();
+    }
+
+    private void initButtons() {
         binding.changeHw.setOnClickListener((view) -> {
             String hw = "";
             if (lesson.getHomeWork() != null)
@@ -58,24 +63,31 @@ public class TimetableDialog extends AlertDialog {
                 taskConsumer.accept(val);
             }).show();
         });
+    }
 
-        binding.lessonName.setText(lesson.getName() + " " + lesson.getRoom());
+    private void initTextFields() {
+
+        String lessonName = String.format(getContext().getResources().getString(R.string.lesson_name), lesson.getName(), lesson.getRoom());
+        binding.lessonName.setText(lessonName);
+
         binding.teacherName.setText(lesson.getTeacherName());
         binding.timeStart.setText(LessonTime.getLessonStartTime(lesson.getLessonTime()));
         binding.timeEnd.setText(LessonTime.getLessonEndTime(lesson.getLessonTime()));
+
         if (lesson.getHomeWork() == null) {
             binding.hwIcon.setImageDrawable(null);
             binding.homeworkText.setText("");
         } else {
             binding.homeworkText.setText(lesson.getHomeWork().getDescription());
         }
+
         if (lesson.getTask() == null) {
             binding.noteText.setText("");
             binding.noteIcon.setImageDrawable(null);
         } else {
             binding.noteText.setText(lesson.getTask().getDescription());
         }
-        binding.lessonType.setImageResource(lesson.getLessonIcon());
 
+        binding.lessonType.setImageResource(lesson.getLessonIcon());
     }
 }

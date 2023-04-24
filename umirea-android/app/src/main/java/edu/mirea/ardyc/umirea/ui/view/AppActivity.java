@@ -23,6 +23,8 @@ import edu.mirea.ardyc.umirea.ui.viewModel.AppViewModel;
 
 public class AppActivity extends AppCompatActivity {
 
+    public static String APP_PATH = "edu.mirea.ardyc.umirea";
+
     private ActivityAppBinding binding;
     private AppViewModel appViewModel;
     private NavController navController;

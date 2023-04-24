@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,19 +26,19 @@ import edu.mirea.ardyc.umirea.ui.view.dashboard.dialogs.TimetableDialog;
 public class LessonItems extends RecyclerView.Adapter<LessonItems.ViewHolder> {
 
     private List<Lesson> lessons;
-    private Consumer<DateTask> homeworkConsumer;
-    private Consumer<DateTask> taskConsumer;
+    private final Consumer<DateTask> homeworkConsumer;
+    private final Consumer<DateTask> taskConsumer;
     private TimetableDay day;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView lessonName;
-        private ImageView lessonType;
-        private TextView teacherName;
-        private TextView startTime;
-        private TextView finishTime;
-        private ImageView hwIcon;
-        private ImageView noteIcon;
-        private LinearLayout lessonElement;
+        private final TextView lessonName;
+        private final ImageView lessonType;
+        private final TextView teacherName;
+        private final TextView startTime;
+        private final TextView finishTime;
+        private final ImageView hwIcon;
+        private final ImageView noteIcon;
+        private final LinearLayout lessonElement;
 
         public ViewHolder(View view) {
             super(view);
@@ -91,6 +92,7 @@ public class LessonItems extends RecyclerView.Adapter<LessonItems.ViewHolder> {
         this.taskConsumer = taskConsumer;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
@@ -102,7 +104,7 @@ public class LessonItems extends RecyclerView.Adapter<LessonItems.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         Lesson lesson = lessons.get(position);
-        viewHolder.getLessonName().setText(lesson.getName() + " " + lesson.getRoom());
+        viewHolder.getLessonName().setText(String.format(viewHolder.lessonElement.getResources().getString(R.string.lesson_name), lesson.getName(), lesson.getRoom()));
         viewHolder.getStartTime().setText(LessonTime.getLessonStartTime(lesson.getLessonTime()));
         viewHolder.getFinishTime().setText(LessonTime.getLessonEndTime(lesson.getLessonTime()));
         viewHolder.getTeacherName().setText(lesson.getTeacherName());

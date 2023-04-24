@@ -16,10 +16,7 @@ import edu.mirea.ardyc.umirea.ui.viewModel.group.GroupChangeScheduleViewModel;
 import edu.mirea.ardyc.umirea.ui.viewModel.group.GroupSharedViewModel;
 
 public class ChangeScheduleFragment extends Fragment {
-
-
     private FragmentChangeScheduleBinding binding;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

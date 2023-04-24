@@ -11,7 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.databinding.FragmentAccountBinding;
+import edu.mirea.ardyc.umirea.ui.view.AppActivity;
 import edu.mirea.ardyc.umirea.ui.view.auth.AuthorizationActivity;
 import edu.mirea.ardyc.umirea.ui.view.group.GroupManagementActivity;
 import edu.mirea.ardyc.umirea.ui.viewModel.AppSharedViewModel;
@@ -26,13 +28,13 @@ public class AccountFragment extends Fragment {
         ChatViewModel accountViewModel =
                 new ViewModelProvider(this).get(ChatViewModel.class);
 
-        String id = requireActivity().getSharedPreferences("edu.mirea.ardyc.umirea", Context.MODE_PRIVATE).getString("user_id", "");
+        String id = requireActivity().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("user_id", "");
 
         AppSharedViewModel appSharedViewModel = new ViewModelProvider(requireActivity()).get(AppSharedViewModel.class);
         appSharedViewModel.getGroupMutableLiveData().observe(getViewLifecycleOwner(), (val) -> {
-            binding.myName.setText(val.getById(id).getFirstName() + " " + val.getById(id).getLastName());
-            binding.myGroup.setText("Группа - " + val.getName());
-            binding.myRole.setText("Роль - " + val.getById(id).getRole());
+            binding.myName.setText(String.format(getResources().getString(R.string.user_full_name), val.getById(id).getFirstName(), val.getById(id).getLastName()));
+            binding.myGroup.setText(String.format(getResources().getString(R.string.user_group), val.getName()));
+            binding.myRole.setText(String.format(getResources().getString(R.string.user_role), val.getById(id).getRole()));
         });
 
         binding = FragmentAccountBinding.inflate(inflater, container, false);

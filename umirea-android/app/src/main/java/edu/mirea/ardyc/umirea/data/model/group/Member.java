@@ -5,6 +5,7 @@ import java.util.UUID;
 public class Member {
 
     private String firstName;
+
     private String lastName;
 
     private String role;

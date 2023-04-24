@@ -1,5 +1,6 @@
 package edu.mirea.ardyc.umirea.ui.view.chat.adapters;
 
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,9 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
     public void onBindViewHolder(@NonNull ChatMessageAdapter.ViewHolder holder, int position) {
         if (chat != null) {
             if (group.getById(chat.getChatMessages().get(position).getSender()) != null) {
-                holder.getName().setText(group.getById(chat.getChatMessages().get(position).getSender()).getFirstName() + " " + group.getById(chat.getChatMessages().get(position).getSender()).getLastName());
+                Resources resources = holder.message.getResources();
+                String userFullName = String.format(resources.getString(R.string.user_full_name),group.getById(chat.getChatMessages().get(position).getSender()).getFirstName(), group.getById(chat.getChatMessages().get(position).getSender()).getLastName());
+                holder.getName().setText(userFullName);
                 holder.getMessage().setText(chat.getChatMessages().get(position).getMessage());
             }
         }

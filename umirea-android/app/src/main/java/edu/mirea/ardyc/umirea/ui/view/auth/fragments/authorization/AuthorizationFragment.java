@@ -42,7 +42,7 @@ public class AuthorizationFragment extends Fragment {
     }
 
     private void initButtons() {
-        requireActivity().getSharedPreferences("edu.mirea.ardyc.umirea", Context.MODE_PRIVATE).edit().putString("user_id", "ID2").apply();
+        requireActivity().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).edit().putString("user_id", "ID2").apply();
         binding.enterButton.setOnClickListener(view -> {
 //            authorizationViewModel.loginToServer(binding.loginText.getText().toString(), binding.passwordText.getText().toString());
             startActivity(new Intent(requireActivity(), AppActivity.class));

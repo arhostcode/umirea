@@ -29,10 +29,14 @@ public class CreateGroupFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentCreateGroupBinding.inflate(getLayoutInflater());
         viewModel = new ViewModelProvider(requireActivity()).get(CreateGroupViewModel.class);
+        initObservers();
+        return binding.getRoot();
+    }
+
+    private void initObservers() {
         viewModel.getGroupsList().observe(getViewLifecycleOwner(), (val) -> {
             if (val != null)
                 binding.schedulesList.setAdapter(new ArrayAdapter<>(getContext(), R.layout.group_item, val));
         });
-        return binding.getRoot();
     }
 }

@@ -26,10 +26,14 @@ public class ResetPasswordData extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = FragmentResetPasswordDataBinding.inflate(getLayoutInflater());
+        initButtons();
+        return binding.getRoot();
+    }
+
+    private void initButtons(){
         binding.enterButton.setOnClickListener((view) -> {
             startActivity(new Intent(getActivity(), AppActivity.class));
             getActivity().finish();
         });
-        return binding.getRoot();
     }
 }

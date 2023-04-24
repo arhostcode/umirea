@@ -23,6 +23,7 @@ public class ChatFragment extends Fragment {
 
     private FragmentChatBinding binding;
     private ChatViewModel chatViewModel;
+    private AppSharedViewModel appSharedViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -35,9 +36,14 @@ public class ChatFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setStackFromEnd(true);
 
-        AppSharedViewModel appSharedViewModel = new ViewModelProvider(requireActivity()).get(AppSharedViewModel.class);
+        appSharedViewModel = new ViewModelProvider(requireActivity()).get(AppSharedViewModel.class);
         binding.chat.setLayoutManager(layoutManager);
         binding.chat.setAdapter(new ChatMessageAdapter(new Chat(), new Group()));
+        initObservers();
+        return root;
+    }
+
+    private void initObservers() {
         appSharedViewModel.getChatMutableLiveData().observe(getViewLifecycleOwner(), (val) -> {
             ((ChatMessageAdapter) binding.chat.getAdapter()).update(val);
         });
@@ -45,8 +51,6 @@ public class ChatFragment extends Fragment {
         appSharedViewModel.getGroupMutableLiveData().observe(getViewLifecycleOwner(), (val) -> {
             ((ChatMessageAdapter) binding.chat.getAdapter()).update(val);
         });
-
-        return root;
     }
 
     @Override

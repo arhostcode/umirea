@@ -30,6 +30,8 @@ public class TimetableRemoteRepository extends TimetableRepository {
         super(context);
     }
 
+
+    // TODO: 24.04.2023  
     @Override
     public Timetable getData() {
 

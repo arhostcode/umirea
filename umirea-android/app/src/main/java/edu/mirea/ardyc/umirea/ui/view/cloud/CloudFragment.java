@@ -39,6 +39,7 @@ public class CloudFragment extends Fragment {
 
     private FragmentCloudBinding binding;
     private CloudViewModel cloudViewModel;
+    private AppSharedViewModel appSharedViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,47 +48,46 @@ public class CloudFragment extends Fragment {
 
         binding = FragmentCloudBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        AppSharedViewModel appSharedViewModel = new ViewModelProvider(requireActivity()).get(AppSharedViewModel.class);
+
+        appSharedViewModel = new ViewModelProvider(requireActivity()).get(AppSharedViewModel.class);
         cloudViewModel.setCloudMutableLiveData(appSharedViewModel.getCloudFolderMutableLiveData());
+
         binding.folders.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.folders.setAdapter(new CloudFolderAdapter(new ArrayList<>(), (val) -> {
             if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        1);
+                requestPermission();
             } else {
                 uploadFile.launch("*/*");
                 cloudViewModel.setCurrentFolder(val);
             }
         }));
+
+        initButtons();
+        initObservers();
+        return root;
+    }
+
+    private void initObservers() {
         appSharedViewModel.getCloudFolderMutableLiveData().observe(getViewLifecycleOwner(), (data) -> {
             ((CloudFolderAdapter) binding.folders.getAdapter()).update(data);
         });
+    }
+
+    private void initButtons() {
         binding.addFolder.setOnClickListener((view) -> {
             new CreateFolderDialog(requireActivity(), (val) -> {
                 cloudViewModel.createFolder(val);
             }).show();
         });
-
-        return root;
     }
 
-    ActivityResultLauncher<String> uploadFile = registerForActivityResult(new ActivityResultContracts.GetContent(),
+    private ActivityResultLauncher<String> uploadFile = registerForActivityResult(new ActivityResultContracts.GetContent(),
             uri -> {
                 cloudViewModel.uploadFile(uri.toString());
             });
 
-    private String readTextFromUri(Uri uri) throws IOException {
-        StringBuilder stringBuilder = new StringBuilder();
-        try (InputStream inputStream =
-                     requireActivity().getContentResolver().openInputStream(uri);
-             BufferedReader reader = new BufferedReader(
-                     new InputStreamReader(Objects.requireNonNull(inputStream)))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line);
-            }
-        }
-        return stringBuilder.toString();
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
     }
 
     @Override

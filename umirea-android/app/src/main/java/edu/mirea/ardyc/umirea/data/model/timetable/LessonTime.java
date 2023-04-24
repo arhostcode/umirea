@@ -22,7 +22,7 @@ public class LessonTime {
         int endMinute = Integer.parseInt(timeEnd[timeEnd.length - 1].split("\\.")[1]);
         if (startHour > hour || (startHour == hour && startMinute > minute))
             return -1;
-        if (endHour < hour || (endHour == hour && endHour < minute))
+        if (endHour < hour || (endHour == hour && endMinute < minute))
             return -1;
 
         for (int i = 0; i < timeStart.length; i++) {

@@ -44,7 +44,7 @@ public class HelloFragment extends Fragment {
     private void sleepNavigate() {
         new Thread(() -> {
             try {
-                Thread.sleep(3000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

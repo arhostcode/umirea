@@ -18,9 +18,12 @@ public class MemoryDashboardDataSource extends DashboardDataSource {
 
     @Override
     public Timetable loadData() {
+        return createMockData();
+    }
 
+    private Timetable createMockData() {
         HomeWork homeWork = new HomeWork("Выучить наизусть все правила английского языка");
-        Task task = new Task("Заебал он нахуй");
+        Task task = new Task("Я не хочу ничего учить");
 
         Lesson rus = new Lesson.Builder(new LabLesson())
                 .withName("Русский язык")

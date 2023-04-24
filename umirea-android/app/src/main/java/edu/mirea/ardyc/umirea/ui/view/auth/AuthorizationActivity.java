@@ -21,7 +21,6 @@ public class AuthorizationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityAuthorizationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
     }

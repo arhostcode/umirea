@@ -23,7 +23,7 @@ public class DashboardConverter {
         return new Gson().toJson(task);
     }
     @TypeConverter
-    public Task notekFromJson(String json) {
+    public Task noteFromJson(String json) {
         return new Gson().fromJson(json, Task.class);
     }
 

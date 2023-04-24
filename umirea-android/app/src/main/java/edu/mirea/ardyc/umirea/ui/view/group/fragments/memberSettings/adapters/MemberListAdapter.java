@@ -31,7 +31,8 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (group != null) {
-            holder.getName().setText(group.getMembers().get(position).getFirstName() + " " + group.getMembers().get(position).getLastName());
+            String userName = String.format(holder.name.getResources().getString(R.string.user_full_name), group.getMembers().get(position).getFirstName(), group.getMembers().get(position).getLastName());
+            holder.getName().setText(userName);
         }
     }
 

@@ -21,8 +21,8 @@ public class LessonDatesAdapter extends RecyclerView.Adapter<LessonDatesAdapter.
     private List<String> dates;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView date;
-        private ImageView delete;
+        private final TextView date;
+        private final ImageView delete;
 
         public ViewHolder(View view) {
             super(view);

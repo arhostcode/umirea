@@ -16,16 +16,7 @@ public class FullLessonItems extends LessonItems {
     public FullLessonItems(List<Lesson> lessons, Consumer<DateTask> homeworkConsumer, Consumer<DateTask> taskConsumer) {
         super(lessons, homeworkConsumer, taskConsumer);
         List<Lesson> l = getLessons();
-
-        if (l.size() != 0) {
-            int i = 0;
-            while (i < maxLessonsCount) {
-                if (i >= l.size() || l.get(i).getLessonTime() != i) {
-                    l.add(i, new Lesson.Builder().withName("Нет пары").withLessonTime(i).build());
-                }
-                i++;
-            }
-        }
+        updateLessons(l);
     }
 
     @Override
@@ -33,6 +24,11 @@ public class FullLessonItems extends LessonItems {
         super.update(day);
         List<Lesson> lessons = new ArrayList<>(day.getLessons());
         lessons.sort(Comparator.comparingInt(Lesson::getLessonTime));
+        updateLessons(lessons);
+        super.update(lessons);
+    }
+
+    private void updateLessons(List<Lesson> lessons) {
         if (lessons.size() != 0) {
             int lesson = 0;
             while (lesson < maxLessonsCount) {
@@ -42,6 +38,5 @@ public class FullLessonItems extends LessonItems {
                 lesson++;
             }
         }
-        super.update(lessons);
     }
 }

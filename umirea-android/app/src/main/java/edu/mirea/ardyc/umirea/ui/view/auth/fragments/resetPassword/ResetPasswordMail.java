@@ -28,13 +28,15 @@ public class ResetPasswordMail extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         viewModel = new ViewModelProvider(this).get(ResetPasswordMailViewModel.class);
         binding = FragmentResetPasswordMailBinding.inflate(getLayoutInflater());
+        initButtons();
+        return binding.getRoot();
+    }
 
+    private void initButtons() {
         binding.enterButton.setOnClickListener((view) -> {
             NavHostFragment.findNavController(this).navigate(R.id.navigation_reset_password_data);
         });
 
-
-        return binding.getRoot();
     }
 
 }

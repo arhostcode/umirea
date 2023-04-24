@@ -45,14 +45,12 @@ public class CloudFileAdapter extends RecyclerView.Adapter<CloudFileAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private View parent;
-        private TextView fileName;
-        private ImageView fileIcon;
+        private final TextView fileName;
+        private final ImageView fileIcon;
 
 
         public ViewHolder(View view) {
             super(view);
-            parent = view;
             fileName = view.findViewById(R.id.file_name);
             fileIcon = view.findViewById(R.id.file_icon);
         }
