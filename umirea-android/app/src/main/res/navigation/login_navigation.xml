@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation2"
+    app:startDestination="@id/navigation_hello">
+
+    <fragment
+        android:id="@+id/navigation_authorization"
+        android:name="edu.mirea.ardyc.umirea.ui.view.auth.fragments.authorization.AuthorizationFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_authorization" />
+
+    <fragment
+        android:id="@+id/navigation_chose_group"
+        android:name="edu.mirea.ardyc.umirea.ui.view.auth.fragments.group.ChoseGroupFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_chose_group" />
+
+    <fragment
+        android:id="@+id/navigation_create_group"
+        android:name="edu.mirea.ardyc.umirea.ui.view.auth.fragments.group.CreateGroupFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_create_group" />
+
+    <fragment
+        android:id="@+id/navigation_registration"
+        android:name="edu.mirea.ardyc.umirea.ui.view.auth.fragments.registration.RegistrationFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_registration" />
+
+    <fragment
+        android:id="@+id/navigation_reset_password_mail"
+        android:name="edu.mirea.ardyc.umirea.ui.view.auth.fragments.resetPassword.ResetPasswordMail"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_reset_password_mail" />
+
+    <fragment
+        android:id="@+id/navigation_reset_password_data"
+        android:name="edu.mirea.ardyc.umirea.ui.view.auth.fragments.resetPassword.ResetPasswordData"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_reset_password_data" />
+
+    <fragment
+        android:id="@+id/navigation_hello"
+        android:name="edu.mirea.ardyc.umirea.ui.view.auth.fragments.hello.HelloFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_hello">
+        <action
+            android:id="@+id/action_navigation_hello_to_navigation_authorization"
+            app:destination="@id/navigation_authorization" />
+    </fragment>
+
+</navigation>

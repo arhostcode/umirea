@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/midnight_express"
     android:layout_height="match_parent"
-    tools:context=".ui.view.info.InfoFragment" >
+    android:background="@color/midnight_express"
+    android:orientation="vertical"
+    tools:context=".ui.view.info.InfoFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,4 +34,11 @@
             android:layout_weight="1"
             android:src="@drawable/logo" />
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="20dp"
+        android:paddingBottom="50dp"
+        tools:listitem="@layout/message_element" />
 </LinearLayout>

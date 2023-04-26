@@ -1,32 +1,56 @@
 package edu.mirea.ardyc.umirea.data.model.timetable;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.Map;
 import java.util.stream.Collectors;
+
 
 public class Timetable {
 
-    private ArrayList<TimetableDay> timetableDays = new ArrayList<>();
+    private ArrayList<TimetableMonth> timetableMonths = new ArrayList<>();
 
-    public Timetable(ArrayList<TimetableDay> timetableDays) {
-        this.timetableDays = timetableDays;
+    public Timetable(ArrayList<TimetableMonth> timetableMonths) {
+        this.timetableMonths = timetableMonths;
     }
 
     private Timetable() {
     }
 
-    public ArrayList<TimetableDay> getTimetableDays() {
-        return timetableDays;
+    public List<TimetableDay> toDaysList() {
+        List<TimetableDay> dayList = new ArrayList<>();
+        for (TimetableMonth month : timetableMonths) {
+            for (TimetableDay day : month.getDays().values()) {
+                dayList.add(day);
+            }
+        }
+        return dayList;
+    }
+
+    public static Timetable fromDaysList(List<TimetableDay> days) {
+        Timetable timetable = new Timetable();
+        for (TimetableDay day : days) {
+            TimetableMonth month = timetable.getForMonthYear(day.getMonth(), day.getYear());
+            if (month != null) {
+                month.putDay(day);
+            } else {
+                month = new TimetableMonth(day.getMonth(), day.getYear());
+                month.putDay(day);
+                timetable.timetableMonths.add(month);
+            }
+        }
+        return timetable;
+    }
+
+    public ArrayList<TimetableMonth> getTimetableMonths() {
+        return timetableMonths;
     }
 
     public static class Builder {
         private Timetable timetable = new Timetable();
 
-        public Builder addDay(TimetableDay day) {
-            timetable.timetableDays.add(day);
+        public Builder addMonth(TimetableMonth month) {
+            timetable.timetableMonths.add(month);
             return this;
         }
 
@@ -35,8 +59,8 @@ public class Timetable {
         }
     }
 
-    public List<TimetableDay> getForMonthYear(int month, int year) {
-        return timetableDays.stream().filter(timetableDay -> timetableDay.getMonth() == month && timetableDay.getYear() == year).collect(Collectors.toList());
+    public TimetableMonth getForMonthYear(int monthId, int year) {
+        return timetableMonths.stream().filter((m) -> m.getId() == monthId && m.getYear() == year).findFirst().orElse(null);
     }
 
 }

@@ -1,8 +1,15 @@
 package edu.mirea.ardyc.umirea.data.model.timetable;
 
-import edu.mirea.ardyc.umirea.R;
+import androidx.annotation.NonNull;
 
-public class Lesson {
+import java.util.Objects;
+
+import edu.mirea.ardyc.umirea.R;
+import edu.mirea.ardyc.umirea.data.model.timetable.lessons.LabLesson;
+import edu.mirea.ardyc.umirea.data.model.timetable.lessons.LectionLesson;
+import edu.mirea.ardyc.umirea.data.model.timetable.lessons.SeminarLesson;
+
+public class Lesson implements Cloneable {
 
     private int lessonTime = 0;
 
@@ -24,6 +31,10 @@ public class Lesson {
         this.homeWork = homeWork;
         this.task = task;
         this.lessonTime = lessonTime;
+    }
+
+    public int getType() {
+        return 0;
     }
 
     public String getName() {
@@ -94,9 +105,20 @@ public class Lesson {
     public Lesson() {
     }
 
-    public static class Builder {
+    @NonNull
+    @Override
+    public Lesson clone() {
+        try {
+            Lesson clone = (Lesson) super.clone();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 
-        private final Lesson lesson;
+    public static class Builder implements Cloneable {
+
+        private Lesson lesson;
 
         public Builder() {
             lesson = new Lesson();
@@ -104,6 +126,22 @@ public class Lesson {
 
         public Builder(Lesson initialLesson) {
             this.lesson = initialLesson;
+        }
+
+        public Builder(int lessonType) {
+            switch (lessonType) {
+                case 1:
+                    lesson = new LabLesson();
+                    break;
+                case 2:
+                    lesson = new LectionLesson();
+                    break;
+                case 3:
+                    lesson = new SeminarLesson();
+                    break;
+                default:
+                    lesson = new Lesson();
+            }
         }
 
 
@@ -137,10 +175,40 @@ public class Lesson {
             return this;
         }
 
+        public Builder cloned() {
+            lesson = lesson.clone();
+            return this;
+        }
+
         public Lesson build() {
             return lesson;
         }
-
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Lesson lesson = (Lesson) o;
+        return lessonTime == lesson.lessonTime && Objects.equals(name, lesson.name) && Objects.equals(teacherName, lesson.teacherName) && Objects.equals(room, lesson.room) && Objects.equals(homeWork, lesson.homeWork) && Objects.equals(task, lesson.task);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lessonTime, name, teacherName, room, homeWork, task);
+    }
+
+    @Override
+    public String toString() {
+        return "Lesson{" +
+                "lessonTime=" + lessonTime +
+                ", lessonIconMini=" + lessonIconMini +
+                ", lessonIcon=" + lessonIcon +
+                ", name='" + name + '\'' +
+                ", teacherName='" + teacherName + '\'' +
+                ", room='" + room + '\'' +
+                ", homeWork=" + homeWork +
+                ", task=" + task +
+                '}';
+    }
 }
