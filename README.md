@@ -63,11 +63,11 @@ $ docker-compose up
 
 ## Screenshots
 
-![](assets/screenshot_home.jpg)
-![](assets/screenshot_account.jpg)
-![](assets/screenshot_cloud.jpg)
-![](assets/screenshot_dashboard.jpg)
 
+<img src="assets/screenshot_home.jpg" alt="UMIREA" width="150">
+<img src="assets/screenshot_account.jpg" alt="UMIREA" width="150">
+<img src="assets/screenshot_cloud.jpg" alt="UMIREA" width="150">
+<img src="assets/screenshot_dashboard.jpg" alt="UMIREA" width="150">
 
 ___
 
