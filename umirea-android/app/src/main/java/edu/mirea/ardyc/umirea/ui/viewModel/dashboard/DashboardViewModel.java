@@ -18,11 +18,11 @@ import edu.mirea.ardyc.umirea.ui.viewModel.UmireaApplication;
 public class DashboardViewModel extends AndroidViewModel {
 
     private MutableLiveData<Timetable> timetableMutableLiveData;
-    private DashboardProcessor dashboardProcessor;
+    private DashboardService dashboardService;
 
     public DashboardViewModel(@NonNull Application application) {
         super(application);
-        dashboardProcessor = ((UmireaApplication) application).getDashboardProcessor();
+        dashboardService = ((UmireaApplication) application).getDashboardProcessor();
     }
 
     public void addLesson(String name, String teacherName, String room, int lessonType, List<Integer> times, List<String> dates) {
@@ -37,7 +37,7 @@ public class DashboardViewModel extends AndroidViewModel {
                 lessons.add(new DateLesson(day, month, year, builder.cloned().withLessonTime(times.get(j)).build()));
             }
         }
-        dashboardProcessor.addLessons(lessons, timetableMutableLiveData);
+        dashboardService.addLessons(lessons, timetableMutableLiveData);
     }
 
     public void setTimetableMutableLiveData(MutableLiveData<Timetable> timetableMutableLiveData) {
@@ -45,10 +45,10 @@ public class DashboardViewModel extends AndroidViewModel {
     }
 
     public void updateHomework(DateTask dateTask){
-        dashboardProcessor.updateHomework(dateTask, timetableMutableLiveData);
+        dashboardService.updateHomework(dateTask, timetableMutableLiveData);
     }
 
     public void updateTask(DateTask dateTask){
-        dashboardProcessor.updateTask(dateTask, timetableMutableLiveData);
+        dashboardService.updateTask(dateTask, timetableMutableLiveData);
     }
 }

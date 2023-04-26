@@ -16,7 +16,7 @@ import edu.mirea.ardyc.umirea.data.repository.impl.chat.ChatRepository;
 import edu.mirea.ardyc.umirea.data.repository.impl.chat.LocalChatRepository;
 import edu.mirea.ardyc.umirea.data.repository.impl.cloud.CloudLocalRepository;
 import edu.mirea.ardyc.umirea.data.repository.impl.cloud.CloudRepository;
-import edu.mirea.ardyc.umirea.ui.viewModel.dashboard.DashboardProcessor;
+import edu.mirea.ardyc.umirea.ui.viewModel.dashboard.DashboardService;
 import edu.mirea.ardyc.umirea.ui.viewModel.group.GroupProcessor;
 
 public class AppViewModel extends AndroidViewModel {
@@ -31,16 +31,16 @@ public class AppViewModel extends AndroidViewModel {
     //Repositories
     private ChatRepository chatRepository;
 
-    private DashboardProcessor dashboardProcessor;
+    private DashboardService dashboardService;
     private GroupProcessor groupProcessor;
 
     private CloudRepository cloudRepository;
 
     public AppViewModel(@NonNull Application application) {
         super(application);
-        dashboardProcessor = ((UmireaApplication) application).getDashboardProcessor();
+        dashboardService = ((UmireaApplication) application).getDashboardProcessor();
         groupProcessor = ((UmireaApplication) application).getGroupProcessor();
-        timetableMutableLiveData = dashboardProcessor.initTimetableData();
+        timetableMutableLiveData = dashboardService.initTimetableData();
         groupMutableLiveData = groupProcessor.initGroup();
         initChatData();
         initCloud();

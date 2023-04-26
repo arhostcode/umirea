@@ -14,8 +14,4 @@ public class LectionLesson extends Lesson {
         return 2;
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 }

@@ -17,15 +17,15 @@ import edu.mirea.ardyc.umirea.data.repository.impl.timetable.TimetableLocalRepos
 import edu.mirea.ardyc.umirea.data.repository.impl.timetable.TimetableMemoryRepository;
 import edu.mirea.ardyc.umirea.data.repository.impl.timetable.TimetableRepository;
 
-public class DashboardProcessor {
+public class DashboardService {
 
-    public static DashboardProcessor create(Application application) {
-        return new DashboardProcessor(application);
+    public static DashboardService create(Application application) {
+        return new DashboardService(application);
     }
 
     private final Application application;
 
-    private DashboardProcessor(Application application) {
+    private DashboardService(Application application) {
         this.application = application;
     }
 
@@ -92,34 +92,13 @@ public class DashboardProcessor {
 
 
     //TODO TO STORING IN BACKEND
-    public void processAddonLessons(Timetable timetable) {
+    public void processAddonLessons(MutableLiveData<Timetable> mutableLiveData) {
         List<DateLesson> lessons = timetableRepository.getAddonLessons();
         String hash = application.getSharedPreferences("edu.mirea.ardyc.umirea", Context.MODE_PRIVATE).getString("timetable_hash_addon_lessons", "");
         String remoteHash = timetableRepository.getAddonLessonsHash();
         if (!hash.equals(remoteHash)) {
-            lessons.forEach(timetableLocalRepository::updateLesson);
-            lessons.forEach((lesson) -> {
-                TimetableMonth month = timetable.getForMonthYear(lesson.getMonth(), lesson.getYear());
-                if (month == null) {
-                    month = new TimetableMonth(lesson.getMonth(), lesson.getYear());
-                    month.putDay(new TimetableDay.Builder().withDate(lesson.getDay(), lesson.getMonth(), lesson.getYear()).addLesson(lesson.getLesson()).build());
-                    timetable.getTimetableMonths().add(month);
-                } else {
-                    TimetableDay day = month.getDay(lesson.getDay());
-                    if (day == null) {
-                        month.putDay(new TimetableDay.Builder().withDate(lesson.getDay(), lesson.getMonth(), lesson.getYear()).addLesson(lesson.getLesson()).build());
-                    } else {
-                        for (int i = 0; i < day.getLessons().size(); i++) {
-                            if (day.getLessons().get(i).getLessonTime() == lesson.getLesson().getLessonTime()) {
-                                day.getLessons().set(i, lesson.getLesson());
-                            }
-                        }
-                        month.putDay(day);
-                    }
-                }
-                application.getSharedPreferences("edu.mirea.ardyc.umirea", Context.MODE_PRIVATE).edit().putString("timetable_hash_addon_lessons", remoteHash).apply();
-            });
-
+            addLessons(lessons, mutableLiveData);
+            application.getSharedPreferences("edu.mirea.ardyc.umirea", Context.MODE_PRIVATE).edit().putString("timetable_hash_addon_lessons", remoteHash).apply();
         }
     }
 

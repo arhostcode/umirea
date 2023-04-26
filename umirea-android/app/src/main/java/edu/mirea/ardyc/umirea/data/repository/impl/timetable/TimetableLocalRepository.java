@@ -24,10 +24,7 @@ public class TimetableLocalRepository extends LocalRepository<Timetable> {
     @Override
     public MutableLiveData<Timetable> getData() {
         MutableLiveData<Timetable> timetableMutableLiveData = new MutableLiveData<>();
-        UmireaDatabase.databaseWriteExecutor.execute(() -> {
-            List<TimetableDay> dayList = UmireaDatabase.getDatabase(context).timetableDao().getTimetableDays().stream().map(LessonAndTimetableDay::toTimetableDay).collect(Collectors.toList());
-            timetableMutableLiveData.postValue(Timetable.fromDaysList(dayList));
-        });
+        getDataAndPerform(timetableMutableLiveData::postValue);
         return timetableMutableLiveData;
     }
 

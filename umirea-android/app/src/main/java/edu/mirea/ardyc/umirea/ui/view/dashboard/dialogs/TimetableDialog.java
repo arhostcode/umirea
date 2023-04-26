@@ -56,7 +56,7 @@ public class TimetableDialog extends AlertDialog {
 
         binding.changeNote.setOnClickListener((view) -> {
             String note = "";
-            if (lesson.getHomeWork() != null)
+            if (lesson.getTask() != null)
                 note = lesson.getTask().getDescription();
             new TaskModifierDialog(getContext(), note, (val) -> {
                 binding.noteText.setText(val);

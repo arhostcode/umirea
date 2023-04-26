@@ -160,7 +160,7 @@ public class DashboardCalendar extends LinearLayout {
                     if (day - firstDayOfCurrentMonth == currentDay && currentMonth == ym.getMonth().getValue()) {
                         currentMonthDay.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.current_day_shape, null));
                         currentCalendarDayView = currentMonthDay;
-                        if (onClickCalendarDay != null)
+                        if (onClickCalendarDay != null && (chosenCalendarDayView == null || chosenCalendarDayView.getDay() == null || chosenCalendarDayView.getDay().getMonth() != chosenMonth))
                             onClickCalendarDay.click(currentMonthDay);
                     }
 

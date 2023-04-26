@@ -62,7 +62,6 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Vi
 
     public void update(Group group) {
         this.group = group;
-        System.out.println(group.getMembers().size());
         notifyDataSetChanged();
     }
 

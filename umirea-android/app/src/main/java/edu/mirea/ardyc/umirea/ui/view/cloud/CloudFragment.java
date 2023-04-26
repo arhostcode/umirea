@@ -2,9 +2,11 @@ package edu.mirea.ardyc.umirea.ui.view.cloud;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,12 +56,8 @@ public class CloudFragment extends Fragment {
 
         binding.folders.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.folders.setAdapter(new CloudFolderAdapter(new ArrayList<>(), (val) -> {
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                requestPermission();
-            } else {
-                uploadFile.launch("*/*");
-                cloudViewModel.setCurrentFolder(val);
-            }
+            uploadFile.launch("*/*");
+            cloudViewModel.setCurrentFolder(val);
         }));
 
         initButtons();
@@ -83,11 +81,36 @@ public class CloudFragment extends Fragment {
 
     private ActivityResultLauncher<String> uploadFile = registerForActivityResult(new ActivityResultContracts.GetContent(),
             uri -> {
-                cloudViewModel.uploadFile(uri.toString());
+                if (uri != null)
+                    cloudViewModel.uploadFile(getFileName(uri));
+            });
+    private ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
             });
 
     private void requestPermission() {
-        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+//        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+    }
+
+    private String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            try (Cursor cursor = requireActivity().getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    int length = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    result = cursor.getString(Math.max(length, 0));
+                }
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
     }
 
     @Override

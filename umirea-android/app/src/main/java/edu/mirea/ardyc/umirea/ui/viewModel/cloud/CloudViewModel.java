@@ -31,15 +31,8 @@ public class CloudViewModel extends AndroidViewModel {
         List<CloudFolder> folders = cloudMutableLiveData.getValue();
         for (CloudFolder folder : folders) {
             if (folder.getUuid().equals(currentFolder)) {
-                try {
-                    String[] contentPath = URLDecoder.decode(uri, "utf-8").split(":");
-                    String[] path = contentPath[contentPath.length - 1].split("/");
-                    String name = path[path.length - 1];
-                    folder.getFiles().add(new CloudFile(UUID.randomUUID().toString(), name, "", ""));
-                    cloudMutableLiveData.postValue(folders);
-                } catch (Exception e) {
-                    return;
-                }
+                folder.getFiles().add(new CloudFile(UUID.randomUUID().toString(), uri, "", ""));
+                cloudMutableLiveData.postValue(folders);
                 break;
             }
         }
