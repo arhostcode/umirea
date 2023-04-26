@@ -31,28 +31,49 @@ Umirea - Learning activities manager
 
 ## How To Use
 
-* To use the app, go to the release section and download the latest version from there.
+* To use the app, go to the [release](https://github.com/ArhostCode/umirea/releases/) section and download the latest
+  version from there.
 * Install the apk file.
 
 ## How To Build
 
-To clone and build this application, you'll need [Git](https://git-scm.com) and [Intellij Idea](https://www.jetbrains.com/idea/) or [Android Studio](https://developer.android.com/studio)  installed on your computer.
+To clone and build this application, you'll need [Git](https://git-scm.com)
+and [Intellij Idea](https://www.jetbrains.com/idea/) or [Android Studio](https://developer.android.com/studio)
+installed on your computer.
 From your command line
 
 ```bash
 # Clone this repository
 $ git clone https://github.com/ArhostCode/umirea
 ```
+
 * Open umirea-android project in Android Studio to build android app.
 * Open umirea-backend project in Intellij Idea to build backend.
-<br> Use docker-compose to up backend
+  <br> Use docker-compose to up backend
+
 ```bash
 # Clone this repository
 $ cd umirea-backend
 $ docker-compose up
 ```
+
 > **Note**
->  If you want to up backend with docker-compose, you need [Docker](https://www.docker.com/)
+> If you want to up backend with docker-compose, you need [Docker](https://www.docker.com/)
+
+## Tech Stack
+
+**Client:** Android, Java, Room
+
+**Server:** Quarkus, Spring MVC, MariaDB
+
+## Screenshots
+
+<p float="left">
+<img src="assets/screenshot_home.jpg" alt="UMIREA" width="150">
+<img src="assets/screenshot_account.jpg" alt="UMIREA" width="150">
+<img src="assets/screenshot_cloud.jpg" alt="UMIREA" width="150">
+<img src="assets/screenshot_dashboard.jpg" alt="UMIREA" width="150">
+</p>
 
 ___
 
