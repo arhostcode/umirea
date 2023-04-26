@@ -74,8 +74,8 @@ $ docker-compose up
 <img src="assets/screenshot_cloud.jpg" alt="UMIREA" width="150">
 <img src="assets/screenshot_dashboard.jpg" alt="UMIREA" width="150">
 </p>
-___
 
+___
 
 > VK [ardycode](https://vk.com/ardycode) &nbsp;&middot;&nbsp;
 > GitHub [@arhostcode](https://github.com/ArhostCode)
