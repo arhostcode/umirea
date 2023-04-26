@@ -31,7 +31,7 @@ Umirea - Learning activities manager
 
 ## How To Use
 
-* To use the app, go to the release section and download the latest version from there.
+* To use the app, go to the [release](https://github.com/ArhostCode/umirea/releases/) section and download the latest version from there.
 * Install the apk file.
 
 ## How To Build
@@ -45,7 +45,7 @@ $ git clone https://github.com/ArhostCode/umirea
 ```
 * Open umirea-android project in Android Studio to build android app.
 * Open umirea-backend project in Intellij Idea to build backend.
-<br> Use docker-compose to up backend
+  <br> Use docker-compose to up backend
 ```bash
 # Clone this repository
 $ cd umirea-backend
@@ -53,6 +53,21 @@ $ docker-compose up
 ```
 > **Note**
 >  If you want to up backend with docker-compose, you need [Docker](https://www.docker.com/)
+
+
+## Tech Stack
+
+**Client:** Android, Java, Room
+
+**Server:** Quarkus, Spring MVC, MariaDB
+
+## Screenshots
+
+![](assets/screenshot_home.jpg)
+![](assets/screenshot_account.jpg)
+![](assets/screenshot_cloud.jpg)
+![](assets/screenshot_dashboard.jpg)
+
 
 ___
 
