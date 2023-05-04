@@ -47,7 +47,10 @@ public class AccountFragment extends Fragment {
 
         binding = FragmentAccountBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        binding.groupSettings.setOnClickListener((view) -> startActivity(new Intent(requireContext(), GroupManagementActivity.class)));
+        binding.groupSettings.setOnClickListener((view) -> {
+            startActivity(new Intent(requireContext(), GroupManagementActivity.class));
+            requireActivity().overridePendingTransition(0, 0);
+        });
         binding.exitAccount.setOnClickListener((view) -> {
             accountViewModel.removeUserData();
             startActivity(new Intent(requireActivity(), AuthorizationActivity.class));

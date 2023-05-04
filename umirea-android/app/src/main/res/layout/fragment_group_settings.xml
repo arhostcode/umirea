@@ -14,15 +14,15 @@
         android:elevation="4dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="10dp"
-        android:paddingEnd="15dp">
+        android:paddingHorizontal="15dp"
+        android:paddingTop="10dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:paddingStart="30dp"
-            android:text="Настройки группы"
+            android:paddingHorizontal="15dp"
+            android:text="@string/group_settings"
             android:textAlignment="textStart"
             android:textColor="@color/white"
             android:textSize="20sp"
@@ -50,7 +50,7 @@
             <TextView
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Название группы "
+                android:text="@string/group_name"
                 android:textColor="@color/white" />
 
             <TextView
@@ -72,7 +72,7 @@
             <TextView
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Токен группы "
+                android:text="@string/group_token"
                 android:textColor="@color/white" />
 
             <TextView
@@ -94,7 +94,7 @@
             <TextView
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Рассписание группы "
+                android:text="@string/group_schedule"
                 android:textColor="@color/white" />
 
             <TextView
@@ -116,7 +116,7 @@
             <TextView
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Количество человек в группе"
+                android:text="@string/group_member_count"
                 android:textColor="@color/white" />
 
             <TextView
@@ -131,21 +131,21 @@
 
 
         <Button
-            style="@style/ColoredButton"
             android:id="@+id/schedule_settings"
+            style="@style/ColoredButton"
             android:layout_width="200dp"
             android:layout_height="25dp"
             android:layout_marginTop="15dp"
-            android:text="Изменить рассписание"
+            android:text="@string/change_schedule"
             android:textSize="12sp" />
 
         <Button
-            style="@style/ColoredButton"
             android:id="@+id/member_settings"
+            style="@style/ColoredButton"
             android:layout_width="200dp"
             android:layout_height="25dp"
             android:layout_marginTop="10dp"
-            android:text="Управление участниками"
+            android:text="@string/manage_members"
             android:textSize="12sp" />
 
 

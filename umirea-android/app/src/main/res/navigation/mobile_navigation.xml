@@ -37,6 +37,21 @@
             app:destination="@id/navigation_home"
             app:popUpTo="@id/navigation_home"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_navigation_chat"
+            app:destination="@id/navigation_chat"
+            app:popUpTo="@id/navigation_chat"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_navigation_account"
+            app:destination="@id/navigation_account"
+            app:popUpTo="@id/navigation_account"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_navigation_cloud"
+            app:destination="@id/navigation_cloud"
+            app:popUpTo="@id/navigation_cloud"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -49,6 +64,11 @@
             app:destination="@id/navigation_info"
             app:popUpTo="@id/navigation_chat"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_navigation_chat_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard"
+            app:popUpTo="@id/navigation_dashboard"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -72,6 +92,21 @@
             app:destination="@id/navigation_home"
             app:exitAnim="@android:anim/fade_out"
             app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigation_cloud_to_navigation_account"
+            app:destination="@id/navigation_account"
+            app:popUpTo="@id/navigation_account"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigation_cloud_to_navigation_chat"
+            app:destination="@id/navigation_chat"
+            app:popUpTo="@id/navigation_chat"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigation_cloud_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard"
+            app:popUpTo="@id/navigation_dashboard"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment

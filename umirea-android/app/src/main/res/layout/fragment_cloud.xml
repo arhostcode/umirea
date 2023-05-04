@@ -16,17 +16,17 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
+        android:paddingHorizontal="15dp"
         android:paddingTop="10dp"
-        android:paddingEnd="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:paddingStart="30dp"
+            android:paddingHorizontal="15dp"
             android:text="@string/title_cloud"
             android:textAlignment="textStart"
             android:textColor="@color/white"
@@ -55,10 +55,10 @@
         android:layout_height="50dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:src="@drawable/add_lesson"
         android:background="@color/coral"
-        app:backgroundTint="@color/coral"
         android:backgroundTint="@color/coral"
+        android:src="@drawable/add_lesson"
+        app:backgroundTint="@color/coral"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

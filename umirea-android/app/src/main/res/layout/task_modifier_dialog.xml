@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="Изменить задание"
+        android:text="@string/change_task"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -35,7 +35,7 @@
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_marginTop="15dp"
-        android:text="Применить" />
+        android:text="@string/apply" />
 
     <androidx.legacy.widget.Space
         android:layout_width="match_parent"

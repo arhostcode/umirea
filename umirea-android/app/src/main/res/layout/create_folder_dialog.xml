@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Создать папку"
+        android:text="@string/create_folder"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20sp"
@@ -24,7 +24,7 @@
         android:layout_marginTop="15dp"
         android:background="@drawable/chat_field"
         android:ems="10"
-        android:hint="Название папки"
+        android:hint="@string/folder_name"
         android:inputType="none|text"
         android:paddingHorizontal="7dp" />
 
@@ -36,7 +36,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
         android:paddingHorizontal="40dp"
-        android:text="Создать" />
+        android:text="@string/create" />
 
     <androidx.legacy.widget.Space
         android:layout_width="match_parent"

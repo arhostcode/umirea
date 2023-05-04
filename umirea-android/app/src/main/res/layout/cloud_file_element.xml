@@ -14,8 +14,7 @@
         android:id="@+id/file_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="10dp"
-        android:text="@string/lastName"
+        android:paddingHorizontal="10dp"
         android:textColor="@color/white"
         android:textSize="12sp" />
 

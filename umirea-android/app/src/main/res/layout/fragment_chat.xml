@@ -13,21 +13,21 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:elevation="4dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:elevation="4dp"
+        android:paddingHorizontal="15dp"
         android:paddingTop="10dp"
-        android:paddingEnd="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:paddingStart="30dp"
-            android:text="Чат"
+            android:paddingHorizontal="15dp"
+            android:text="@string/title_chat"
             android:textAlignment="textStart"
             android:textColor="@color/white"
             android:textSize="20sp"
@@ -85,10 +85,10 @@
             android:ems="12"
             android:inputType="textCapSentences|textMultiLine"
             android:maxLines="2"
-            android:textColor="@color/black"
             android:paddingHorizontal="10dp"
             android:paddingTop="5dp"
-            android:paddingBottom="5dp"/>
+            android:paddingBottom="5dp"
+            android:textColor="@color/black" />
 
         <android.widget.Space
             android:layout_width="15dp"
@@ -97,8 +97,7 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/arrow_right"
-            android:contentDescription="Send Message" />
+            android:src="@drawable/arrow_right" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -46,6 +46,24 @@
     <string name="user_login">Логин - %1$s</string>
     <string name="user_role_member">Студент</string>
     <string name="user_role_owner">Староста</string>
+    <string name="upload_more">Загрузить ещё</string>
+    <string name="create_folder">Создать папку</string>
+    <string name="folder_name">Название папки</string>
+    <string name="create">Создать</string>
+    <string name="change_image">Изменить изображение</string>
+    <string name="logout">Выйти из аккаунта</string>
+    <string name="apply_schedule">Применить рассписание</string>
+    <string name="join">Присоединиться</string>
+    <string name="group_name">Название группы</string>
+    <string name="group_token">Токен группы</string>
+    <string name="create_group">Создать группу</string>
+    <string name="member_settings">Настройки участников</string>
+    <string name="group_schedule">Рассписание группы</string>
+    <string name="group_member_count">Количество человек в группе</string>
+    <string name="change_schedule">Изменить рассписание</string>
+    <string name="manage_members">Управление участниками</string>
+    <string name="apply">Применить</string>
+    <string name="change_task">Изменить задание</string>
 
 
 </resources>

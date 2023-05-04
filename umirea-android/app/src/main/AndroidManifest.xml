@@ -46,10 +46,6 @@
         </activity>
         <activity
             android:screenOrientation="portrait"
-            android:name=".ui.view.MainActivity"
-            android:exported="true" />
-        <activity
-            android:screenOrientation="portrait"
             android:name=".ui.view.group.GroupManagementActivity"
             android:exported="true" />
         <provider

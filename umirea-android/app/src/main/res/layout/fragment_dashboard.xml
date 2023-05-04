@@ -15,16 +15,16 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingTop="10dp"
-        android:paddingEnd="15dp"
+        android:paddingHorizontal="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:paddingStart="30dp"
+            android:paddingHorizontal="15dp"
             android:text="@string/title_dashboard"
             android:textAlignment="textStart"
             android:textColor="@color/white"
