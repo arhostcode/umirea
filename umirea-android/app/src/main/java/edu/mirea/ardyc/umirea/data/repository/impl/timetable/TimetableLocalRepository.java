@@ -1,6 +1,8 @@
 package edu.mirea.ardyc.umirea.data.repository.impl.timetable;
 
 import android.content.Context;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -21,7 +23,6 @@ public class TimetableLocalRepository extends LocalRepository<Timetable> {
         super(context);
     }
 
-    @Override
     public MutableLiveData<Timetable> getData() {
         MutableLiveData<Timetable> timetableMutableLiveData = new MutableLiveData<>();
         getDataAndPerform(timetableMutableLiveData::postValue);
@@ -62,4 +63,8 @@ public class TimetableLocalRepository extends LocalRepository<Timetable> {
         });
     }
 
+    public void removeDashboard() {
+        UmireaDatabase.getDatabase(context).timetableDao().clearAll();
+
+    }
 }

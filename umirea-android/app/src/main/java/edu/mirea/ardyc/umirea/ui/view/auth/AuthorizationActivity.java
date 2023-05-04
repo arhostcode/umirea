@@ -10,10 +10,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.databinding.ActivityAuthorizationBinding;
 
-
+@AndroidEntryPoint
 public class AuthorizationActivity extends AppCompatActivity {
 
     private ActivityAuthorizationBinding binding;

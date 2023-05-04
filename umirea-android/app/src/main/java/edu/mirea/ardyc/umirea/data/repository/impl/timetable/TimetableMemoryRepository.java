@@ -15,7 +15,6 @@ public class TimetableMemoryRepository extends TimetableRepository {
         super(context);
     }
 
-    @Override
     public Timetable getData() {
         return new MemoryDashboardDataSource(context).loadData();
     }
@@ -36,7 +35,7 @@ public class TimetableMemoryRepository extends TimetableRepository {
 
     @Override
     public String getBaseScheduleHash() {
-        return "asdasdfllflflfmnggckd";
+        return "asdasdfllasdfasdfflflfmsdfsdfggckd";
     }
 
     @Override

@@ -17,6 +17,7 @@ import edu.mirea.ardyc.umirea.ui.view.AppActivity;
 import edu.mirea.ardyc.umirea.ui.view.auth.AuthorizationActivity;
 import edu.mirea.ardyc.umirea.ui.view.group.GroupManagementActivity;
 import edu.mirea.ardyc.umirea.ui.viewModel.AppSharedViewModel;
+import edu.mirea.ardyc.umirea.ui.viewModel.account.AccountViewModel;
 import edu.mirea.ardyc.umirea.ui.viewModel.chat.ChatViewModel;
 
 public class AccountFragment extends Fragment {
@@ -25,22 +26,30 @@ public class AccountFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ChatViewModel accountViewModel =
-                new ViewModelProvider(this).get(ChatViewModel.class);
+        AccountViewModel accountViewModel =
+                new ViewModelProvider(requireActivity()).get(AccountViewModel.class);
 
-        String id = requireActivity().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("user_id", "");
+        String id = requireActivity().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("user_uuid", "");
 
         AppSharedViewModel appSharedViewModel = new ViewModelProvider(requireActivity()).get(AppSharedViewModel.class);
         appSharedViewModel.getGroupMutableLiveData().observe(getViewLifecycleOwner(), (val) -> {
-            binding.myName.setText(String.format(getResources().getString(R.string.user_full_name), val.getById(id).getFirstName(), val.getById(id).getLastName()));
+            System.out.println(val);
             binding.myGroup.setText(String.format(getResources().getString(R.string.user_group), val.getName()));
-            binding.myRole.setText(String.format(getResources().getString(R.string.user_role), val.getById(id).getRole()));
+            binding.myRole.setText(String.format(getResources().getString(R.string.user_role), getRussianRole(val.getById(id).getRole())));
+            if (!val.getById(id).getRole().equals("owner"))
+                binding.groupSettings.setVisibility(View.GONE);
+        });
+
+        appSharedViewModel.getUserMutableLiveData().observe(getViewLifecycleOwner(), (val) -> {
+            binding.myName.setText(String.format(getResources().getString(R.string.user_full_name), val.getFirstName(), val.getLastName()));
+            binding.myMail.setText(String.format(getResources().getString(R.string.user_login), val.getLogin()));
         });
 
         binding = FragmentAccountBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         binding.groupSettings.setOnClickListener((view) -> startActivity(new Intent(requireContext(), GroupManagementActivity.class)));
         binding.exitAccount.setOnClickListener((view) -> {
+            accountViewModel.removeUserData();
             startActivity(new Intent(requireActivity(), AuthorizationActivity.class));
             requireActivity().finish();
         });
@@ -51,5 +60,16 @@ public class AccountFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private String getRussianRole(String role) {
+        switch (role) {
+            case "owner":
+                return getResources().getString(R.string.user_role_owner);
+            case "member":
+                return getResources().getString(R.string.user_role_member);
+            default:
+                return getResources().getString(R.string.user_role_member);
+        }
     }
 }

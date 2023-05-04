@@ -18,8 +18,8 @@ public class AuthController {
     }
 
     @GetMapping(path = "/register")
-    public Response register(@RequestParam String login, @RequestParam String password, @RequestParam String educationGroup, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String verificationCode) {
-        return authService.register(login, password, educationGroup, firstName, lastName, "Студент", verificationCode);
+    public Response register(@RequestParam String login, @RequestParam String password,  @RequestParam String firstName, @RequestParam String lastName, @RequestParam String verificationCode) {
+        return authService.register(login, password, firstName, lastName, verificationCode);
     }
 
     @GetMapping(path = "/verify")

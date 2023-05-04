@@ -42,10 +42,11 @@ public class DashboardFragment extends Fragment {
         View root = binding.getRoot();
         binding.calendar.init(getContext());
         AppSharedViewModel appSharedViewModel = new ViewModelProvider(requireActivity()).get(AppSharedViewModel.class);
+        System.out.println(appSharedViewModel.getTimetableMutableLiveData());
         appSharedViewModel.getTimetableMutableLiveData().observe(getViewLifecycleOwner(), (val) -> {
             binding.calendar.reInit(val);
+            dashboardViewModel.updateMutableLiveData(val);
         });
-        dashboardViewModel.setTimetableMutableLiveData(appSharedViewModel.getTimetableMutableLiveData());
 
         binding.lessons.setAdapter(new FullLessonItems(new ArrayList<>(), this::updateHomework, this::updateTask));
         binding.calendar.setOnClickCalendarDay((day) -> {

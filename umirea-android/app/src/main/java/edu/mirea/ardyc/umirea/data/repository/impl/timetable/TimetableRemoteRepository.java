@@ -15,7 +15,7 @@ import edu.mirea.ardyc.umirea.data.model.timetable.Timetable;
 import edu.mirea.ardyc.umirea.data.model.timetable.TimetableDay;
 import edu.mirea.ardyc.umirea.data.model.timetable.TimetableMonth;
 import edu.mirea.ardyc.umirea.data.model.timetable.date.DateLesson;
-import edu.mirea.ardyc.umirea.data.net.auth.DashboardService;
+import edu.mirea.ardyc.umirea.data.net.dashboard.DashboardRemoteService;
 import edu.mirea.ardyc.umirea.data.repository.impl.timetable.api.TLesson;
 import edu.mirea.ardyc.umirea.data.repository.impl.timetable.api.TParser;
 import edu.mirea.ardyc.umirea.data.repository.impl.timetable.api.TWeek;
@@ -24,15 +24,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TimetableRemoteRepository extends TimetableRepository {
 
-    private DashboardService service;
+    private DashboardRemoteService service;
 
     public TimetableRemoteRepository(Context context) {
         super(context);
     }
 
 
-    // TODO: 24.04.2023  
-    @Override
+    // TODO: 24.04.2023
     public Timetable getData() {
 
         String server = "http://10.0.2.2:8085";
@@ -40,7 +39,7 @@ public class TimetableRemoteRepository extends TimetableRepository {
                 .baseUrl(server)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        service = retrofit.create(DashboardService.class);
+        service = retrofit.create(DashboardRemoteService.class);
 
         Timetable.Builder timetableBuilder = new Timetable.Builder();
 

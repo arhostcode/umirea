@@ -1,28 +1,20 @@
 package edu.mirea.ardyc.umirea.ui.viewModel.auth;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import javax.inject.Inject;
 
+import dagger.hilt.android.lifecycle.HiltViewModel;
 import edu.mirea.ardyc.umirea.data.model.auth.User;
-import edu.mirea.ardyc.umirea.data.net.auth.AuthService;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import edu.mirea.ardyc.umirea.data.model.net.DataResponse;
 
-//TODO
-public class RegistrationViewModel extends ViewModel {
+@HiltViewModel
+public class RegistrationViewModel extends AndroidViewModel {
 
-
-    private String authServer;
-    private AuthService authService;
+    private UserService userService;
     private MutableLiveData<User> userMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<String> errorText = new MutableLiveData<>();
 
@@ -34,55 +26,48 @@ public class RegistrationViewModel extends ViewModel {
         return errorText;
     }
 
-    public void init() {
-        authServer = "http://192.168.118.234:8081";
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(authServer)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        authService = retrofit.create(AuthService.class);
+    private boolean isRegistering = false;
+
+    @Inject
+    public RegistrationViewModel(Application application, UserService userService) {
+        super(application);
+        this.userService = userService;
     }
 
-
     public void register(String login, String password, String firstName, String lastName, String verificationCode) {
-        Call<JsonObject> loginCall = authService.register(login, password, firstName, lastName, verificationCode);
-        loginCall.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                JsonElement code = response.body().get("code");
-                JsonElement message = response.body().get("message");
-                if (code.getAsInt() == 0) {
-                    User user = new Gson().fromJson(message.getAsJsonObject(), User.class);
-                    userMutableLiveData.postValue(user);
-                } else {
-                    errorText.postValue(message.getAsString());
-                }
+        if (isRegistering) {
+            return;
+        }
+        isRegistering = true;
+        new Thread(() -> {
+            DataResponse<User> response = userService.register(login, password, firstName, lastName, verificationCode);
+            if (response.getData() != null) {
+                userMutableLiveData.postValue(response.getData());
+                userService.saveUser(response.getData());
+            } else {
+                errorText.postValue(response.getMessage());
             }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                System.out.println(t.getMessage());
-            }
-        });
+            isRegistering = false;
+        }).start();
     }
 
     public void verify(String login, String password, String firstName, String lastName) {
-        Call<JsonObject> loginCall = authService.verify(login, password, firstName, lastName);
-        loginCall.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                JsonElement code = response.body().get("code");
-                JsonElement message = response.body().get("message");
-                if (code.getAsInt() != 0) {
-                    errorText.postValue(message.getAsString());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                System.out.println(t.getMessage());
-            }
-        });
+//        Call<JsonObject> loginCall = authService.verify(login, password, firstName, lastName);
+//        loginCall.enqueue(new Callback<JsonObject>() {
+//            @Override
+//            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+//                JsonElement code = response.body().get("code");
+//                JsonElement message = response.body().get("message");
+//                if (code.getAsInt() != 0) {
+//                    errorText.postValue(message.getAsString());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+//                System.out.println(t.getMessage());
+//            }
+//        });
     }
 
 

@@ -9,20 +9,25 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
 import edu.mirea.ardyc.umirea.data.model.timetable.Lesson;
 import edu.mirea.ardyc.umirea.data.model.timetable.Timetable;
 import edu.mirea.ardyc.umirea.data.model.timetable.date.DateLesson;
 import edu.mirea.ardyc.umirea.data.model.timetable.date.DateTask;
 import edu.mirea.ardyc.umirea.ui.viewModel.UmireaApplication;
 
+@HiltViewModel
 public class DashboardViewModel extends AndroidViewModel {
 
-    private MutableLiveData<Timetable> timetableMutableLiveData;
+    private MutableLiveData<Timetable> timetableMutableLiveData = new MutableLiveData<>();
     private DashboardService dashboardService;
 
-    public DashboardViewModel(@NonNull Application application) {
+    @Inject
+    public DashboardViewModel(@NonNull Application application, DashboardService dashboardService) {
         super(application);
-        dashboardService = ((UmireaApplication) application).getDashboardProcessor();
+        this.dashboardService = dashboardService;
     }
 
     public void addLesson(String name, String teacherName, String room, int lessonType, List<Integer> times, List<String> dates) {
@@ -44,11 +49,15 @@ public class DashboardViewModel extends AndroidViewModel {
         this.timetableMutableLiveData = timetableMutableLiveData;
     }
 
-    public void updateHomework(DateTask dateTask){
+    public void updateMutableLiveData(Timetable timetable) {
+        timetableMutableLiveData.postValue(timetable);
+    }
+
+    public void updateHomework(DateTask dateTask) {
         dashboardService.updateHomework(dateTask, timetableMutableLiveData);
     }
 
-    public void updateTask(DateTask dateTask){
+    public void updateTask(DateTask dateTask) {
         dashboardService.updateTask(dateTask, timetableMutableLiveData);
     }
 }

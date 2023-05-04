@@ -4,13 +4,11 @@ public class CloudFile {
 
     private String uuid;
     private String name;
-    private String remotePath;
-    private String filePath;
+    private String folderId;
 
-    public CloudFile(String uuid, String name, String remotePath, String filePath) {
+    public CloudFile(String uuid, String name, String folderId) {
         this.name = name;
-        this.remotePath = remotePath;
-        this.filePath = filePath;
+        this.folderId = folderId;
         this.uuid = uuid;
     }
 
@@ -18,13 +16,10 @@ public class CloudFile {
         return name;
     }
 
-    public String getRemotePath() {
-        return remotePath;
+    public String getFolderId() {
+        return folderId;
     }
 
-    public String getFilePath() {
-        return filePath;
-    }
 
     public String getUuid() {
         return uuid;

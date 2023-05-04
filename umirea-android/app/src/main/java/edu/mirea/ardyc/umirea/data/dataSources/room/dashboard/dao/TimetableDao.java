@@ -125,5 +125,9 @@ public abstract class TimetableDao {
     @Query("DELETE FROM timetable_lessons")
     public abstract void deleteAllLessons();
 
-
+    @Transaction
+    public void clearAll() {
+        deleteAllDays();
+        deleteAllLessons();
+    }
 }

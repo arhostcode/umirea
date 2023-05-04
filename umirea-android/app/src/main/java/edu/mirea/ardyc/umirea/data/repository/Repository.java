@@ -2,7 +2,7 @@ package edu.mirea.ardyc.umirea.data.repository;
 
 import android.content.Context;
 
-public abstract class Repository<T> {
+public abstract class Repository {
 
     protected Context context;
 
@@ -10,6 +10,5 @@ public abstract class Repository<T> {
         this.context = context;
     }
 
-    public abstract T getData();
 
 }

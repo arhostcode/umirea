@@ -36,9 +36,11 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/info_messages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="20dp"
         android:paddingBottom="50dp"
-        tools:listitem="@layout/message_element" />
+        app:stackFromEnd="true"
+        tools:listitem="@layout/info_element" />
 </LinearLayout>

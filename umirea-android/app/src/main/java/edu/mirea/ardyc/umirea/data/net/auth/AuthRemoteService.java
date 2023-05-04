@@ -6,7 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface AuthService {
+public interface AuthRemoteService {
     @GET("auth/login")
     Call<JsonObject> login(@Query("login") String login, @Query("password") String password);
 
@@ -15,6 +15,10 @@ public interface AuthService {
 
     @GET("auth/verify")
     Call<JsonObject> verify(@Query("login") String login, @Query("password") String password, @Query("firstName") String firstName, @Query("lastName") String lastName);
+
+
+    @GET("user/getInfo")
+    Call<JsonObject> getInfo(@Query("token") String token);
 
 
 }

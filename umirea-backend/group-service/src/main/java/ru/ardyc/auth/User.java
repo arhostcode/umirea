@@ -14,21 +14,16 @@ public class User {
     private String educationGroup;
     private String token;
 
-    private String imageId;
-
     private String uniqueID;
 
-    private String role;
 
-    public User(String firstName, String lastName, String login, String educationGroup, String token, String imageId, String uniqueID, String role) {
+    public User(String firstName, String lastName, String login, String educationGroup, String token, String imageId, String uniqueID) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
         this.educationGroup = educationGroup;
         this.token = token;
-        this.imageId = imageId;
         this.uniqueID = uniqueID;
-        this.role = role;
     }
 
     public String getUniqueID() {
@@ -79,21 +74,6 @@ public class User {
         this.token = token;
     }
 
-    public String getImageId() {
-        return imageId;
-    }
-
-    public void setImageId(String imageId) {
-        this.imageId = imageId;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 
     @Override
     public String toString() {
@@ -103,8 +83,6 @@ public class User {
                 ", login='" + login + '\'' +
                 ", educationGroup='" + educationGroup + '\'' +
                 ", token='" + token + '\'' +
-                ", imageId='" + imageId + '\'' +
-                ", role='" + role + '\'' +
                 '}';
     }
 

@@ -4,17 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CloudFolder {
-    private String folderName;
+    private String name;
     private String uuid;
-    private final List<CloudFile> files = new ArrayList<>();
+    private String groupUuid;
+    private List<CloudFile> files = new ArrayList<>();
 
-    public CloudFolder(String uuid, String folderName) {
-        this.folderName = folderName;
+    public CloudFolder(String uuid, String name) {
+        this.name = name;
         this.uuid = uuid;
     }
 
-    public String getFolderName() {
-        return folderName;
+    public CloudFolder(String name, String uuid, String groupUuid) {
+        this.name = name;
+        this.uuid = uuid;
+        this.groupUuid = groupUuid;
+    }
+
+
+    public CloudFolder(String name, String uuid, String groupUuid, List<CloudFile> files) {
+        this.name = name;
+        this.uuid = uuid;
+        this.groupUuid = groupUuid;
+        this.files = files;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public List<CloudFile> getFiles() {
@@ -23,5 +38,19 @@ public class CloudFolder {
 
     public String getUuid() {
         return uuid;
+    }
+
+    public String getGroupUuid() {
+        return groupUuid;
+    }
+
+    @Override
+    public String toString() {
+        return "CloudFolder{" +
+                "folderName='" + name + '\'' +
+                ", uuid='" + uuid + '\'' +
+                ", groupUuid='" + groupUuid + '\'' +
+                ", files=" + files +
+                '}';
     }
 }

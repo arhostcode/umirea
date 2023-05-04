@@ -11,11 +11,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.databinding.FragmentRegistrationBinding;
 import edu.mirea.ardyc.umirea.ui.viewModel.auth.RegistrationViewModel;
 
-
+@AndroidEntryPoint
 public class RegistrationFragment extends Fragment {
 
     private FragmentRegistrationBinding binding;
@@ -29,7 +30,6 @@ public class RegistrationFragment extends Fragment {
         binding = FragmentRegistrationBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        registerViewModel.init();
         initButtons();
         initObservers();
 
@@ -38,19 +38,22 @@ public class RegistrationFragment extends Fragment {
 
     private void initObservers() {
         registerViewModel.getErrorText().observe(getViewLifecycleOwner(), s -> Toast.makeText(requireActivity().getApplicationContext(), s, Toast.LENGTH_SHORT).show());
-
+        registerViewModel.getUserMutableLiveData().observe(getViewLifecycleOwner(), (val) -> {
+            NavHostFragment.findNavController(this).navigate(R.id.navigation_chose_group);
+        });
     }
 
     private void initButtons() {
-        binding.verify.setOnClickListener(view -> registerViewModel.verify(binding.loginText.getText().toString(), binding.passwordText.getText().toString(), binding.firstName.getText().toString(), binding.lastName.getText().toString()));
+//        binding.verify.setOnClickListener(view -> registerViewModel.verify(binding.loginText.getText().toString(), binding.passwordText.getText().toString(), binding.firstName.getText().toString(), binding.lastName.getText().toString()));
         binding.enterButton.setOnClickListener(view -> {
 //            if (binding.code.getText().toString().isEmpty()) {
 //                Toast.makeText(getActivity().getApplicationContext(), "Получите код подтверждения на почту. Проверьте папку спам.", Toast.LENGTH_SHORT).show();
 //            } else {
 //
 //            }
-            NavHostFragment.findNavController(this).navigate(R.id.navigation_chose_group);
-//                registerViewModel.register(binding.loginText.getText().toString(), binding.passwordText.getText().toString(), binding.firstName.getText().toString(), binding.lastName.getText().toString(), binding.code.getText().toString());
+//
+//            registerViewModel.register(binding.loginText.getText().toString(), binding.passwordText.getText().toString(), binding.firstName.getText().toString(), binding.lastName.getText().toString(), binding.code.getText().toString());
+            registerViewModel.register(binding.loginText.getText().toString(), binding.passwordText.getText().toString(), binding.firstName.getText().toString(), binding.lastName.getText().toString(), "");
         });
     }
 

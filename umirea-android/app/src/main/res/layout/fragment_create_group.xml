@@ -101,18 +101,7 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/gradient_button"
-                android:text="@string/enter"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/reset_password"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/gray_button"
-                android:text="Создать группу"
+                android:text="Создать"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />

@@ -14,12 +14,11 @@ public class UserEntity {
     private String educationGroup;
     private String token;
     private String uniqueID;
-    private String role;
 
     public UserEntity() {
     }
 
-    public UserEntity(String firstName, String lastName, String login, String password, String educationGroup, String token, String uniqueID, String role) {
+    public UserEntity(String firstName, String lastName, String login, String password, String educationGroup, String token, String uniqueID) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
@@ -27,7 +26,6 @@ public class UserEntity {
         this.educationGroup = educationGroup;
         this.token = token;
         this.uniqueID = uniqueID;
-        this.role = role;
     }
 
     public String getUniqueID() {
@@ -92,14 +90,6 @@ public class UserEntity {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
 

@@ -1,42 +1,37 @@
 package edu.mirea.ardyc.umirea.ui.view.cloud;
 
 import android.Manifest;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
+import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Objects;
 
-import edu.mirea.ardyc.umirea.data.model.cloud.CloudFolder;
+import dagger.hilt.android.AndroidEntryPoint;
+import edu.mirea.ardyc.umirea.BuildConfig;
+import edu.mirea.ardyc.umirea.data.model.cloud.CloudFile;
 import edu.mirea.ardyc.umirea.databinding.FragmentCloudBinding;
 import edu.mirea.ardyc.umirea.ui.view.cloud.adapters.CloudFolderAdapter;
 import edu.mirea.ardyc.umirea.ui.viewModel.AppSharedViewModel;
 import edu.mirea.ardyc.umirea.ui.viewModel.cloud.CloudViewModel;
+import es.dmoral.toasty.Toasty;
 
+@AndroidEntryPoint
 public class CloudFragment extends Fragment {
 
     private FragmentCloudBinding binding;
@@ -53,16 +48,41 @@ public class CloudFragment extends Fragment {
 
         appSharedViewModel = new ViewModelProvider(requireActivity()).get(AppSharedViewModel.class);
         cloudViewModel.setCloudMutableLiveData(appSharedViewModel.getCloudFolderMutableLiveData());
-
+        cloudViewModel.getMessageMutableLiveData().observe(getViewLifecycleOwner(), (data) -> {
+            if (data == null || data.isEmpty())
+                return;
+            Toasty.info(requireContext(), data).show();
+            cloudViewModel.getMessageMutableLiveData().postValue(null);
+        });
+        System.out.println(appSharedViewModel.getCloudFolderMutableLiveData().getValue());
         binding.folders.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.folders.setAdapter(new CloudFolderAdapter(new ArrayList<>(), (val) -> {
+
+        CloudFolderAdapter cloudFolderAdapter = new CloudFolderAdapter(new ArrayList<>(), (val) -> {
             uploadFile.launch("*/*");
             cloudViewModel.setCurrentFolder(val);
-        }));
+        });
+
+        cloudFolderAdapter.setCloudFileConsumer((cloudFile) -> {
+            cloudViewModel.openFile(cloudFile);
+        });
+        cloudViewModel.getOpenFileMutableLiveData().observe(getViewLifecycleOwner(), (data) -> {
+            if (data == null)
+                return;
+            openFile(data);
+            cloudViewModel.getOpenFileMutableLiveData().postValue(null);
+        });
+        binding.folders.setAdapter(cloudFolderAdapter);
 
         initButtons();
         initObservers();
         return root;
+    }
+
+    public void openFile(Uri uri) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setDataAndType(uri, "*/*");
+        startActivity(intent);
     }
 
     private void initObservers() {
@@ -82,7 +102,7 @@ public class CloudFragment extends Fragment {
     private ActivityResultLauncher<String> uploadFile = registerForActivityResult(new ActivityResultContracts.GetContent(),
             uri -> {
                 if (uri != null)
-                    cloudViewModel.uploadFile(getFileName(uri));
+                    cloudViewModel.uploadFile(uri);
             });
     private ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -93,25 +113,6 @@ public class CloudFragment extends Fragment {
         requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
     }
 
-    private String getFileName(Uri uri) {
-        String result = null;
-        if (uri.getScheme().equals("content")) {
-            try (Cursor cursor = requireActivity().getContentResolver().query(uri, null, null, null, null)) {
-                if (cursor != null && cursor.moveToFirst()) {
-                    int length = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-                    result = cursor.getString(Math.max(length, 0));
-                }
-            }
-        }
-        if (result == null) {
-            result = uri.getPath();
-            int cut = result.lastIndexOf('/');
-            if (cut != -1) {
-                result = result.substring(cut + 1);
-            }
-        }
-        return result;
-    }
 
     @Override
     public void onDestroyView() {

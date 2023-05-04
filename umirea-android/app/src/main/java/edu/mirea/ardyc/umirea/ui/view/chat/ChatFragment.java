@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import edu.mirea.ardyc.umirea.data.model.chat.Chat;
 import edu.mirea.ardyc.umirea.data.model.group.Group;
@@ -17,7 +16,6 @@ import edu.mirea.ardyc.umirea.databinding.FragmentChatBinding;
 import edu.mirea.ardyc.umirea.ui.view.chat.adapters.ChatMessageAdapter;
 import edu.mirea.ardyc.umirea.ui.viewModel.AppSharedViewModel;
 import edu.mirea.ardyc.umirea.ui.viewModel.chat.ChatViewModel;
-import edu.mirea.ardyc.umirea.ui.viewModel.group.GroupProcessor;
 
 public class ChatFragment extends Fragment {
 

@@ -128,6 +128,7 @@ public class Lesson implements Cloneable {
             this.lesson = initialLesson;
         }
 
+        //TODO Я знаю что это плохо, но не успеваю изменить тк это нужно для базы данных
         public Builder(int lessonType) {
             switch (lessonType) {
                 case 1:

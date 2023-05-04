@@ -4,19 +4,23 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.databinding.FragmentChangeScheduleBinding;
 import edu.mirea.ardyc.umirea.ui.viewModel.group.GroupChangeScheduleViewModel;
 import edu.mirea.ardyc.umirea.ui.viewModel.group.GroupSharedViewModel;
 
+@AndroidEntryPoint
 public class ChangeScheduleFragment extends Fragment {
     private FragmentChangeScheduleBinding binding;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +38,8 @@ public class ChangeScheduleFragment extends Fragment {
                 binding.schedulesList.setAdapter(new ArrayAdapter<>(getContext(), R.layout.group_item, val));
         });
         binding.apply.setOnClickListener(v -> {
-            viewModel.updateSchedule(binding.schedulesList.getSelectedItem().toString());
+            groupSharedViewModel.changeSchedule(binding.schedulesList.getSelectedItem().toString());
+            NavHostFragment.findNavController(this).popBackStack();
         });
         return binding.getRoot();
     }

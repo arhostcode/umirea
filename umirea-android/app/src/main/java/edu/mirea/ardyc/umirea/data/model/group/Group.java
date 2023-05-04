@@ -6,6 +6,7 @@ import java.util.List;
 public class Group {
 
     private List<Member> members = new ArrayList<>();
+    private String uuid;
     private String name;
     private String token;
     private String baseSchedule;
@@ -13,6 +14,14 @@ public class Group {
     public Group(List<Member> members, String name, String baseSchedule) {
         this.members = members;
         this.name = name;
+        this.baseSchedule = baseSchedule;
+    }
+
+    public Group(List<Member> members, String uuid, String name, String token, String baseSchedule) {
+        this.members = members;
+        this.uuid = uuid;
+        this.name = name;
+        this.token = token;
         this.baseSchedule = baseSchedule;
     }
 
@@ -52,5 +61,20 @@ public class Group {
                 return m;
         }
         return null;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "members=" + members +
+                ", uuid='" + uuid + '\'' +
+                ", name='" + name + '\'' +
+                ", token='" + token + '\'' +
+                ", baseSchedule='" + baseSchedule + '\'' +
+                '}';
     }
 }

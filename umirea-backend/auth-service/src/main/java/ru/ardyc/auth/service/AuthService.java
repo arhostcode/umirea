@@ -48,17 +48,29 @@ public class AuthService {
         return new AuthError("Password is not correct.");
     }
 
-    public Response register(String login, String password, String educationGroup, String firstName, String lastName, String role, String verificationCode) {
+    public Response register(String login, String password, String firstName, String lastName, String verificationCode) {
         if (RequestUtils.isInvalid(login, password, lastName, firstName, verificationCode)) {
             return new AuthError("Not all of fields was been provided. Required login, password, firstName, lastname, verificationCode.");
         }
         if (usersRepository.findByLogin(login).isPresent()) {
-            return new AuthError("This login is already used.");
+            return new AuthError("Этот пользователь уже существует.");
         }
-        if (!verificator.isRightVerificationCode(verificationCode, DigestUtils.encodeMD5(login + password))) {
-            return new NotSuccessfulVerificationError();
+        if (login.length() < 5) {
+            return new AuthError("Логин должен быть не менее 5 символов");
         }
-        UserEntity user = new UserEntity(firstName, lastName, login, DigestUtils.encodeMD5(password), educationGroup, DigestUtils.encodeMD5(login + password), UUID.randomUUID().toString(), role);
+        if (firstName.length() < 2) {
+            return new AuthError("Имя должно быть не менее 2 символов");
+        }
+        if (lastName.length() < 2) {
+            return new AuthError("Фамилия должна быть не менее 2 символов");
+        }
+        if (password.length() < 8) {
+            return new AuthError("Пароль должен быть не менее 8 символов");
+        }
+//        if (!verificator.isRightVerificationCode(verificationCode, DigestUtils.encodeMD5(login + password))) {
+//            return new NotSuccessfulVerificationError();
+//        }
+        UserEntity user = new UserEntity(firstName, lastName, login, DigestUtils.encodeMD5(password), "null", DigestUtils.encodeMD5(login + password), UUID.randomUUID().toString());
         usersRepository.save(user);
         return MessageResponse.create(User.fromEntity(user));
     }
@@ -69,7 +81,7 @@ public class AuthService {
         }
         String verificationCode = verificator.createVerificationCode(DigestUtils.encodeMD5(login + password));
         verificator.sendVerificationCode(login, firstName, lastName, verificationCode);
-        return MessageResponse.create("Verification code is successfully sent.");
+        return MessageResponse.create("Код подтверждения отправлен");
     }
 
     public Response verifyResetPassword(String login) {
@@ -82,7 +94,7 @@ public class AuthService {
         }
         String verificationCode = verificator.createVerificationCode(optionalUserEntity.get().getToken());
         verificator.sendVerificationCode(login, optionalUserEntity.get().getFirstName(), optionalUserEntity.get().getLastName(), verificationCode);
-        return MessageResponse.create("Verification code is successfully sent.");
+        return MessageResponse.create("Код подтверждения отправлен");
     }
 
     public Response resetPassword(String login, String newPassword, String verificationCode) {
@@ -96,17 +108,17 @@ public class AuthService {
         if (!isQualifiedPassword(newPassword)) {
             return new NotQualifiedPasswordError();
         }
-        String originalVerificationCode = verificator.createVerificationCode(optionalUserEntity.get().getToken());
-        if (!originalVerificationCode.equals(verificationCode)) {
-            return new NotSuccessfulVerificationError();
-        }
+//        String originalVerificationCode = verificator.createVerificationCode(optionalUserEntity.get().getToken());
+//        if (!originalVerificationCode.equals(verificationCode)) {
+//            return new NotSuccessfulVerificationError();
+//        }
 
         UserEntity entity = optionalUserEntity.get();
         entity.setPassword(DigestUtils.encodeMD5(newPassword));
         entity.setToken(DigestUtils.encodeMD5(login + newPassword));
 
         usersRepository.save(entity);
-        return MessageResponse.create("Password was been reseted.");
+        return MessageResponse.create("Пароль успешно изменён");
     }
 
     public Response deleteAccount(String token) {

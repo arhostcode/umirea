@@ -3,7 +3,6 @@ package edu.mirea.ardyc.umirea.ui.view.cloud.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,14 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 import edu.mirea.ardyc.umirea.R;
+import edu.mirea.ardyc.umirea.data.model.cloud.CloudFile;
 import edu.mirea.ardyc.umirea.data.model.cloud.CloudFolder;
 
 public class CloudFolderAdapter extends RecyclerView.Adapter<CloudFolderAdapter.ViewHolder> {
 
     private final Consumer<String> action;
+    private Consumer<CloudFile> fileConsumer;
 
     public CloudFolderAdapter(List<CloudFolder> folders, Consumer<String> action) {
         this.folders = folders;
@@ -40,11 +40,13 @@ public class CloudFolderAdapter extends RecyclerView.Adapter<CloudFolderAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.folderName.setText(folders.get(position).getFolderName());
+        holder.folderName.setText(folders.get(position).getName());
         CloudFileAdapter adapter = (CloudFileAdapter) holder.getFiles().getAdapter();
         if (adapter == null) {
             holder.getFiles().setLayoutManager(new LinearLayoutManager(holder.files.getContext()));
-            holder.getFiles().setAdapter(new CloudFileAdapter(folders.get(position).getFiles()));
+            CloudFileAdapter cloudFileAdapter = new CloudFileAdapter(folders.get(position).getFiles());
+            cloudFileAdapter.setCloudFileConsumer(fileConsumer);
+            holder.getFiles().setAdapter(cloudFileAdapter);
         } else {
             adapter.update(folders.get(position).getFiles());
         }
@@ -107,8 +109,14 @@ public class CloudFolderAdapter extends RecyclerView.Adapter<CloudFolderAdapter.
                 layout.setVisibility(View.GONE);
                 arrow.setImageDrawable(ResourcesCompat.getDrawable(arrow.getResources(), R.drawable.arrow_down, null));
             }
+
+
         }
 
+    }
+
+    public void setCloudFileConsumer(Consumer<CloudFile> fileConsumer) {
+        this.fileConsumer = fileConsumer;
     }
 
 }

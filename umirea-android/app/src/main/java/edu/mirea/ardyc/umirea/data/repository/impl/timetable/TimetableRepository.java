@@ -8,7 +8,7 @@ import edu.mirea.ardyc.umirea.data.model.timetable.Timetable;
 import edu.mirea.ardyc.umirea.data.model.timetable.date.DateLesson;
 import edu.mirea.ardyc.umirea.data.repository.Repository;
 
-public abstract class TimetableRepository extends Repository<Timetable> {
+public abstract class TimetableRepository extends Repository {
     public TimetableRepository(Context context) {
         super(context);
     }

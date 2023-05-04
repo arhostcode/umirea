@@ -16,34 +16,28 @@ import edu.mirea.ardyc.umirea.data.model.timetable.date.DateTask;
 import edu.mirea.ardyc.umirea.data.repository.impl.timetable.TimetableLocalRepository;
 import edu.mirea.ardyc.umirea.data.repository.impl.timetable.TimetableMemoryRepository;
 import edu.mirea.ardyc.umirea.data.repository.impl.timetable.TimetableRepository;
+import edu.mirea.ardyc.umirea.ui.view.AppActivity;
 
 public class DashboardService {
+    private final Context context;
 
-    public static DashboardService create(Application application) {
-        return new DashboardService(application);
-    }
-
-    private final Application application;
-
-    private DashboardService(Application application) {
-        this.application = application;
+    public DashboardService(Context context) {
+        this.context = context;
     }
 
     private TimetableLocalRepository timetableLocalRepository;
-    private TimetableRepository timetableRepository;
+    private TimetableMemoryRepository timetableRepository;
 
-    public MutableLiveData<Timetable> initTimetableData() {
-        MutableLiveData<Timetable> mutableLiveData = new MutableLiveData<>();
+    public void initTimetableData(MutableLiveData<Timetable> mutableLiveData) {
         new Thread(() -> {
-            String hash = application.getSharedPreferences("edu.mirea.ardyc.umirea", Context.MODE_PRIVATE).getString("timetable_hash", "");
-            timetableRepository = new TimetableMemoryRepository(application);
-            timetableLocalRepository = new TimetableLocalRepository(application);
+            String hash = context.getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("timetable_hash", "");
+            timetableRepository = new TimetableMemoryRepository(context);
+            timetableLocalRepository = new TimetableLocalRepository(context);
             String remoteHash = timetableRepository.getBaseScheduleHash();
-
             if (!hash.equals(remoteHash)) {
                 Timetable data = timetableRepository.getData();
-                timetableLocalRepository.updateData(timetableRepository.getData());
-                application.getSharedPreferences("edu.mirea.ardyc.umirea", Context.MODE_PRIVATE).edit().putString("timetable_hash", remoteHash).apply();
+                timetableLocalRepository.updateData(data);
+                context.getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).edit().putString("timetable_hash", remoteHash).apply();
                 timetableProcessing(data, mutableLiveData);
             } else {
                 timetableLocalRepository.getDataAndPerform((val) -> {
@@ -51,7 +45,6 @@ public class DashboardService {
                 });
             }
         }).start();
-        return mutableLiveData;
     }
 
     private void timetableProcessing(Timetable timetable, MutableLiveData<Timetable> timetableMutableLiveData) {
@@ -94,11 +87,11 @@ public class DashboardService {
     //TODO TO STORING IN BACKEND
     public void processAddonLessons(MutableLiveData<Timetable> mutableLiveData) {
         List<DateLesson> lessons = timetableRepository.getAddonLessons();
-        String hash = application.getSharedPreferences("edu.mirea.ardyc.umirea", Context.MODE_PRIVATE).getString("timetable_hash_addon_lessons", "");
+        String hash = context.getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("timetable_hash_addon_lessons", "");
         String remoteHash = timetableRepository.getAddonLessonsHash();
         if (!hash.equals(remoteHash)) {
             addLessons(lessons, mutableLiveData);
-            application.getSharedPreferences("edu.mirea.ardyc.umirea", Context.MODE_PRIVATE).edit().putString("timetable_hash_addon_lessons", remoteHash).apply();
+            context.getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).edit().putString("timetable_hash_addon_lessons", remoteHash).apply();
         }
     }
 
@@ -140,5 +133,13 @@ public class DashboardService {
         });
         data.postValue(timetable);
         timetableLocalRepository.updateTask(task);
+    }
+
+    public void removeDashboard() {
+        timetableLocalRepository.removeDashboard();
+        context.getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).edit()
+                .remove("timetable_hash")
+                .remove("timetable_hash_addon_lessons")
+                .apply();
     }
 }

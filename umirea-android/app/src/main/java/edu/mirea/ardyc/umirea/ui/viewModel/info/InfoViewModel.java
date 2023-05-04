@@ -1,19 +1,36 @@
 package edu.mirea.ardyc.umirea.ui.viewModel.info;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class InfoViewModel extends ViewModel {
+import java.util.List;
 
-    private final MutableLiveData<String> mText;
+import javax.inject.Inject;
 
-    public InfoViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is chat fragment");
+import dagger.hilt.android.lifecycle.HiltViewModel;
+import edu.mirea.ardyc.umirea.data.model.info.InfoMessage;
+
+@HiltViewModel
+public class InfoViewModel extends AndroidViewModel {
+
+    private MutableLiveData<List<InfoMessage>> infoMessages;
+
+    @Inject
+    public InfoViewModel(@NonNull Application application, InfoService infoService) {
+        super(application);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+
+    public MutableLiveData<List<InfoMessage>> getInfoMessages() {
+        return infoMessages;
+    }
+
+    public void setInfoMessages(MutableLiveData<List<InfoMessage>> infoMessages) {
+        this.infoMessages = infoMessages;
     }
 }

@@ -6,17 +6,19 @@ import edu.mirea.ardyc.umirea.data.model.group.Member;
 
 public class InfoMessage {
 
-    private UUID id;
+    private String id;
+    private String name;
     private String text;
-    private Member owner;
+    private String ownerId;
 
-    public InfoMessage(UUID id, String text, Member owner) {
+    public InfoMessage(String id, String name, String text, String owner) {
         this.id = id;
+        this.name = name;
         this.text = text;
-        this.owner = owner;
+        this.ownerId = owner;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
@@ -24,7 +26,11 @@ public class InfoMessage {
         return text;
     }
 
-    public Member getOwner() {
-        return owner;
+    public String getOwner() {
+        return ownerId;
+    }
+
+    public String getName() {
+        return name;
     }
 }

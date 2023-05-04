@@ -13,7 +13,7 @@ public class LocalChatRepository extends ChatRepository {
         super(context);
     }
 
-    @Override
+
     public Chat getData() {
         Chat chat = new Chat();
         chat.addMessage(new ChatMessage("ID1", "Привет всем"));

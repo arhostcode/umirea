@@ -34,6 +34,8 @@ public class ScheduleService {
     }
 
 
+
+
     public Response getAllGroups() {
         return MessageResponse.create(Groups.fromJson(Json.createReader(new StringReader(mireaXyzClient.getAllGroups())).readArray()));
     }

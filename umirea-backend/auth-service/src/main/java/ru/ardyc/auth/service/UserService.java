@@ -30,6 +30,16 @@ public class UserService {
         return MessageResponse.create(User.fromEntity(user.get()));
     }
 
+    public Response getUserByUUID(String uuid) {
+        if (RequestUtils.isInvalid(uuid)) {
+            return new AuthError("Not all of fields was been provided. Required UUID.");
+        }
+        Optional<UserEntity> user = usersRepository.findByUniqueID(uuid);
+        if (user.isEmpty())
+            return new UserNotFoundError();
+        return MessageResponse.create(User.fromEntity(user.get()));
+    }
+
     public Response setPassword(String token, String oldPassword, String newPassword) {
         if (RequestUtils.isInvalid(token, oldPassword, newPassword)) {
             return new AuthError("Not all of fields was been provided. Required token, oldPassword, newPassword.");
@@ -43,19 +53,6 @@ public class UserService {
         }
         userEntity.setPassword(DigestUtils.encodeMD5(newPassword));
         userEntity.setToken(DigestUtils.encodeMD5(userEntity.getLogin() + newPassword));
-        usersRepository.save(userEntity);
-        return MessageResponse.create(User.fromEntity(userEntity));
-    }
-
-    public Response setRole(String token, String role) {
-        if (RequestUtils.isInvalid(token, role)) {
-            return new AuthError("Not all of fields was been provided. Required token, role.");
-        }
-        Optional<UserEntity> optionalUserEntity = usersRepository.findByToken(token);
-        if (optionalUserEntity.isEmpty())
-            return new UserNotFoundError();
-        UserEntity userEntity = optionalUserEntity.get();
-        userEntity.setRole(role);
         usersRepository.save(userEntity);
         return MessageResponse.create(User.fromEntity(userEntity));
     }

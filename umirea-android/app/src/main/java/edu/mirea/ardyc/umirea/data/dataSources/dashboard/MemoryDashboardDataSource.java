@@ -16,7 +16,6 @@ public class MemoryDashboardDataSource extends DashboardDataSource {
         super(context);
     }
 
-    @Override
     public Timetable loadData() {
         return createMockData();
     }

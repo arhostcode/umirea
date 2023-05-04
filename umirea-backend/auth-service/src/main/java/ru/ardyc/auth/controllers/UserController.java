@@ -3,7 +3,6 @@ package ru.ardyc.auth.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.ardyc.auth.service.UserService;
-import ru.ardyc.response.MessageResponse;
 import ru.ardyc.response.Response;
 
 @RestController
@@ -24,14 +23,14 @@ public class UserController {
     }
 
     // Internal api
-    @PostMapping(path = "/setRole")
-    public Response setRole(@RequestParam String token, @RequestParam String role) {
-        return userService.setRole(token, role);
-    }
-
     @PostMapping(path = "/setGroup")
     public Response setGroup(@RequestParam String token, @RequestParam String group) {
         return userService.setGroup(token, group);
     }
 
+
+    @GetMapping(path = "/getInfoByUUID")
+    public Response getInfoByUUID(@RequestParam String uuid) {
+        return userService.getUserByUUID(uuid);
+    }
 }
