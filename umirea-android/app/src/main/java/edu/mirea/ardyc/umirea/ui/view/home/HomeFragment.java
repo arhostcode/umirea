@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 
 import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.data.model.chat.ChatMessage;
+import edu.mirea.ardyc.umirea.data.model.cloud.CloudFile;
+import edu.mirea.ardyc.umirea.data.model.cloud.CloudFolder;
 import edu.mirea.ardyc.umirea.data.model.group.Group;
 import edu.mirea.ardyc.umirea.data.model.group.Member;
 import edu.mirea.ardyc.umirea.data.model.info.InfoMessage;
@@ -82,7 +84,7 @@ public class HomeFragment extends Fragment {
 
         appSharedViewModel.getChatMutableLiveData().observe(getViewLifecycleOwner(), chat -> {
             Group group = appSharedViewModel.getGroupMutableLiveData().getValue();
-            if(chat.getChatMessages().size() == 0)
+            if (chat.getChatMessages().size() == 0)
                 return;
             if (group != null) {
                 ChatMessage message = chat.getChatMessages().get(chat.getChatMessages().size() - 1);
@@ -99,7 +101,7 @@ public class HomeFragment extends Fragment {
 
         appSharedViewModel.getListInfoMutableLiveData().observe(getViewLifecycleOwner(), infoMessages -> {
             Group group = appSharedViewModel.getGroupMutableLiveData().getValue();
-            if(infoMessages == null || infoMessages.size() == 0)
+            if (infoMessages == null || infoMessages.size() == 0)
                 return;
             if (group != null) {
                 InfoMessage message = infoMessages.get(infoMessages.size() - 1);
@@ -113,6 +115,18 @@ public class HomeFragment extends Fragment {
                 binding.infoText.setText(message.getMessage());
             }
 
+        });
+
+        appSharedViewModel.getCloudFolderMutableLiveData().observe(getViewLifecycleOwner(), cloudFolders -> {
+            if (cloudFolders == null || cloudFolders.isEmpty())
+                return;
+            CloudFolder folder = cloudFolders.get(cloudFolders.size() - 1);
+            if (folder.getFiles() == null || folder.getFiles().isEmpty())
+                return;
+            CloudFile file = folder.getFiles().get(folder.getFiles().size() - 1);
+            if (file == null)
+                return;
+            binding.lastFile.setText(file.getName());
         });
         return root;
     }

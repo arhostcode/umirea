@@ -489,10 +489,11 @@
                                     <ImageView
                                         android:layout_width="35dp"
                                         android:layout_height="35dp"
-                                        android:src="@drawable/note_icon" />
+                                        android:src="@drawable/last_file_icon" />
 
 
                                     <TextView
+                                        android:id="@+id/last_file"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="10dp"
