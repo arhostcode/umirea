@@ -17,7 +17,7 @@
     <string name="verify">Получить код</string>
     <string name="reset_password">Восстановить пароль</string>
     <string name="sign_up">Зарегистрироваться</string>
-    <string name="mail">Почта</string>
+    <string name="mail">Логин</string>
     <string name="password">Пароль</string>
     <string name="code">Код</string>
     <string name="firstName">Имя</string>

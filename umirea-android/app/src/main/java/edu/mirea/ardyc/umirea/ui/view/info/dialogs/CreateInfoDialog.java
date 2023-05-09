@@ -13,6 +13,7 @@ import java.util.function.Consumer;
 import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.data.model.info.InfoMessage;
 import edu.mirea.ardyc.umirea.databinding.CreateInfoDialogBinding;
+import es.dmoral.toasty.Toasty;
 
 public class CreateInfoDialog extends BottomSheetDialog {
 
@@ -29,6 +30,10 @@ public class CreateInfoDialog extends BottomSheetDialog {
             String title = createInfoDialogBinding.infoName.getText().toString();
             String text = createInfoDialogBinding.infoText.getText().toString();
             if (title.isEmpty() || text.isEmpty()) {
+                return;
+            }
+            if (text.split("\n").length > 20) {
+                Toasty.info(context, "Слишком много строк").show();
                 return;
             }
             infoMessageConsumer.accept(new InfoContent(title, text));

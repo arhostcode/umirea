@@ -68,6 +68,7 @@
             android:ems="12"
             android:hint="@string/group_name"
             android:inputType="none|text"
+            android:maxLength="30"
             android:paddingHorizontal="10dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"

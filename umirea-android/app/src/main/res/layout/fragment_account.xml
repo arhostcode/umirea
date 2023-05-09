@@ -123,14 +123,14 @@
             android:text="@string/logout"
             android:textSize="12sp" />
 
-        <Button
-            style="@style/ColoredButton"
-            android:layout_width="160dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="10dp"
-            android:paddingHorizontal="10dp"
-            android:text="@string/delete_account"
-            android:textSize="12sp" />
+<!--        <Button-->
+<!--            style="@style/ColoredButton"-->
+<!--            android:layout_width="160dp"-->
+<!--            android:layout_height="25dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:paddingHorizontal="10dp"-->
+<!--            android:text="@string/delete_account"-->
+<!--            android:textSize="12sp" />-->
 
 
         <Button

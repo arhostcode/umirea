@@ -46,9 +46,9 @@ public class AuthorizationFragment extends Fragment {
         binding.enterButton.setOnClickListener(view -> {
             authorizationViewModel.loginToServer(binding.loginText.getText().toString(), binding.passwordText.getText().toString());
         });
-        binding.resetPassword.setOnClickListener(view -> {
-            NavHostFragment.findNavController(this).navigate(R.id.navigation_reset_password_mail);
-        });
+//        binding.resetPassword.setOnClickListener(view -> {
+//            NavHostFragment.findNavController(this).navigate(R.id.navigation_reset_password_mail);
+//        });
         binding.createAccount.setOnClickListener(view -> {
             NavHostFragment.findNavController(this).navigate(R.id.navigation_registration);
         });

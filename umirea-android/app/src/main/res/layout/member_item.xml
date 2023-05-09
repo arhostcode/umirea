@@ -31,11 +31,11 @@
                 android:layout_height="30dp"
                 android:src="@drawable/kick" />
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:src="@drawable/admin" />
+<!--            <ImageView-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_marginStart="10dp"-->
+<!--                android:src="@drawable/admin" />-->
         </LinearLayout>
 
     </LinearLayout>

@@ -70,9 +70,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
+        <!--        <Button-->
+        <!--            android:layout_width="30dp"-->
+        <!--            android:layout_height="30dp" />-->
 
         <android.widget.Space
             android:layout_width="15dp"
@@ -85,6 +85,7 @@
             android:background="@drawable/chat_field"
             android:ems="12"
             android:inputType="textCapSentences|textMultiLine"
+            android:maxLength="200"
             android:maxLines="2"
             android:paddingHorizontal="10dp"
             android:paddingTop="5dp"
