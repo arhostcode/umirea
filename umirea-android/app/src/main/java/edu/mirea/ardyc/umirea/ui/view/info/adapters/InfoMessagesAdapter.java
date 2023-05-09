@@ -3,31 +3,23 @@ package edu.mirea.ardyc.umirea.ui.view.info.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 import edu.mirea.ardyc.umirea.R;
+import edu.mirea.ardyc.umirea.data.model.group.Group;
+import edu.mirea.ardyc.umirea.data.model.group.Member;
 import edu.mirea.ardyc.umirea.data.model.info.InfoMessage;
-import edu.mirea.ardyc.umirea.data.model.timetable.Lesson;
-import edu.mirea.ardyc.umirea.data.model.timetable.LessonTime;
-import edu.mirea.ardyc.umirea.data.model.timetable.Task;
-import edu.mirea.ardyc.umirea.data.model.timetable.TimetableDay;
-import edu.mirea.ardyc.umirea.data.model.timetable.date.DateTask;
-import edu.mirea.ardyc.umirea.ui.view.dashboard.adapters.LessonItems;
-import edu.mirea.ardyc.umirea.ui.view.dashboard.dialogs.TimetableDialog;
 
 public class InfoMessagesAdapter extends RecyclerView.Adapter<InfoMessagesAdapter.ViewHolder> {
 
     private List<InfoMessage> infoMessages;
+    private Group group;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView name;
@@ -71,12 +63,16 @@ public class InfoMessagesAdapter extends RecyclerView.Adapter<InfoMessagesAdapte
 
     @Override
     public void onBindViewHolder(InfoMessagesAdapter.ViewHolder viewHolder, final int position) {
-        InfoMessage infoMessage = infoMessages.get(position);
+        InfoMessage infoMessage = infoMessages.get(getItemCount() - 1 - position);
         if (infoMessage == null)
             return;
-        viewHolder.text.setText(infoMessage.getText());
+        viewHolder.text.setText(infoMessage.getMessage());
         viewHolder.name.setText(infoMessage.getName());
-        viewHolder.senderName.setText(infoMessage.getOwner());
+        if (infoMessage.getOwner() != null) {
+            Member member = group.getById(infoMessage.getOwner());
+            if (member != null)
+                viewHolder.senderName.setText(String.format(viewHolder.name.getResources().getString(R.string.user_full_name), member.getFirstName(), member.getLastName()));
+        }
     }
 
     public void update(List<InfoMessage> messages) {
@@ -88,6 +84,10 @@ public class InfoMessagesAdapter extends RecyclerView.Adapter<InfoMessagesAdapte
     @Override
     public int getItemCount() {
         return infoMessages == null ? 0 : infoMessages.size();
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
 }

@@ -8,9 +8,8 @@ import java.util.stream.Collectors;
 import edu.mirea.ardyc.umirea.data.dataSources.DataSource;
 import edu.mirea.ardyc.umirea.data.dataSources.room.UmireaDatabase;
 import edu.mirea.ardyc.umirea.data.dataSources.room.cloud.entities.FileWithFolder;
-import edu.mirea.ardyc.umirea.data.model.cloud.CloudFile;
 import edu.mirea.ardyc.umirea.data.model.cloud.CloudFolder;
-import edu.mirea.ardyc.umirea.data.model.net.DataResponse;
+import edu.mirea.ardyc.umirea.data.model.DataResponse;
 
 public class CloudDataSource extends DataSource {
     public CloudDataSource(Context context) {
@@ -25,4 +24,7 @@ public class CloudDataSource extends DataSource {
         return new DataResponse<>(UmireaDatabase.getDatabase(context).cloudFileDao().getFolders().stream().map(FileWithFolder::toModel).collect(Collectors.toList()));
     }
 
+    public void clear() {
+        UmireaDatabase.getDatabase(context).cloudFileDao().clearAll();
+    }
 }

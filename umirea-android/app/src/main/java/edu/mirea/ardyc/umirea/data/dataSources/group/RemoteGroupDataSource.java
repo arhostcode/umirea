@@ -13,7 +13,7 @@ import java.util.List;
 import edu.mirea.ardyc.umirea.data.dataSources.DataSource;
 import edu.mirea.ardyc.umirea.data.model.group.Group;
 import edu.mirea.ardyc.umirea.data.model.group.Member;
-import edu.mirea.ardyc.umirea.data.model.net.DataResponse;
+import edu.mirea.ardyc.umirea.data.model.DataResponse;
 import edu.mirea.ardyc.umirea.data.net.group.GroupRemoteService;
 import edu.mirea.ardyc.umirea.data.repository.impl.group.api.RemoteGroup;
 import retrofit2.Call;
@@ -109,6 +109,7 @@ public class RemoteGroupDataSource extends DataSource {
         try {
             groupRemoteService.changeSchedule(userToken, schedule).execute();
         } catch (Exception ignored) {
+            ignored.printStackTrace();
         }
     }
 

@@ -16,6 +16,7 @@ import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.databinding.FragmentChangeScheduleBinding;
 import edu.mirea.ardyc.umirea.ui.viewModel.group.GroupChangeScheduleViewModel;
 import edu.mirea.ardyc.umirea.ui.viewModel.group.GroupSharedViewModel;
+import es.dmoral.toasty.Toasty;
 
 @AndroidEntryPoint
 public class ChangeScheduleFragment extends Fragment {
@@ -38,7 +39,12 @@ public class ChangeScheduleFragment extends Fragment {
                 binding.schedulesList.setAdapter(new ArrayAdapter<>(getContext(), R.layout.group_item, val));
         });
         binding.apply.setOnClickListener(v -> {
-            groupSharedViewModel.changeSchedule(binding.schedulesList.getSelectedItem().toString());
+            String text = binding.schedulesList.getText().toString();
+            if (!viewModel.getGroups().getValue().contains(text)) {
+                Toasty.info(requireContext(), "Расписание не найдено").show();
+                return;
+            }
+            groupSharedViewModel.changeSchedule(binding.schedulesList.getText().toString());
             NavHostFragment.findNavController(this).popBackStack();
         });
         return binding.getRoot();

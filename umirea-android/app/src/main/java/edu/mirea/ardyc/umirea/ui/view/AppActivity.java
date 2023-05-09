@@ -102,5 +102,9 @@ public class AppActivity extends AppCompatActivity {
         Toasty.info(getApplicationContext(), message).show();
     }
 
-
+    @Override
+    protected void onDestroy() {
+        appViewModel.shutdown();
+        super.onDestroy();
+    }
 }

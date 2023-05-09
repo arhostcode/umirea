@@ -10,7 +10,7 @@ import java.util.List;
 public class TParser {
 
     public static List<TWeek> fromJson(JsonObject schedule) {
-        JsonArray days = schedule.getAsJsonObject("message").getAsJsonArray("days");
+        JsonArray days = schedule.getAsJsonArray("days");
         List<TWeek> weeks = new ArrayList<>();
         for (int i = 0; i < 18; i++) {
             weeks.add(new TWeek());

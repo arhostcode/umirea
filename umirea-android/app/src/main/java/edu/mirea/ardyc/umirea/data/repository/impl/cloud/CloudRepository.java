@@ -2,24 +2,15 @@ package edu.mirea.ardyc.umirea.data.repository.impl.cloud;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
-
 import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 
 import edu.mirea.ardyc.umirea.data.dataSources.cloud.CloudDataSource;
 import edu.mirea.ardyc.umirea.data.dataSources.cloud.RemoteCloudDataSource;
-import edu.mirea.ardyc.umirea.data.dataSources.room.UmireaDatabase;
 import edu.mirea.ardyc.umirea.data.model.cloud.CloudFolder;
-import edu.mirea.ardyc.umirea.data.model.net.DataResponse;
-import edu.mirea.ardyc.umirea.data.net.cloud.CloudRemoteService;
+import edu.mirea.ardyc.umirea.data.model.DataResponse;
 import edu.mirea.ardyc.umirea.data.repository.Repository;
-import retrofit2.Call;
-import retrofit2.Response;
 
 public class CloudRepository extends Repository {
 
@@ -51,10 +42,21 @@ public class CloudRepository extends Repository {
     }
 
     public DataResponse<List<CloudFolder>> uploadFileInFolder(String folderUuid, String userToken, File file) {
-        return remoteDataSource.uploadFileInFolder(folderUuid, userToken, file);
+        DataResponse<List<CloudFolder>> response = remoteDataSource.uploadFileInFolder(folderUuid, userToken, file);
+        if (!response.isError())
+            saveData(response.getData());
+        return response;
     }
 
     public DataResponse<InputStream> downloadFile(String fileUuid, String userToken) {
         return remoteDataSource.downloadFile(fileUuid, userToken);
+    }
+
+    public DataResponse<CloudFolder> createFolder(String userToken, String name) {
+        return remoteDataSource.createFolder(userToken, name);
+    }
+
+    public void clear() {
+        cloudDataSource.clear();
     }
 }

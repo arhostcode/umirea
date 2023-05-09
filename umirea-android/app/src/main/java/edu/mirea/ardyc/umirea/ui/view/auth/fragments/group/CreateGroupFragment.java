@@ -16,6 +16,7 @@ import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.databinding.FragmentCreateGroupBinding;
 import edu.mirea.ardyc.umirea.ui.view.AppActivity;
 import edu.mirea.ardyc.umirea.ui.viewModel.auth.CreateGroupViewModel;
+import es.dmoral.toasty.Toasty;
 
 public class CreateGroupFragment extends Fragment {
 
@@ -33,7 +34,14 @@ public class CreateGroupFragment extends Fragment {
         binding = FragmentCreateGroupBinding.inflate(getLayoutInflater());
         viewModel = new ViewModelProvider(requireActivity()).get(CreateGroupViewModel.class);
         initObservers();
-        binding.enterButton.setOnClickListener((v) -> viewModel.createGroup(binding.groupName.getText().toString(), binding.schedulesList.getSelectedItem().toString()));
+        binding.enterButton.setOnClickListener((v) -> {
+            String text = binding.schedulesList.getText().toString();
+            if (!viewModel.getGroupsList().getValue().contains(text)) {
+                Toasty.info(requireActivity(), "Расписание не найдено").show();
+                return;
+            }
+            viewModel.createGroup(binding.groupName.getText().toString(), text);
+        });
         return binding.getRoot();
     }
 

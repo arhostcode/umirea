@@ -12,7 +12,8 @@ public class InfoEntity {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private long id;
+    public Long id;
+
 
     @ColumnInfo(name = "uuid")
     private String uuid;
@@ -27,14 +28,6 @@ public class InfoEntity {
     private String ownerId;
 
     public InfoEntity() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     @Ignore
@@ -78,7 +71,7 @@ public class InfoEntity {
     }
 
     public static InfoEntity fromInfo(InfoMessage infoMessage) {
-        return new InfoEntity(infoMessage.getId(), infoMessage.getName(), infoMessage.getText(), infoMessage.getOwner());
+        return new InfoEntity(infoMessage.getUuid(), infoMessage.getName(), infoMessage.getMessage(), infoMessage.getOwner());
     }
 
     public InfoMessage toInfo() {

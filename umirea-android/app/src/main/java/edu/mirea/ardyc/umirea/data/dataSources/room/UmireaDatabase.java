@@ -10,6 +10,8 @@ import androidx.room.TypeConverters;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import edu.mirea.ardyc.umirea.data.dataSources.room.chat.dao.ChatDao;
+import edu.mirea.ardyc.umirea.data.dataSources.room.chat.entities.MessageEntity;
 import edu.mirea.ardyc.umirea.data.dataSources.room.cloud.dao.CloudFileDao;
 import edu.mirea.ardyc.umirea.data.dataSources.room.cloud.entities.CloudFileEntity;
 import edu.mirea.ardyc.umirea.data.dataSources.room.cloud.entities.CloudFolderEntity;
@@ -24,7 +26,7 @@ import edu.mirea.ardyc.umirea.data.dataSources.room.info.dao.InfoDao;
 import edu.mirea.ardyc.umirea.data.dataSources.room.info.entities.InfoEntity;
 
 @TypeConverters(DashboardConverter.class)
-@Database(entities = {CloudFileEntity.class, CloudFolderEntity.class, InfoEntity.class, LessonEntity.class, TimetableDayEntity.class, MemberEntity.class}, version = 2, exportSchema = false)
+@Database(entities = {MessageEntity.class, CloudFileEntity.class, CloudFolderEntity.class, InfoEntity.class, LessonEntity.class, TimetableDayEntity.class, MemberEntity.class}, version = 2, exportSchema = false)
 public abstract class UmireaDatabase extends RoomDatabase {
 
     public abstract LessonDao lessonDao();
@@ -32,6 +34,8 @@ public abstract class UmireaDatabase extends RoomDatabase {
     public abstract TimetableDao timetableDao();
 
     public abstract InfoDao infoDao();
+
+    public abstract ChatDao chatDao();
 
     public abstract MemberDao memberDao();
 
@@ -43,13 +47,11 @@ public abstract class UmireaDatabase extends RoomDatabase {
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public static UmireaDatabase getDatabase(final Context context) {
-        if (INSTANCE == null) {
-            synchronized (UmireaDatabase.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    UmireaDatabase.class, "umirea_database_1").addTypeConverter(new DashboardConverter())
-                            .build();
-                }
+        synchronized (UmireaDatabase.class) {
+            if (INSTANCE == null) {
+                INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                                UmireaDatabase.class, "umirea_database").addTypeConverter(new DashboardConverter())
+                        .build();
             }
         }
         return INSTANCE;

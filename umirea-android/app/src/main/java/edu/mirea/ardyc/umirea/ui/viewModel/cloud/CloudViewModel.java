@@ -24,8 +24,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 import edu.mirea.ardyc.umirea.BuildConfig;
 import edu.mirea.ardyc.umirea.data.model.cloud.CloudFile;
 import edu.mirea.ardyc.umirea.data.model.cloud.CloudFolder;
-import edu.mirea.ardyc.umirea.data.model.net.DataResponse;
+import edu.mirea.ardyc.umirea.data.model.DataResponse;
+import edu.mirea.ardyc.umirea.data.repository.impl.cloud.CloudRepository;
 import edu.mirea.ardyc.umirea.ui.view.AppActivity;
+import edu.mirea.ardyc.umirea.ui.viewModel.AppViewModel;
 
 @HiltViewModel
 public class CloudViewModel extends AndroidViewModel {
@@ -33,14 +35,14 @@ public class CloudViewModel extends AndroidViewModel {
     private MutableLiveData<List<CloudFolder>> cloudMutableLiveData;
     private MutableLiveData<String> messageMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Uri> openFileMutableLiveData = new MutableLiveData<>();
-    private CloudService cloudService;
+    private CloudRepository cloudRepository;
 
     private String currentFolder;
 
     @Inject
-    public CloudViewModel(@NonNull Application application, CloudService cloudService) {
+    public CloudViewModel(@NonNull Application application, CloudRepository cloudRepository) {
         super(application);
-        this.cloudService = cloudService;
+        this.cloudRepository = cloudRepository;
     }
 
     public void setCurrentFolder(String currentFolder) {
@@ -69,7 +71,7 @@ public class CloudViewModel extends AndroidViewModel {
                 inputStream.close();
                 outputStream.close();
                 String userToken = getApplication().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("user_token", "");
-                DataResponse<List<CloudFolder>> cloudFolders = cloudService.uploadFileInFolder(currentFolder, userToken, file);
+                DataResponse<List<CloudFolder>> cloudFolders = cloudRepository.uploadFileInFolder(currentFolder, userToken, file);
                 if (cloudFolders.isError())
                     return;
                 cloudMutableLiveData.postValue(cloudFolders.getData());
@@ -85,7 +87,7 @@ public class CloudViewModel extends AndroidViewModel {
             File folder = new File(getApplication().getFilesDir(), cloudFile.getFolderId());
             File file = new File(folder, cloudFile.getName());
             if (!file.exists()) {
-                DataResponse<InputStream> dataResponse = cloudService.downloadFile(cloudFile.getUuid(), userToken);
+                DataResponse<InputStream> dataResponse = cloudRepository.downloadFile(cloudFile.getUuid(), userToken);
                 if (dataResponse.isError()) {
                     messageMutableLiveData.postValue("Ошибка загрузки файла");
                     return;
@@ -134,9 +136,22 @@ public class CloudViewModel extends AndroidViewModel {
     }
 
     public void createFolder(String name) {
-        List<CloudFolder> folders = cloudMutableLiveData.getValue();
-        folders.add(new CloudFolder(UUID.randomUUID().toString(), name));
-        cloudMutableLiveData.postValue(folders);
+        currentFolder = name;
+        AppViewModel.executorService.execute(() -> {
+            String userToken = getApplication().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("user_token", "");
+            DataResponse<CloudFolder> cloudFolderDataResponse = cloudRepository.createFolder(userToken, name);
+            if (cloudFolderDataResponse.isError()) {
+                messageMutableLiveData.postValue(cloudFolderDataResponse.getMessage());
+                return;
+            }
+            DataResponse<List<CloudFolder>> cloudFolders = cloudRepository.getData(userToken);
+            if (cloudFolderDataResponse.isError()) {
+                messageMutableLiveData.postValue(cloudFolderDataResponse.getMessage());
+                return;
+            }
+            cloudMutableLiveData.postValue(cloudFolders.getData());
+
+        });
     }
 
     public MutableLiveData<List<CloudFolder>> getCloudMutableLiveData() {

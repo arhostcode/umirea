@@ -1,9 +1,11 @@
 package ru.ardyc.schedule.model;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
 import javax.json.JsonArray;
 import java.util.ArrayList;
 import java.util.List;
-
+@RegisterForReflection
 public class Groups {
 
     private List<Group> groups = new ArrayList<>();

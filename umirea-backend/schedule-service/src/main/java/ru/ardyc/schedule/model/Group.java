@@ -1,9 +1,10 @@
 package ru.ardyc.schedule.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 
 import javax.json.JsonObject;
-
+@RegisterForReflection
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Group {
     private String name;

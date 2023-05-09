@@ -7,11 +7,12 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import edu.mirea.ardyc.umirea.data.model.auth.User;
-import edu.mirea.ardyc.umirea.data.model.net.DataResponse;
+import edu.mirea.ardyc.umirea.data.model.DataResponse;
+import edu.mirea.ardyc.umirea.data.repository.impl.auth.UserRepository;
 
 @HiltViewModel
 public class AuthorizationViewModel extends ViewModel {
-    private UserService userService;
+    private UserRepository userRepository;
     private MutableLiveData<User> userMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<String> errorText = new MutableLiveData<>();
 
@@ -27,8 +28,8 @@ public class AuthorizationViewModel extends ViewModel {
 
 
     @Inject
-    public AuthorizationViewModel(UserService userService) {
-        this.userService = userService;
+    public AuthorizationViewModel(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     public void loginToServer(String login, String password) {
@@ -37,12 +38,13 @@ public class AuthorizationViewModel extends ViewModel {
 
         isLoggingIn = true;
         new Thread(() -> {
-            DataResponse<User> user = userService.login(login, password);
+            DataResponse<User> user = userRepository.auth(login, password);
             if (user.getData() == null) {
+                System.out.println(user.getMessage());
                 errorText.postValue(user.getMessage());
             } else {
                 userMutableLiveData.postValue(user.getData());
-                userService.saveUser(user.getData());
+                userRepository.saveUser(user.getData());
             }
             isLoggingIn = false;
         }).start();

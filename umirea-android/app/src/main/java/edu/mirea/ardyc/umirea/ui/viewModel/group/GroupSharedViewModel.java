@@ -12,26 +12,28 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import edu.mirea.ardyc.umirea.data.model.group.Group;
 import edu.mirea.ardyc.umirea.data.model.group.Member;
-import edu.mirea.ardyc.umirea.data.model.net.DataResponse;
+import edu.mirea.ardyc.umirea.data.model.DataResponse;
+import edu.mirea.ardyc.umirea.data.repository.impl.group.GroupRepository;
 import edu.mirea.ardyc.umirea.ui.view.AppActivity;
+import edu.mirea.ardyc.umirea.ui.viewModel.AppViewModel;
 
 @HiltViewModel
 public class GroupSharedViewModel extends AndroidViewModel {
 
-    private final GroupService groupService;
+    private final GroupRepository groupRepository;
     private MutableLiveData<Group> groupMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<String> errorMessageMutableLiveData = new MutableLiveData<>();
 
     @Inject
-    public GroupSharedViewModel(@NonNull Application application, GroupService groupService) {
+    public GroupSharedViewModel(@NonNull Application application, GroupRepository groupRepository) {
         super(application);
-        this.groupService = groupService;
+        this.groupRepository = groupRepository;
         updateGroup();
     }
 
     private void updateGroupSync() {
         String userToken = getApplication().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("user_token", "");
-        DataResponse<Group> groupDataResponse = groupService.loadRemoteGroup(userToken);
+        DataResponse<Group> groupDataResponse = groupRepository.getRemoteGroup(userToken);
         if (groupDataResponse.getData() == null) {
             return;
         }
@@ -51,10 +53,11 @@ public class GroupSharedViewModel extends AndroidViewModel {
     }
 
     public void changeSchedule(String schedule) {
-        new Thread(() -> {
+        AppViewModel.executorService.execute(() -> {
             String userToken = getApplication().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("user_token", "");
             try {
-                DataResponse<Group> groupDataResponse = groupService.changeSchedule(schedule, userToken, groupMutableLiveData.getValue());
+                groupRepository.changeSchedule(userToken, schedule);
+                DataResponse<Group> groupDataResponse = groupRepository.getRemoteGroup(userToken);
                 if (groupDataResponse.isError()) {
                     errorMessageMutableLiveData.postValue("Ошибка при изменении расписания");
                     return;
@@ -64,14 +67,14 @@ public class GroupSharedViewModel extends AndroidViewModel {
             } catch (Exception e) {
                 errorMessageMutableLiveData.postValue("Ошибка при изменении расписания");
             }
-        }).start();
+        });
     }
 
     public void kickMember(Member member) {
         new Thread(() -> {
             String userToken = getApplication().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("user_token", "");
             try {
-                groupService.kickMember(userToken, member.getUuid());
+                groupRepository.kickMember(userToken, member.getUuid());
             } catch (Exception e) {
                 e.printStackTrace();
                 errorMessageMutableLiveData.postValue("Ошибка при изменении расписания");

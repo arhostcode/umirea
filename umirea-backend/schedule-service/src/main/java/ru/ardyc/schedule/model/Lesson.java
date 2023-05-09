@@ -1,12 +1,14 @@
 package ru.ardyc.schedule.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
 import java.util.ArrayList;
 import java.util.List;
+@RegisterForReflection
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Lesson {
     private List<Integer> weeks = new ArrayList<>();
@@ -17,14 +19,14 @@ public class Lesson {
 
 
     public Lesson oddWeeks() {
-        for (int i = 0; i < 16; i += 2) {
+        for (int i = 0; i < 17; i += 2) {
             weeks.add(i);
         }
         return this;
     }
 
     public Lesson evenWeeks() {
-        for (int i = 1; i < 16; i += 2) {
+        for (int i = 1; i < 17; i += 2) {
             weeks.add(i);
         }
         return this;

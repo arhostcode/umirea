@@ -64,6 +64,13 @@
     <string name="manage_members">Управление участниками</string>
     <string name="apply">Применить</string>
     <string name="change_task">Изменить задание</string>
+    <string name="create_info">Создать новость</string>
+    <string name="name">Название</string>
+    <string name="files">Файлы</string>
+    <string name="all">Все</string>
+    <string name="full">Полностью</string>
+    <string name="next">Следующая</string>
+    <string name="current">Сейчас</string>
 
 
 </resources>

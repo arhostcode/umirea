@@ -6,11 +6,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.io.IOException;
-
 import edu.mirea.ardyc.umirea.data.dataSources.DataSource;
 import edu.mirea.ardyc.umirea.data.model.auth.User;
-import edu.mirea.ardyc.umirea.data.model.net.DataResponse;
+import edu.mirea.ardyc.umirea.data.model.DataResponse;
 import edu.mirea.ardyc.umirea.data.net.auth.AuthRemoteService;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -38,6 +36,7 @@ public class RemoteUserDataSource extends DataSource {
             }
             return new DataResponse<>(user);
         } catch (Exception e) {
+            e.printStackTrace();
             return DataResponse.error("Не удалось авторизоваться");
         }
     }

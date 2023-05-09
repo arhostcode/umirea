@@ -1,33 +1,29 @@
 package edu.mirea.ardyc.umirea.data.model.info;
 
-import java.util.UUID;
-
-import edu.mirea.ardyc.umirea.data.model.group.Member;
-
 public class InfoMessage {
 
-    private String id;
+    private String uuid;
     private String name;
-    private String text;
-    private String ownerId;
+    private String message;
+    private String ownerUuid;
 
-    public InfoMessage(String id, String name, String text, String owner) {
-        this.id = id;
+    public InfoMessage(String uuid, String name, String message, String owner) {
+        this.uuid = uuid;
         this.name = name;
-        this.text = text;
-        this.ownerId = owner;
+        this.message = message;
+        this.ownerUuid = owner;
     }
 
-    public String getId() {
-        return id;
+    public String getUuid() {
+        return uuid;
     }
 
-    public String getText() {
-        return text;
+    public String getMessage() {
+        return message;
     }
 
     public String getOwner() {
-        return ownerId;
+        return ownerUuid;
     }
 
     public String getName() {

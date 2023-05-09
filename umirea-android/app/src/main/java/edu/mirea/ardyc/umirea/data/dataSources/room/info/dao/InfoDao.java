@@ -3,16 +3,23 @@ package edu.mirea.ardyc.umirea.data.dataSources.room.info.dao;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
 import java.util.List;
 
 import edu.mirea.ardyc.umirea.data.dataSources.room.info.entities.InfoEntity;
+import edu.mirea.ardyc.umirea.data.model.info.InfoMessage;
 
 @Dao
 public abstract class InfoDao {
 
     @Query("SELECT * FROM info")
     public abstract List<InfoEntity> getAll();
+
+    @Transaction
+    public void insertAll(List<InfoMessage> infoMessages) {
+        infoMessages.stream().map(InfoEntity::fromInfo).forEach(this::insert);
+    }
 
     @Insert
     public abstract void insert(InfoEntity entity);
@@ -22,4 +29,5 @@ public abstract class InfoDao {
 
     @Query("DELETE FROM info")
     public abstract void clearAll();
+
 }

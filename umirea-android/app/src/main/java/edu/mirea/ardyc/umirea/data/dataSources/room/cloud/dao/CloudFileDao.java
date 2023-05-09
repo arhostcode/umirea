@@ -16,6 +16,7 @@ import edu.mirea.ardyc.umirea.data.model.cloud.CloudFolder;
 @Dao
 public abstract class CloudFileDao {
 
+    @Transaction
     @Query("SELECT * FROM cloud_folders")
     public abstract List<FileWithFolder> getFolders();
 

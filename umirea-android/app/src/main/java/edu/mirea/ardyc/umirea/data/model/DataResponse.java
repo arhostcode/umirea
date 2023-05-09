@@ -1,4 +1,4 @@
-package edu.mirea.ardyc.umirea.data.model.net;
+package edu.mirea.ardyc.umirea.data.model;
 
 public class DataResponse<T> {
     private final T data;

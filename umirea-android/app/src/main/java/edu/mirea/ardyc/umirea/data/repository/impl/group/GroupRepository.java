@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import edu.mirea.ardyc.umirea.data.dataSources.group.GroupDataSource;
 import edu.mirea.ardyc.umirea.data.dataSources.group.RemoteGroupDataSource;
 import edu.mirea.ardyc.umirea.data.model.group.Group;
-import edu.mirea.ardyc.umirea.data.model.net.DataResponse;
+import edu.mirea.ardyc.umirea.data.model.DataResponse;
 import edu.mirea.ardyc.umirea.data.repository.Repository;
 
 public class GroupRepository extends Repository {
@@ -31,7 +31,11 @@ public class GroupRepository extends Repository {
 
 
     public DataResponse<Group> createGroup(String userToken, String groupTimetable, String groupName) {
-        return remoteGroupDataSource.connectToGroup(userToken, groupTimetable, groupName);
+        try {
+            return remoteGroupDataSource.createGroup(userToken, groupTimetable, groupName);
+        } catch (Exception e) {
+            return new DataResponse<>(null, "Создание группы не удалось");
+        }
     }
 
     public void saveGroup(Group group) {
@@ -39,7 +43,11 @@ public class GroupRepository extends Repository {
     }
 
     public DataResponse<Group> connectToGroup(String userToken, String groupName, String groupToken) {
-        return remoteGroupDataSource.connectToGroup(userToken, groupName, groupToken);
+        try {
+            return remoteGroupDataSource.connectToGroup(userToken, groupName, groupToken);
+        } catch (Exception e) {
+            return new DataResponse<>(null, "Подключение к группе не удалось");
+        }
     }
 
     public void removeGroup() {

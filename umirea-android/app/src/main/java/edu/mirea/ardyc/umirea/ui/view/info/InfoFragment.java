@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import dagger.hilt.android.AndroidEntryPoint;
 import edu.mirea.ardyc.umirea.databinding.FragmentInfoBinding;
 import edu.mirea.ardyc.umirea.ui.view.info.adapters.InfoMessagesAdapter;
+import edu.mirea.ardyc.umirea.ui.view.info.dialogs.CreateInfoDialog;
 import edu.mirea.ardyc.umirea.ui.viewModel.AppSharedViewModel;
 import edu.mirea.ardyc.umirea.ui.viewModel.info.InfoViewModel;
+import es.dmoral.toasty.Toasty;
 
 @AndroidEntryPoint
 public class InfoFragment extends Fragment {
@@ -29,15 +31,31 @@ public class InfoFragment extends Fragment {
         AppSharedViewModel appSharedViewModel = new ViewModelProvider(requireActivity()).get(AppSharedViewModel.class);
         binding = FragmentInfoBinding.inflate(inflater, container, false);
         infoMessagesAdapter = new InfoMessagesAdapter(null);
+        infoMessagesAdapter.setGroup(appSharedViewModel.getGroupMutableLiveData().getValue());
         binding.infoMessages.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.infoMessages.setAdapter(infoMessagesAdapter);
+
         appSharedViewModel.getListInfoMutableLiveData().observe(getViewLifecycleOwner(), (val) -> {
-            System.out.println(val + "  asd as sddddddddddddddddddddddddd]");
             infoMessagesAdapter.update(val);
         });
 
-        View root = binding.getRoot();
+        infoViewModel.setInfo(appSharedViewModel.getListInfoMutableLiveData());
 
+        binding.addInfo.setOnClickListener((view) -> {
+            CreateInfoDialog dialog = new CreateInfoDialog(requireContext());
+            dialog.setInfoContentConsumer(infoViewModel::createInfo);
+            dialog.show();
+        });
+
+        infoViewModel.getError().observe(getViewLifecycleOwner(), (val) -> {
+            if (val == null || val.isEmpty()) {
+                return;
+            }
+            Toasty.info(requireContext(), val).show();
+            infoViewModel.getError().setValue(null);
+        });
+
+        View root = binding.getRoot();
         return root;
     }
 

@@ -11,7 +11,10 @@ public class Chat {
         return chatMessages;
     }
 
-    public void addMessage(ChatMessage message) {
-        chatMessages.add(message);
+    public Chat(List<ChatMessage> chatMessages) {
+        this.chatMessages = chatMessages;
+    }
+
+    public Chat() {
     }
 }

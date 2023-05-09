@@ -10,7 +10,7 @@ import edu.mirea.ardyc.umirea.data.dataSources.room.UmireaDatabase;
 import edu.mirea.ardyc.umirea.data.dataSources.room.group.entities.MemberEntity;
 import edu.mirea.ardyc.umirea.data.model.group.Group;
 import edu.mirea.ardyc.umirea.data.model.group.Member;
-import edu.mirea.ardyc.umirea.data.model.net.DataResponse;
+import edu.mirea.ardyc.umirea.data.model.DataResponse;
 import edu.mirea.ardyc.umirea.ui.view.AppActivity;
 
 public class GroupDataSource extends DataSource {

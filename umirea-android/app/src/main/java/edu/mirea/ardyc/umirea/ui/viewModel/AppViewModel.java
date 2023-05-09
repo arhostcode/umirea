@@ -19,19 +19,20 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import edu.mirea.ardyc.umirea.data.model.auth.User;
 import edu.mirea.ardyc.umirea.data.model.chat.Chat;
+import edu.mirea.ardyc.umirea.data.model.chat.ChatMessage;
 import edu.mirea.ardyc.umirea.data.model.cloud.CloudFolder;
 import edu.mirea.ardyc.umirea.data.model.group.Group;
 import edu.mirea.ardyc.umirea.data.model.info.InfoMessage;
-import edu.mirea.ardyc.umirea.data.model.net.DataResponse;
+import edu.mirea.ardyc.umirea.data.model.DataResponse;
 import edu.mirea.ardyc.umirea.data.model.timetable.Timetable;
+import edu.mirea.ardyc.umirea.data.model.timetable.date.DateLesson;
+import edu.mirea.ardyc.umirea.data.repository.impl.auth.UserRepository;
 import edu.mirea.ardyc.umirea.data.repository.impl.chat.ChatRepository;
-import edu.mirea.ardyc.umirea.data.repository.impl.chat.LocalChatRepository;
+import edu.mirea.ardyc.umirea.data.repository.impl.cloud.CloudRepository;
+import edu.mirea.ardyc.umirea.data.repository.impl.group.GroupRepository;
+import edu.mirea.ardyc.umirea.data.repository.impl.info.InfoRepository;
+import edu.mirea.ardyc.umirea.data.repository.impl.timetable.DashboardRepository;
 import edu.mirea.ardyc.umirea.ui.view.AppActivity;
-import edu.mirea.ardyc.umirea.ui.viewModel.auth.UserService;
-import edu.mirea.ardyc.umirea.ui.viewModel.cloud.CloudService;
-import edu.mirea.ardyc.umirea.ui.viewModel.dashboard.DashboardService;
-import edu.mirea.ardyc.umirea.ui.viewModel.group.GroupService;
-import edu.mirea.ardyc.umirea.ui.viewModel.info.InfoService;
 
 @HiltViewModel
 public class AppViewModel extends AndroidViewModel {
@@ -39,44 +40,47 @@ public class AppViewModel extends AndroidViewModel {
     private static final int NUMBER_OF_THREADS = 2;
     public static ExecutorService executorService = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    public static ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(2);
+    private ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(2);
 
     private MutableLiveData<Timetable> timetableMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Group> groupMutableLiveData = new MutableLiveData<>(new Group());
     private MutableLiveData<Chat> chatMutableLiveData = new MutableLiveData<>(new Chat());
     private MutableLiveData<List<CloudFolder>> cloudFolderMutableLiveData = new MutableLiveData<>();
-    private MutableLiveData<List<InfoMessage>> infoMessages;
+    private MutableLiveData<List<InfoMessage>> infoMessages = new MutableLiveData<>();
     private MutableLiveData<User> userMutableLiveData = new MutableLiveData<>(new User("", "", "", "", "", ""));
-
     private MutableLiveData<String> errorMessage = new MutableLiveData<>();
 
     private boolean isHostConnected = true;
 
     //Repositories
     private ChatRepository chatRepository;
-    private InfoService infoService;
-    private DashboardService dashboardService;
-    private GroupService groupService;
-
-    private CloudService cloudService;
+    private InfoRepository infoRepository;
+    private UserRepository userRepository;
+    private DashboardRepository dashboardRepository;
+    private GroupRepository groupRepository;
+    private CloudRepository cloudRepository;
 
     @Inject
-    public AppViewModel(@NonNull Application application, InfoService infoService, DashboardService dashboardService, UserService userService, GroupService groupService, CloudService cloudService) {
+    public AppViewModel(@NonNull Application application, InfoRepository infoRepository, ChatRepository chatRepository, DashboardRepository dashboardRepository, UserRepository userRepository, GroupRepository groupRepository, CloudRepository cloudRepository) {
         super(application);
-        this.dashboardService = dashboardService;
-        this.infoService = infoService;
-        this.groupService = groupService;
-        this.cloudService = cloudService;
-        dashboardService.initTimetableData(timetableMutableLiveData);
-        infoMessages = infoService.getMutableInfoData();
+        this.dashboardRepository = dashboardRepository;
+        this.chatRepository = chatRepository;
+        this.groupRepository = groupRepository;
+        this.cloudRepository = cloudRepository;
+        this.userRepository = userRepository;
+        this.infoRepository = infoRepository;
+
         initLocalData();
-        initUser(userService);
+        initUser();
     }
 
     private void initLocalData() {
         executorService.execute(() -> {
-            groupMutableLiveData.postValue(groupService.loadLocalGroup().getData());
-            cloudFolderMutableLiveData.postValue(cloudService.loadLocalFolders().getData());
+            groupMutableLiveData.postValue(groupRepository.getLocalGroup().getData());
+            cloudFolderMutableLiveData.postValue(cloudRepository.loadLocalFolders().getData());
+            chatMutableLiveData.postValue(new Chat(chatRepository.loadChatMessagesLocal().getData()));
+            infoMessages.postValue(infoRepository.loadInfoLocal().getData());
+            timetableMutableLiveData.postValue(dashboardRepository.getLocalDashboard().getData());
         });
     }
 
@@ -84,7 +88,8 @@ public class AppViewModel extends AndroidViewModel {
         scheduledExecutorService.scheduleAtFixedRate(() -> {
             try {
                 initGroup(user);
-                initChatData(user);
+                initDashboard(user);
+                initInfo(user);
                 initCloud(user);
 
                 if (!isHostConnected)
@@ -97,30 +102,42 @@ public class AppViewModel extends AndroidViewModel {
                 isHostConnected = false;
             }
         }, 0, 10, TimeUnit.SECONDS);
+
+        scheduledExecutorService.scheduleAtFixedRate(() -> initChat(user), 0, 1, TimeUnit.SECONDS);
+    }
+
+    private void initDashboard(User user) {
+        DataResponse<Timetable> dashboard = dashboardRepository.loadDashboard(user.getToken());
+        if (!dashboard.isError()) {
+            timetableMutableLiveData.postValue(dashboard.getData());
+
+        }
+        DataResponse<List<DateLesson>> dataResponse = dashboardRepository.loadAddonLessons(user.getToken());
+        if (!dataResponse.isError()) {
+            dashboardRepository.loadHomeworks(user.getToken());
+            dashboardRepository.loadNotes(user.getToken());
+            timetableMutableLiveData.postValue(dashboardRepository.getLocalDashboard().getData());
+        }
     }
 
 
-    private void initUser(UserService userService) {
+    private void initUser() {
         executorService.execute(() -> {
             String token = getApplication().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("user_token", null);
             if (token == null) {
                 userMutableLiveData.setValue(null);
                 return;
             }
-            DataResponse<User> user = userService.getInfo(token);
+            DataResponse<User> user = userRepository.getInfo(token);
             if (!user.isError()) {
                 userMutableLiveData.postValue(user.getData());
             }
         });
     }
 
-    private void initChatData(User user) {
-        chatRepository = new LocalChatRepository(getApplication());
-//        chatMutableLiveData.setValue(chatRepository.getData());
-    }
 
     private void initCloud(User user) throws Exception {
-        DataResponse<List<CloudFolder>> cloudFolders = cloudService.getFolders(user.getToken());
+        DataResponse<List<CloudFolder>> cloudFolders = cloudRepository.getData(user.getToken());
         if (cloudFolders.getData() != null) {
             List<CloudFolder> cloudFolder = cloudFolders.getData();
             cloudFolderMutableLiveData.postValue(cloudFolder);
@@ -129,8 +146,32 @@ public class AppViewModel extends AndroidViewModel {
         throw new Exception("Failed to load cloud folders");
     }
 
+    private void initChat(User user) {
+        Chat chat = chatMutableLiveData.getValue();
+        if (chat == null)
+            return;
+        DataResponse<List<ChatMessage>> chatMessages = chatRepository.loadChatMessages(user.getToken());
+        if (chatMessages.getData() != null) {
+            chat.getChatMessages().addAll(chatMessages.getData());
+            if (chatMessages.getData().size() > 0)
+                chatMutableLiveData.postValue(chat);
+        }
+    }
+
+    private void initInfo(User user) {
+        List<InfoMessage> messages = infoMessages.getValue();
+        if (messages == null)
+            return;
+        DataResponse<List<InfoMessage>> infoMessagesList = infoRepository.loadInfo(user.getToken());
+        if (infoMessagesList.getData() != null) {
+            messages.addAll(infoMessagesList.getData());
+            if (infoMessagesList.getData().size() > 0)
+                infoMessages.postValue(messages);
+        }
+    }
+
     private void initGroup(User user) throws Exception {
-        DataResponse<Group> group = groupService.loadRemoteGroup(user.getToken());
+        DataResponse<Group> group = groupRepository.getRemoteGroup(user.getToken());
         if (!group.isError()) {
             groupMutableLiveData.postValue(group.getData());
             return;
@@ -165,5 +206,9 @@ public class AppViewModel extends AndroidViewModel {
 
     public MutableLiveData<String> getErrorMessage() {
         return errorMessage;
+    }
+
+    public void shutdown() {
+        scheduledExecutorService.shutdown();
     }
 }

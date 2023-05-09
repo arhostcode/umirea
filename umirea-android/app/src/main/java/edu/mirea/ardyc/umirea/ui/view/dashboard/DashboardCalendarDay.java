@@ -28,7 +28,7 @@ public class DashboardCalendarDay extends View {
     public DashboardCalendarDay(Context context) {
         super(context);
         this.context = context;
-        setLayoutParams(new LinearLayout.LayoutParams(60, 80, 1));
+        setLayoutParams(new LinearLayout.LayoutParams(60, 90, 1));
     }
 
     public DashboardCalendarDay(Context context, @Nullable AttributeSet attrs) {
@@ -51,11 +51,11 @@ public class DashboardCalendarDay extends View {
     protected void onDraw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(color);
-        paint.setTextSize(30);
+        paint.setTextSize(40);
         int off = date / 10;
         if (off > 0)
             off = 1;
-        canvas.drawText(text, getWidth() / 2f - 10 - 11 * off, 30, paint);
+        canvas.drawText(text, getWidth() / 2f - 12 - 11 * off, 40, paint);
         for (int i = 0; i < lessonsCount; i++) {
             float circleSize = getWidth() / 15f;
             canvas.drawCircle((getWidth() / 2f - lessonsCount * circleSize) + (circleSize + i * circleSize * 2), getHeight() - 20, getWidth() / 15f, paint);

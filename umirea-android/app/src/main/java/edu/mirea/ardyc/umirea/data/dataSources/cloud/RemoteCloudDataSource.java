@@ -1,7 +1,6 @@
 package edu.mirea.ardyc.umirea.data.dataSources.cloud;
 
 import android.content.Context;
-import android.net.Uri;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -10,11 +9,11 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.InputStream;
-import java.net.URLConnection;
 import java.util.List;
 
+import edu.mirea.ardyc.umirea.data.dataSources.DataSource;
 import edu.mirea.ardyc.umirea.data.model.cloud.CloudFolder;
-import edu.mirea.ardyc.umirea.data.model.net.DataResponse;
+import edu.mirea.ardyc.umirea.data.model.DataResponse;
 import edu.mirea.ardyc.umirea.data.net.cloud.CloudRemoteService;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -22,9 +21,8 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
-import retrofit2.http.Part;
 
-public class RemoteCloudDataSource extends CloudDataSource {
+public class RemoteCloudDataSource extends DataSource {
 
     public CloudRemoteService cloudRemoteService;
 
@@ -38,13 +36,11 @@ public class RemoteCloudDataSource extends CloudDataSource {
         Call<JsonObject> foldersCall = cloudRemoteService.getFolders(userToken);
         try {
             Response<JsonObject> response = foldersCall.execute();
-            System.out.println(response.body());
             JsonElement code = response.body().get("code");
             JsonElement message = response.body().get("message");
             if (code.getAsInt() == 0) {
                 cloudFolders = new Gson().fromJson(message, new TypeToken<List<CloudFolder>>() {
                 }.getType());
-                saveData(cloudFolders);
                 return new DataResponse<>(cloudFolders);
             }
             return new DataResponse<>(null, message.getAsString());
@@ -65,7 +61,6 @@ public class RemoteCloudDataSource extends CloudDataSource {
             Response<JsonObject> response = foldersCall.execute();
             JsonElement code = response.body().get("code");
             JsonElement message = response.body().get("message");
-            System.out.println(response);
             if (code.getAsInt() == 0) {
                 return getData(userToken);
             }
@@ -84,6 +79,22 @@ public class RemoteCloudDataSource extends CloudDataSource {
             return new DataResponse<>(response.body().byteStream());
         } catch (Exception e) {
             return new DataResponse<>(null, "Ошибка загрузки файла");
+        }
+    }
+
+    public DataResponse<CloudFolder> createFolder(String userToken, String name) {
+        try {
+            Call<JsonObject> createFolderCall = cloudRemoteService.createFolder(userToken, name);
+            Response<JsonObject> response = createFolderCall.execute();
+            JsonElement code = response.body().get("code");
+            JsonElement message = response.body().get("message");
+            if (code.getAsInt() == 0) {
+                return new DataResponse<>(new Gson().fromJson(message, CloudFolder.class));
+            }
+            return new DataResponse<>(null, message.getAsString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new DataResponse<>(null, "Ошибка создания папки");
         }
     }
 }

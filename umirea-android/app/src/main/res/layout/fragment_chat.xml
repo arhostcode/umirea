@@ -79,6 +79,7 @@
             android:layout_height="match_parent" />
 
         <EditText
+            android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/chat_field"
@@ -95,6 +96,7 @@
             android:layout_height="match_parent" />
 
         <ImageView
+            android:id="@+id/send"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/arrow_right" />

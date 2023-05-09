@@ -17,6 +17,7 @@ import edu.mirea.ardyc.umirea.ui.view.AppActivity;
 import edu.mirea.ardyc.umirea.ui.view.auth.AuthorizationActivity;
 import edu.mirea.ardyc.umirea.ui.view.group.GroupManagementActivity;
 import edu.mirea.ardyc.umirea.ui.viewModel.AppSharedViewModel;
+import edu.mirea.ardyc.umirea.ui.viewModel.AppViewModel;
 import edu.mirea.ardyc.umirea.ui.viewModel.account.AccountViewModel;
 import edu.mirea.ardyc.umirea.ui.viewModel.chat.ChatViewModel;
 
@@ -32,8 +33,10 @@ public class AccountFragment extends Fragment {
         String id = requireActivity().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("user_uuid", "");
 
         AppSharedViewModel appSharedViewModel = new ViewModelProvider(requireActivity()).get(AppSharedViewModel.class);
+        AppViewModel appViewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
         appSharedViewModel.getGroupMutableLiveData().observe(getViewLifecycleOwner(), (val) -> {
-            System.out.println(val);
+            if (val == null || val.getMembers().isEmpty())
+                return;
             binding.myGroup.setText(String.format(getResources().getString(R.string.user_group), val.getName()));
             binding.myRole.setText(String.format(getResources().getString(R.string.user_role), getRussianRole(val.getById(id).getRole())));
             if (!val.getById(id).getRole().equals("owner"))
@@ -52,9 +55,10 @@ public class AccountFragment extends Fragment {
             requireActivity().overridePendingTransition(0, 0);
         });
         binding.exitAccount.setOnClickListener((view) -> {
-            accountViewModel.removeUserData();
+            appViewModel.shutdown();
             startActivity(new Intent(requireActivity(), AuthorizationActivity.class));
             requireActivity().finish();
+            accountViewModel.removeUserData();
         });
         return root;
     }

@@ -12,27 +12,32 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import edu.mirea.ardyc.umirea.data.model.group.Group;
-import edu.mirea.ardyc.umirea.ui.viewModel.UmireaApplication;
-import edu.mirea.ardyc.umirea.ui.viewModel.dashboard.DashboardService;
+import edu.mirea.ardyc.umirea.data.repository.impl.timetable.DashboardRepository;
+import edu.mirea.ardyc.umirea.ui.viewModel.AppViewModel;
 
 
 @HiltViewModel
 public class GroupChangeScheduleViewModel extends AndroidViewModel {
 
     private MutableLiveData<Group> groupMutableLiveData;
-    private DashboardService dashboardService;
+    MutableLiveData<List<String>> groupSchedulesList = new MutableLiveData<>();
+
+    private DashboardRepository dashboardRepository;
 
     @Inject
-    public GroupChangeScheduleViewModel(Application application, DashboardService dashboardService) {
+    public GroupChangeScheduleViewModel(Application application, DashboardRepository dashboardService) {
         super(application);
-        this.dashboardService = dashboardService;
+        this.dashboardRepository = dashboardService;
+        initGroupsList();
+    }
+
+    private void initGroupsList() {
+        AppViewModel.executorService.execute(() -> {
+            groupSchedulesList.postValue(dashboardRepository.listGroupsSchedules().getData());
+        });
     }
 
     public LiveData<List<String>> getGroups() {
-        MutableLiveData<List<String>> groupSchedulesList = new MutableLiveData<>();
-        new Thread(() -> {
-            groupSchedulesList.postValue(dashboardService.getGroupsSchedules());
-        }).start();
         return groupSchedulesList;
     }
 
