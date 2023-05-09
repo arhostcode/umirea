@@ -4,18 +4,13 @@ import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.List;
 
 import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.data.model.chat.Chat;
-import edu.mirea.ardyc.umirea.data.model.cloud.CloudFile;
 import edu.mirea.ardyc.umirea.data.model.group.Group;
 
 public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.ViewHolder> {
@@ -40,12 +35,15 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
     @Override
     public void onBindViewHolder(@NonNull ChatMessageAdapter.ViewHolder holder, int position) {
         if (chat != null) {
-            if (group.getById(chat.getChatMessages().get(position).getSender()) != null) {
+            if (group.getById(chat.getChatMessages().get(position).getOwnerUuid()) != null) {
                 Resources resources = holder.message.getResources();
-                String userFullName = String.format(resources.getString(R.string.user_full_name),group.getById(chat.getChatMessages().get(position).getSender()).getFirstName(), group.getById(chat.getChatMessages().get(position).getSender()).getLastName());
+                String userFullName = String.format(resources.getString(R.string.user_full_name), group.getById(chat.getChatMessages().get(position).getOwnerUuid()).getFirstName(), group.getById(chat.getChatMessages().get(position).getOwnerUuid()).getLastName());
                 holder.getName().setText(userFullName);
-                holder.getMessage().setText(chat.getChatMessages().get(position).getMessage());
+            } else {
+                holder.getName().setText("Пользователь Удалён");
             }
+            holder.getMessage().setText(chat.getChatMessages().get(position).getMessage());
+
         }
     }
 

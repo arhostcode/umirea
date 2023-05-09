@@ -31,7 +31,9 @@ public class GroupMemberSettings extends Fragment {
         binding = FragmentGroupMemberSettingsBinding.inflate(getLayoutInflater());
         viewModel = new ViewModelProvider(requireActivity()).get(GroupMemberSettingsViewModel.class);
         GroupSharedViewModel groupSharedViewModel = new ViewModelProvider(requireActivity()).get(GroupSharedViewModel.class);
-        binding.members.setAdapter(new MemberListAdapter(null));
+        MemberListAdapter adapter = new MemberListAdapter(null);
+        adapter.setMemberConsumer(groupSharedViewModel::kickMember);
+        binding.members.setAdapter(adapter);
         binding.members.setLayoutManager(new LinearLayoutManager(requireContext()));
         groupSharedViewModel.getGroupMutableLiveData().observe(getViewLifecycleOwner(), (val) -> {
             ((MemberListAdapter) binding.members.getAdapter()).update(val);

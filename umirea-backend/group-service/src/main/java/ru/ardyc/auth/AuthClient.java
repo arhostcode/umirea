@@ -7,21 +7,20 @@ import javax.ws.rs.core.MediaType;
 
 @RegisterRestClient
 public interface AuthClient {
-    @GET
-    @Path("auth/login")
-    @Produces(MediaType.APPLICATION_JSON)
-    String login(@QueryParam("login") String login, @QueryParam("password") String password);
-
-
-    @GET
-    @Path("auth/register")
-    @Produces(MediaType.APPLICATION_JSON)
-    String register(@QueryParam("login") String login, @QueryParam("password") String password, @QueryParam("educationGroup") String educationGroup, @QueryParam("firstName") String firstName, @QueryParam("lastName") String lastName, @QueryParam("imageId") String imageId, @QueryParam("role") String role);
 
     @GET
     @Path("user/getInfo")
     @Produces(MediaType.APPLICATION_JSON)
     String getInfo(@QueryParam("token") String token);
+
+    @GET
+    @Path("user/getInfoByUUID")
+    @Produces(MediaType.APPLICATION_JSON)
+    String getInfoByUUID(@QueryParam("uuid") String uuid);
+
+    @POST
+    @Path("user/setGroup")
+    void setGroup(@QueryParam("token") String token, @QueryParam("group") String group);
 
 
 }

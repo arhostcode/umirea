@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/midnight_express"
-    android:orientation="vertical"
-    tools:context=".ui.view.cloud.CloudFragment">
+    android:orientation="vertical">
 
 
     <LinearLayout
@@ -18,7 +17,7 @@
         android:paddingEnd="15dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:paddingStart="30dp"
@@ -62,20 +61,19 @@
                     android:id="@+id/my_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Дмиртий Кашеварин"
-
+                    android:text="@string/user_full_name"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Изменить изображение"
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/change_image"-->
 
-                    android:textColor="@color/gray"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+<!--                    android:textColor="@color/gray"-->
+<!--                    android:textSize="14sp"-->
+<!--                    android:textStyle="bold" />-->
 
 
             </LinearLayout>
@@ -91,7 +89,7 @@
                 android:id="@+id/my_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Группа - ИКБО-04-22"
+                android:text="@string/user_group"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -100,7 +98,7 @@
                 android:id="@+id/my_mail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Почта - fucking_slave@edu.mirea.ru"
+                android:text="@string/user_login"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -109,7 +107,7 @@
                 android:id="@+id/my_role"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Роль - староста"
+                android:text="@string/user_role"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -122,17 +120,17 @@
             android:layout_height="25dp"
             android:layout_marginTop="15dp"
             android:paddingHorizontal="10dp"
-            android:text="Выйти из аккаунта"
+            android:text="@string/logout"
             android:textSize="12sp" />
 
-        <Button
-            style="@style/ColoredButton"
-            android:layout_width="160dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="10dp"
-            android:paddingHorizontal="10dp"
-            android:text="@string/delete_account"
-            android:textSize="12sp" />
+<!--        <Button-->
+<!--            style="@style/ColoredButton"-->
+<!--            android:layout_width="160dp"-->
+<!--            android:layout_height="25dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:paddingHorizontal="10dp"-->
+<!--            android:text="@string/delete_account"-->
+<!--            android:textSize="12sp" />-->
 
 
         <Button

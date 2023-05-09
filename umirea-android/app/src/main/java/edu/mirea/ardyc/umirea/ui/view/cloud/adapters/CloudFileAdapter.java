@@ -11,6 +11,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.data.model.cloud.CloudFile;
@@ -18,6 +19,7 @@ import edu.mirea.ardyc.umirea.data.model.cloud.CloudFile;
 public class CloudFileAdapter extends RecyclerView.Adapter<CloudFileAdapter.ViewHolder> {
 
     private List<CloudFile> files;
+    private Consumer<CloudFile> cloudFileConsumer;
 
     public CloudFileAdapter(List<CloudFile> files) {
         this.files = files;
@@ -36,6 +38,7 @@ public class CloudFileAdapter extends RecyclerView.Adapter<CloudFileAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.getFileName().setText(files.get(position).getName());
         holder.getFileIcon().setImageDrawable(ResourcesCompat.getDrawable(holder.fileIcon.getResources(), R.drawable.hw_icon, null));
+        holder.getItemView().setOnClickListener(v -> cloudFileConsumer.accept(files.get(position)));
     }
 
     @Override
@@ -48,11 +51,13 @@ public class CloudFileAdapter extends RecyclerView.Adapter<CloudFileAdapter.View
         private final TextView fileName;
         private final ImageView fileIcon;
 
+        private final View itemView;
 
         public ViewHolder(View view) {
             super(view);
             fileName = view.findViewById(R.id.file_name);
             fileIcon = view.findViewById(R.id.file_icon);
+            itemView = view;
         }
 
         public TextView getFileName() {
@@ -63,6 +68,9 @@ public class CloudFileAdapter extends RecyclerView.Adapter<CloudFileAdapter.View
             return fileIcon;
         }
 
+        public View getItemView() {
+            return itemView;
+        }
     }
 
     public void update(List<CloudFile> files) {
@@ -70,4 +78,7 @@ public class CloudFileAdapter extends RecyclerView.Adapter<CloudFileAdapter.View
         notifyDataSetChanged();
     }
 
+    public void setCloudFileConsumer(Consumer<CloudFile> cloudFileConsumer) {
+        this.cloudFileConsumer = cloudFileConsumer;
+    }
 }

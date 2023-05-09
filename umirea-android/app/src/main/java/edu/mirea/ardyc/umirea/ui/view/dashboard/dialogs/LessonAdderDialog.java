@@ -18,12 +18,12 @@ import java.util.List;
 import java.util.Objects;
 
 import edu.mirea.ardyc.umirea.R;
-import edu.mirea.ardyc.umirea.databinding.BottomSheetLayoutBinding;
+import edu.mirea.ardyc.umirea.databinding.LessonCreatorDialogBinding;
 import edu.mirea.ardyc.umirea.ui.view.dashboard.adapters.LessonDatesAdapter;
 
 public class LessonAdderDialog extends BottomSheetDialog {
 
-    private BottomSheetLayoutBinding binding;
+    private LessonCreatorDialogBinding binding;
     private List<String> dates = new ArrayList<>();
 
     private LessonDialogProcessor processor;
@@ -31,14 +31,13 @@ public class LessonAdderDialog extends BottomSheetDialog {
     public LessonAdderDialog(@NonNull Context context, LessonDialogProcessor processor) {
         super(context, R.style.BottomSheetDialog);
         this.processor = processor;
-        binding = BottomSheetLayoutBinding.inflate(getLayoutInflater());
+        binding = LessonCreatorDialogBinding.inflate(getLayoutInflater());
 
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         binding.lessonTimes.setAdapter(new LessonDatesAdapter(dates));
         binding.lessonTimes.setLayoutManager(new LinearLayoutManager(getContext()));
 
         initButtons();
-
         setContentView(binding.getRoot());
     }
 

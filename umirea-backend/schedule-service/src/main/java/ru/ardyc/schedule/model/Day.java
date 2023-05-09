@@ -1,12 +1,13 @@
 package ru.ardyc.schedule.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
-
+@RegisterForReflection
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Day {
 

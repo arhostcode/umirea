@@ -15,6 +15,12 @@ import androidx.navigation.fragment.NavHostFragment;
 import java.time.LocalDateTime;
 
 import edu.mirea.ardyc.umirea.R;
+import edu.mirea.ardyc.umirea.data.model.chat.ChatMessage;
+import edu.mirea.ardyc.umirea.data.model.cloud.CloudFile;
+import edu.mirea.ardyc.umirea.data.model.cloud.CloudFolder;
+import edu.mirea.ardyc.umirea.data.model.group.Group;
+import edu.mirea.ardyc.umirea.data.model.group.Member;
+import edu.mirea.ardyc.umirea.data.model.info.InfoMessage;
 import edu.mirea.ardyc.umirea.data.model.timetable.Lesson;
 import edu.mirea.ardyc.umirea.data.model.timetable.LessonTime;
 import edu.mirea.ardyc.umirea.data.model.timetable.TimetableDay;
@@ -76,6 +82,52 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        appSharedViewModel.getChatMutableLiveData().observe(getViewLifecycleOwner(), chat -> {
+            Group group = appSharedViewModel.getGroupMutableLiveData().getValue();
+            if (chat.getChatMessages().size() == 0)
+                return;
+            if (group != null) {
+                ChatMessage message = chat.getChatMessages().get(chat.getChatMessages().size() - 1);
+                Member member = group.getById(message.getOwnerUuid());
+                if (member == null) {
+                    binding.messageName.setText("Пользователь Удалён");
+                } else {
+                    binding.messageName.setText(String.format(getResources().getString(R.string.user_full_name), member.getFirstName(), member.getLastName()));
+                }
+                binding.message.setText(message.getMessage());
+            }
+
+        });
+
+        appSharedViewModel.getListInfoMutableLiveData().observe(getViewLifecycleOwner(), infoMessages -> {
+            Group group = appSharedViewModel.getGroupMutableLiveData().getValue();
+            if (infoMessages == null || infoMessages.size() == 0)
+                return;
+            if (group != null) {
+                InfoMessage message = infoMessages.get(infoMessages.size() - 1);
+                Member member = group.getById(message.getOwner());
+                if (member == null) {
+                    binding.infoOwner.setText("Пользователь Удалён");
+                } else {
+                    binding.infoOwner.setText(String.format(getResources().getString(R.string.user_full_name), member.getFirstName(), member.getLastName()));
+                }
+                binding.infoTitle.setText(message.getName());
+                binding.infoText.setText(message.getMessage());
+            }
+
+        });
+
+        appSharedViewModel.getCloudFolderMutableLiveData().observe(getViewLifecycleOwner(), cloudFolders -> {
+            if (cloudFolders == null || cloudFolders.isEmpty())
+                return;
+            CloudFolder folder = cloudFolders.get(cloudFolders.size() - 1);
+            if (folder.getFiles() == null || folder.getFiles().isEmpty())
+                return;
+            CloudFile file = folder.getFiles().get(folder.getFiles().size() - 1);
+            if (file == null)
+                return;
+            binding.lastFile.setText(file.getName());
+        });
         return root;
     }
 

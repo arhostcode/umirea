@@ -1,5 +1,8 @@
 package ru.ardyc.response;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
+@RegisterForReflection
 public class MessageResponse extends Response {
     private Object message;
 

@@ -3,6 +3,8 @@ package edu.mirea.ardyc.umirea.ui.view.auth.fragments.hello;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import android.view.ViewGroup;
 
 import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.databinding.FragmentHelloBinding;
+import edu.mirea.ardyc.umirea.ui.view.AppActivity;
 import edu.mirea.ardyc.umirea.ui.viewModel.auth.HelloViewModel;
 
 public class HelloFragment extends Fragment {
@@ -36,8 +39,20 @@ public class HelloFragment extends Fragment {
 
     private void initObservers() {
         isInitialized.observe(getViewLifecycleOwner(), (val) -> {
-            if (val)
-                NavHostFragment.findNavController(this).navigate(R.id.action_navigation_hello_to_navigation_authorization);
+            if (val) {
+                String token = requireActivity().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("user_token", "null");
+                if (token.equals("null")) {
+                    NavHostFragment.findNavController(this).navigate(R.id.action_navigation_hello_to_navigation_authorization);
+                    return;
+                }
+                String group = requireActivity().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("user_educationGroup", "null");
+                if (group.equals("null")) {
+                    NavHostFragment.findNavController(this).navigate(R.id.navigation_chose_group);
+                    return;
+                }
+                startActivity(new Intent(requireActivity(), AppActivity.class));
+                requireActivity().finish();
+            }
         });
     }
 

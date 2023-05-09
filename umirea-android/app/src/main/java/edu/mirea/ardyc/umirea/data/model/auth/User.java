@@ -15,17 +15,14 @@ public class User {
     private String token;
     @SerializedName("uniqueID")
     private String uniqueID;
-    @SerializedName("role")
-    private String role;
 
-    public User(String firstName, String lastName, String login, String educationGroup, String token, String uniqueID, String role) {
+    public User(String firstName, String lastName, String login, String educationGroup, String token, String uniqueID) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
         this.educationGroup = educationGroup;
         this.token = token;
         this.uniqueID = uniqueID;
-        this.role = role;
     }
 
     public String getFirstName() {
@@ -52,9 +49,6 @@ public class User {
         return uniqueID;
     }
 
-    public String getRole() {
-        return role;
-    }
 
     @Override
     public String toString() {
@@ -65,7 +59,6 @@ public class User {
                 ", educationGroup='" + educationGroup + '\'' +
                 ", token='" + token + '\'' +
                 ", uniqueID='" + uniqueID + '\'' +
-                ", role='" + role + '\'' +
                 '}';
     }
 }

@@ -12,6 +12,10 @@ public class GroupEntity {
     private Long id;
     private String uuid;
 
+    private String name;
+
+    private String token;
+
     private String timeTable;
 
 
@@ -39,11 +43,29 @@ public class GroupEntity {
         this.timeTable = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public GroupEntity() {
     }
 
-    public GroupEntity(String uuid, String timeTable) {
+    public GroupEntity(String uuid, String name, String timeTable, String token) {
         this.uuid = uuid;
+        this.name = name;
+        this.token = token;
         this.timeTable = timeTable;
     }
 }

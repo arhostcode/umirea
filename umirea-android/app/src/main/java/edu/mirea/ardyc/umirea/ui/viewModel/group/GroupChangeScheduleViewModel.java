@@ -8,29 +8,37 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
-import edu.mirea.ardyc.umirea.data.model.group.Group;
-import edu.mirea.ardyc.umirea.ui.viewModel.UmireaApplication;
+import javax.inject.Inject;
 
+import dagger.hilt.android.lifecycle.HiltViewModel;
+import edu.mirea.ardyc.umirea.data.model.group.Group;
+import edu.mirea.ardyc.umirea.data.repository.impl.timetable.DashboardRepository;
+import edu.mirea.ardyc.umirea.ui.viewModel.AppViewModel;
+
+
+@HiltViewModel
 public class GroupChangeScheduleViewModel extends AndroidViewModel {
 
     private MutableLiveData<Group> groupMutableLiveData;
-    public GroupChangeScheduleViewModel(Application application) {
+    MutableLiveData<List<String>> groupSchedulesList = new MutableLiveData<>();
+
+    private DashboardRepository dashboardRepository;
+
+    @Inject
+    public GroupChangeScheduleViewModel(Application application, DashboardRepository dashboardService) {
         super(application);
+        this.dashboardRepository = dashboardService;
+        initGroupsList();
+    }
+
+    private void initGroupsList() {
+        AppViewModel.executorService.execute(() -> {
+            groupSchedulesList.postValue(dashboardRepository.listGroupsSchedules().getData());
+        });
     }
 
     public LiveData<List<String>> getGroups() {
-        MutableLiveData<List<String>> groupSchedulesList = new MutableLiveData<>();
-        new Thread(() -> {
-            groupSchedulesList.postValue(((UmireaApplication) getApplication()).getDashboardProcessor().getGroupsSchedules());
-        }).start();
         return groupSchedulesList;
-    }
-
-    public void updateSchedule(String schedule) {
-        Group group = groupMutableLiveData.getValue();
-        group.setBaseSchedule(schedule);
-        groupMutableLiveData.postValue(group);
-        ((UmireaApplication) getApplication()).getGroupProcessor().updateBaseSchedule(schedule);
     }
 
     public void setGroupMutableLiveData(MutableLiveData<Group> groupMutableLiveData) {

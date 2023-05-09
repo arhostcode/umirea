@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Создать группу"
+                android:text="@string/create_group"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="24sp"
@@ -66,8 +66,9 @@
             android:layout_height="40dp"
             android:background="@drawable/chat_field"
             android:ems="12"
-            android:hint="Название группы"
+            android:hint="@string/group_name"
             android:inputType="none|text"
+            android:maxLength="30"
             android:paddingHorizontal="10dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
@@ -81,11 +82,12 @@
             android:background="@drawable/chat_field"
             android:paddingHorizontal="13dp">
 
-            <Spinner
+            <AutoCompleteTextView
                 android:id="@+id/schedules_list"
                 android:layout_width="227dp"
                 android:layout_height="40dp"
                 android:backgroundTint="@color/black"
+                android:hint="Расписание"
                 tools:listitem="@layout/group_item" />
         </LinearLayout>
 
@@ -101,18 +103,7 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/gradient_button"
-                android:text="@string/enter"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/reset_password"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/gray_button"
-                android:text="Создать группу"
+                android:text="@string/create"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />

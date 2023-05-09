@@ -1,5 +1,6 @@
 package edu.mirea.ardyc.umirea.ui.view.auth.fragments.group;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,10 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.databinding.FragmentCreateGroupBinding;
+import edu.mirea.ardyc.umirea.ui.view.AppActivity;
 import edu.mirea.ardyc.umirea.ui.viewModel.auth.CreateGroupViewModel;
+import es.dmoral.toasty.Toasty;
 
 public class CreateGroupFragment extends Fragment {
 
@@ -30,6 +34,14 @@ public class CreateGroupFragment extends Fragment {
         binding = FragmentCreateGroupBinding.inflate(getLayoutInflater());
         viewModel = new ViewModelProvider(requireActivity()).get(CreateGroupViewModel.class);
         initObservers();
+        binding.enterButton.setOnClickListener((v) -> {
+            String text = binding.schedulesList.getText().toString();
+            if (!viewModel.getGroupsList().getValue().contains(text)) {
+                Toasty.info(requireActivity(), "Расписание не найдено").show();
+                return;
+            }
+            viewModel.createGroup(binding.groupName.getText().toString(), text);
+        });
         return binding.getRoot();
     }
 
@@ -37,6 +49,17 @@ public class CreateGroupFragment extends Fragment {
         viewModel.getGroupsList().observe(getViewLifecycleOwner(), (val) -> {
             if (val != null)
                 binding.schedulesList.setAdapter(new ArrayAdapter<>(getContext(), R.layout.group_item, val));
+        });
+        viewModel.getError().observe(getViewLifecycleOwner(), (val) -> {
+            if (val != null)
+                Toast.makeText(getContext(), val, Toast.LENGTH_SHORT).show();
+            viewModel.getError().setValue(null);
+        });
+        viewModel.getGroupMutableLiveData().observe(getViewLifecycleOwner(), (val) -> {
+            if (val != null) {
+                startActivity(new Intent(requireActivity(), AppActivity.class));
+                requireActivity().finish();
+            }
         });
     }
 }

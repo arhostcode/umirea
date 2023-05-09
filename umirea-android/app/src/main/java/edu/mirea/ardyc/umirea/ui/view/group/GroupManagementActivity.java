@@ -5,9 +5,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.ui.viewModel.group.GroupManagementViewModel;
 
+@AndroidEntryPoint
 public class GroupManagementActivity extends AppCompatActivity {
 
     private GroupManagementViewModel viewModel;
@@ -18,5 +20,7 @@ public class GroupManagementActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(GroupManagementViewModel.class);
         setContentView(R.layout.activity_group_management);
     }
+
+
 
 }
