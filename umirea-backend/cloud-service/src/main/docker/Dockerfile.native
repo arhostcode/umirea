@@ -1,0 +1,16 @@
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.6
+WORKDIR /work/
+RUN chown root /work \
+    && chmod "g+rwX" /work \
+    && chown root:root /work
+COPY --chown=root:root * /work/
+COPY --chown=root:root *-runner /work/application
+ADD files/ /work/
+
+RUN chmod 777 /work/application
+RUN chmod +x /work/application
+
+EXPOSE 8086
+USER root
+
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]

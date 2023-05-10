@@ -1,0 +1,51 @@
+﻿[24.12.22 14:53:00] info: Program: Starting Squirrel Updater: --createShortcut=Postman.exe --shortcut-locations=StartMenu,Desktop
+[24.12.22 14:53:00] info: ApplyReleasesImpl: About to create shortcuts for Postman.exe, rootAppDir C:\Users\e-gul\AppData\Local\Postman\
+[24.12.22 14:53:00] info: ApplyReleasesImpl: Creating shortcut for Postman.exe => C:\Users\e-gul\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Postman\Postman.lnk
+[24.12.22 14:53:00] info: ApplyReleasesImpl: About to save shortcut: C:\Users\e-gul\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Postman\Postman.lnk (target C:\Users\e-gul\AppData\Local\Postman\Postman.exe, workingDir C:\Users\e-gul\AppData\Local\Postman\app-10.6.0, args , toastActivatorCSLID d56d0ae8-2c2a-5b45-bd3b-9973bc69da9e)
+[24.12.22 14:53:00] info: ApplyReleasesImpl: Creating shortcut for Postman.exe => C:\Users\e-gul\OneDrive\Рабочий стол\Postman.lnk
+[24.12.22 14:53:00] info: ApplyReleasesImpl: About to save shortcut: C:\Users\e-gul\OneDrive\Рабочий стол\Postman.lnk (target C:\Users\e-gul\AppData\Local\Postman\Postman.exe, workingDir C:\Users\e-gul\AppData\Local\Postman\app-10.6.0, args , toastActivatorCSLID d56d0ae8-2c2a-5b45-bd3b-9973bc69da9e)
+[24.12.22 14:53:00] info: ApplyReleasesImpl: Examining Pin: File Explorer.lnk
+[24.12.22 14:53:00] info: ApplyReleasesImpl: Examining Pin: Yandex with voice assistant Alice.lnk
+[24.12.22 14:53:00] info: Program: Finished Squirrel Updater
+[08.03.23 19:59:56] info: Program: Starting Squirrel Updater: --createShortcut=Postman.exe --shortcut-locations=StartMenu,Desktop
+[08.03.23 19:59:56] info: ApplyReleasesImpl: About to create shortcuts for Postman.exe, rootAppDir C:\Users\e-gul\AppData\Local\Postman\
+[08.03.23 19:59:57] info: ApplyReleasesImpl: Creating shortcut for Postman.exe => C:\Users\e-gul\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Postman\Postman.lnk
+[08.03.23 19:59:57] info: ApplyReleasesImpl: About to save shortcut: C:\Users\e-gul\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Postman\Postman.lnk (target C:\Users\e-gul\AppData\Local\Postman\Postman.exe, workingDir C:\Users\e-gul\AppData\Local\Postman\app-10.9.4, args , toastActivatorCSLID d56d0ae8-2c2a-5b45-bd3b-9973bc69da9e)
+[08.03.23 19:59:57] info: ApplyReleasesImpl: Creating shortcut for Postman.exe => C:\Users\e-gul\OneDrive\Рабочий стол\Postman.lnk
+[08.03.23 19:59:57] info: ApplyReleasesImpl: About to save shortcut: C:\Users\e-gul\OneDrive\Рабочий стол\Postman.lnk (target C:\Users\e-gul\AppData\Local\Postman\Postman.exe, workingDir C:\Users\e-gul\AppData\Local\Postman\app-10.9.4, args , toastActivatorCSLID d56d0ae8-2c2a-5b45-bd3b-9973bc69da9e)
+[08.03.23 19:59:57] info: ApplyReleasesImpl: Examining Pin: File Explorer.lnk
+[08.03.23 19:59:57] info: ApplyReleasesImpl: Examining Pin: Logseq.lnk
+[08.03.23 19:59:57] info: ApplyReleasesImpl: Examining Pin: Yandex with voice assistant Alice.lnk
+[08.03.23 19:59:57] info: Program: Finished Squirrel Updater
+[10.03.23 15:55:31] info: Program: Starting Squirrel Updater: --createShortcut=Postman.exe --shortcut-locations=StartMenu,Desktop
+[10.03.23 15:55:31] info: ApplyReleasesImpl: About to create shortcuts for Postman.exe, rootAppDir C:\Users\e-gul\AppData\Local\Postman\
+[10.03.23 15:55:31] info: ApplyReleasesImpl: Creating shortcut for Postman.exe => C:\Users\e-gul\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Postman\Postman.lnk
+[10.03.23 15:55:31] info: ApplyReleasesImpl: About to save shortcut: C:\Users\e-gul\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Postman\Postman.lnk (target C:\Users\e-gul\AppData\Local\Postman\Postman.exe, workingDir C:\Users\e-gul\AppData\Local\Postman\app-10.11.1, args , toastActivatorCSLID d56d0ae8-2c2a-5b45-bd3b-9973bc69da9e)
+[10.03.23 15:55:31] info: ApplyReleasesImpl: Creating shortcut for Postman.exe => C:\Users\e-gul\OneDrive\Рабочий стол\Postman.lnk
+[10.03.23 15:55:31] info: ApplyReleasesImpl: About to save shortcut: C:\Users\e-gul\OneDrive\Рабочий стол\Postman.lnk (target C:\Users\e-gul\AppData\Local\Postman\Postman.exe, workingDir C:\Users\e-gul\AppData\Local\Postman\app-10.11.1, args , toastActivatorCSLID d56d0ae8-2c2a-5b45-bd3b-9973bc69da9e)
+[10.03.23 15:55:31] info: ApplyReleasesImpl: Examining Pin: File Explorer.lnk
+[10.03.23 15:55:31] info: ApplyReleasesImpl: Examining Pin: Logseq.lnk
+[10.03.23 15:55:31] info: ApplyReleasesImpl: Examining Pin: Yandex with voice assistant Alice.lnk
+[10.03.23 15:55:31] info: Program: Finished Squirrel Updater
+[23.03.23 22:32:56] info: Program: Starting Squirrel Updater: --createShortcut=Postman.exe --shortcut-locations=StartMenu,Desktop
+[23.03.23 22:32:56] info: ApplyReleasesImpl: About to create shortcuts for Postman.exe, rootAppDir C:\Users\e-gul\AppData\Local\Postman\
+[23.03.23 22:32:56] info: ApplyReleasesImpl: Creating shortcut for Postman.exe => C:\Users\e-gul\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Postman\Postman.lnk
+[23.03.23 22:32:56] info: ApplyReleasesImpl: About to save shortcut: C:\Users\e-gul\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Postman\Postman.lnk (target C:\Users\e-gul\AppData\Local\Postman\Postman.exe, workingDir C:\Users\e-gul\AppData\Local\Postman\app-10.12.0, args , toastActivatorCSLID d56d0ae8-2c2a-5b45-bd3b-9973bc69da9e)
+[23.03.23 22:32:56] info: ApplyReleasesImpl: Creating shortcut for Postman.exe => C:\Users\e-gul\OneDrive\Рабочий стол\Postman.lnk
+[23.03.23 22:32:56] info: ApplyReleasesImpl: About to save shortcut: C:\Users\e-gul\OneDrive\Рабочий стол\Postman.lnk (target C:\Users\e-gul\AppData\Local\Postman\Postman.exe, workingDir C:\Users\e-gul\AppData\Local\Postman\app-10.12.0, args , toastActivatorCSLID d56d0ae8-2c2a-5b45-bd3b-9973bc69da9e)
+[23.03.23 22:32:56] info: ApplyReleasesImpl: Examining Pin: ClickUp.lnk
+[23.03.23 22:32:56] info: ApplyReleasesImpl: Examining Pin: File Explorer.lnk
+[23.03.23 22:32:56] info: ApplyReleasesImpl: Examining Pin: Process Hacker 2.lnk
+[23.03.23 22:32:56] info: ApplyReleasesImpl: Examining Pin: Yandex with voice assistant Alice.lnk
+[23.03.23 22:32:56] info: Program: Finished Squirrel Updater
+[02.05.23 21:33:19] info: Program: Starting Squirrel Updater: --createShortcut=Postman.exe --shortcut-locations=StartMenu
+[02.05.23 21:33:19] info: ApplyReleasesImpl: About to create shortcuts for Postman.exe, rootAppDir C:\Users\e-gul\AppData\Local\Postman\
+[02.05.23 21:33:19] info: ApplyReleasesImpl: Creating shortcut for Postman.exe => C:\Users\e-gul\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Postman\Postman.lnk
+[02.05.23 21:33:19] info: ApplyReleasesImpl: About to save shortcut: C:\Users\e-gul\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Postman\Postman.lnk (target C:\Users\e-gul\AppData\Local\Postman\Postman.exe, workingDir C:\Users\e-gul\AppData\Local\Postman\app-10.13.0, args , toastActivatorCSLID d56d0ae8-2c2a-5b45-bd3b-9973bc69da9e)
+[02.05.23 21:33:19] info: ApplyReleasesImpl: Examining Pin: Brave.lnk
+[02.05.23 21:33:19] info: ApplyReleasesImpl: Examining Pin: ClickUp.lnk
+[02.05.23 21:33:19] info: ApplyReleasesImpl: Examining Pin: File Explorer.lnk
+[02.05.23 21:33:19] info: ApplyReleasesImpl: Examining Pin: Process Hacker 2.lnk
+[02.05.23 21:33:19] info: ApplyReleasesImpl: Examining Pin: Walling.lnk
+[02.05.23 21:33:19] info: ApplyReleasesImpl: Examining Pin: Yandex with voice assistant Alice.lnk
+[02.05.23 21:33:19] info: Program: Finished Squirrel Updater
