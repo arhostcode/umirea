@@ -40,7 +40,7 @@ public class AppViewModel extends AndroidViewModel {
     private static final int NUMBER_OF_THREADS = 2;
     public static ExecutorService executorService = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    private ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(2);
+    private ScheduledExecutorService scheduledExecutorService;
 
     private MutableLiveData<Timetable> timetableMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Group> groupMutableLiveData = new MutableLiveData<>(new Group());
@@ -85,6 +85,9 @@ public class AppViewModel extends AndroidViewModel {
     }
 
     public void initModules(User user) {
+        if (scheduledExecutorService != null && !scheduledExecutorService.isTerminated())
+            scheduledExecutorService.shutdown();
+        scheduledExecutorService = Executors.newScheduledThreadPool(2);
         scheduledExecutorService.scheduleAtFixedRate(() -> {
             try {
                 initGroup(user);
@@ -209,6 +212,7 @@ public class AppViewModel extends AndroidViewModel {
     }
 
     public void shutdown() {
-        scheduledExecutorService.shutdown();
+        if (scheduledExecutorService != null)
+            scheduledExecutorService.shutdown();
     }
 }

@@ -40,8 +40,7 @@ public class AuthorizationViewModel extends ViewModel {
         new Thread(() -> {
             DataResponse<User> user = userRepository.auth(login, password);
             if (user.getData() == null) {
-                System.out.println(user.getMessage());
-                errorText.postValue(user.getMessage());
+                errorText.postValue("Пользователь не найден");
             } else {
                 userMutableLiveData.postValue(user.getData());
                 userRepository.saveUser(user.getData());
