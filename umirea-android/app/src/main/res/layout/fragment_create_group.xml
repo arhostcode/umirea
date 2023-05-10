@@ -88,6 +88,8 @@
                 android:layout_height="40dp"
                 android:backgroundTint="@color/black"
                 android:hint="Расписание"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
                 tools:listitem="@layout/group_item" />
         </LinearLayout>
 
