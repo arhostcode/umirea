@@ -69,13 +69,11 @@ public class LessonAdderDialog extends BottomSheetDialog {
             for (int i = 0; i < binding.times1.getChildCount(); i++) {
                 if (((CheckBox) binding.times1.getChildAt(i)).isChecked()) {
                     times.add(i);
-                    System.out.println(i);
                 }
             }
             for (int i = 0; i < binding.times2.getChildCount(); i++) {
                 if (((CheckBox) binding.times2.getChildAt(i)).isChecked()) {
                     times.add(i + 3);
-                    System.out.println(i + 3);
                 }
             }
             if (times.isEmpty() || dates.isEmpty() || name.isEmpty())

@@ -20,7 +20,6 @@ public class CloudFolder {
         this.groupUuid = groupUuid;
     }
 
-
     public CloudFolder(String name, String uuid, String groupUuid, List<CloudFile> files) {
         this.name = name;
         this.uuid = uuid;

@@ -15,18 +15,15 @@ import android.view.ViewGroup;
 
 import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.databinding.FragmentResetPasswordMailBinding;
-import edu.mirea.ardyc.umirea.ui.viewModel.auth.ResetPasswordMailViewModel;
 
 public class ResetPasswordMail extends Fragment {
 
-    private ResetPasswordMailViewModel viewModel;
     private FragmentResetPasswordMailBinding binding;
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        viewModel = new ViewModelProvider(this).get(ResetPasswordMailViewModel.class);
         binding = FragmentResetPasswordMailBinding.inflate(getLayoutInflater());
         initButtons();
         return binding.getRoot();

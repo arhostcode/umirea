@@ -145,7 +145,6 @@ public class RemoteDashboardDataSource extends DataSource {
                                 .build());
                 list.add(dateLesson);
             }
-            System.out.println(list);
             return new DataResponse<>(list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -190,7 +189,6 @@ public class RemoteDashboardDataSource extends DataSource {
                         new Task(object.get("text").getAsString()));
                 list.add(dateLesson);
             }
-            System.out.println(list);
             return new DataResponse<>(list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -234,7 +232,6 @@ public class RemoteDashboardDataSource extends DataSource {
                         new Task(object.get("text").getAsString()));
                 list.add(dateLesson);
             }
-            System.out.println(list);
             return new DataResponse<>(list);
         } catch (Exception e) {
             e.printStackTrace();

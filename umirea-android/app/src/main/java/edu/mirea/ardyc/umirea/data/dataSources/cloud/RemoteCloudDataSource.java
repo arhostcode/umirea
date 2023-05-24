@@ -103,7 +103,6 @@ public class RemoteCloudDataSource extends DataSource {
         try {
             Call<JsonObject> createFolderCall = cloudRemoteService.deleteFile(userToken, uuid);
             Response<JsonObject> response = createFolderCall.execute();
-            System.out.println(response.body());
             JsonElement code = response.body().get("code");
             JsonElement message = response.body().get("message");
             if (code.getAsInt() == 0) {

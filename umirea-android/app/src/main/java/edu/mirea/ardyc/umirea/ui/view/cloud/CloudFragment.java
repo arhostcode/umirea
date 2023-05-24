@@ -82,7 +82,8 @@ public class CloudFragment extends Fragment {
     public void openFile(Uri uri) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setDataAndType(uri, "*/*");
+        intent.setData(uri);
+//        intent.setDataAndType(uri, "*/*");
         startActivity(intent);
     }
 

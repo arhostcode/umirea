@@ -16,7 +16,6 @@ public interface AuthRemoteService {
     @GET("auth/verify")
     Call<JsonObject> verify(@Query("login") String login, @Query("password") String password, @Query("firstName") String firstName, @Query("lastName") String lastName);
 
-
     @GET("user/getInfo")
     Call<JsonObject> getInfo(@Query("token") String token);
 

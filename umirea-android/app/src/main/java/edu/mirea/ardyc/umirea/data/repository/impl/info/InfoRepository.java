@@ -40,7 +40,6 @@ public class InfoRepository extends Repository {
                 lastMessageId = chatMessage.getUuid();
             }
             DataResponse<List<InfoMessage>> messages = remoteInfoDataSource.loadData(userToken, lastMessageId);
-            System.out.println(messages.getData());
             if (!messages.isError())
                 infoDataSource.save(messages.getData());
 

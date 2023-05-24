@@ -49,7 +49,6 @@ public class RemoteUserDataSource extends DataSource {
             response = loginCall.execute();
             JsonElement code = response.body().get("code");
             JsonElement message = response.body().get("message");
-            System.out.println(message.toString());
             if (code.getAsInt() == 0) {
                 user = new Gson().fromJson(message.getAsJsonObject(), User.class);
             } else {
