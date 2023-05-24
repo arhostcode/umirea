@@ -29,4 +29,14 @@ public class InfoMessage {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return "InfoMessage{" +
+                "uuid='" + uuid + '\'' +
+                ", name='" + name + '\'' +
+                ", message='" + message + '\'' +
+                ", ownerUuid='" + ownerUuid + '\'' +
+                '}';
+    }
 }

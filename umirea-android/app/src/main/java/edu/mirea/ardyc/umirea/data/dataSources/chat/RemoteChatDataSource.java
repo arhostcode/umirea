@@ -51,7 +51,6 @@ public class RemoteChatDataSource extends DataSource {
         try {
             Response<JsonObject> response = messageCall.execute();
             JsonElement code = response.body().get("code");
-            System.out.println(response.body());
             JsonElement messageResponse = response.body().get("message");
             if (code.getAsInt() == 0) {
                 return new DataResponse<>(new Gson().fromJson(messageResponse, ChatMessage.class));

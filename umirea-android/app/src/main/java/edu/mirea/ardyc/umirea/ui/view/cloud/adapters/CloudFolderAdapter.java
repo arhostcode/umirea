@@ -23,6 +23,9 @@ public class CloudFolderAdapter extends RecyclerView.Adapter<CloudFolderAdapter.
     private final Consumer<String> action;
     private Consumer<CloudFile> fileConsumer;
 
+    private Consumer<CloudFolder> deleteFolder;
+    private Consumer<CloudFile> deleteFile;
+
     public CloudFolderAdapter(List<CloudFolder> folders, Consumer<String> action) {
         this.folders = folders;
         this.action = action;
@@ -46,6 +49,7 @@ public class CloudFolderAdapter extends RecyclerView.Adapter<CloudFolderAdapter.
             holder.getFiles().setLayoutManager(new LinearLayoutManager(holder.files.getContext()));
             CloudFileAdapter cloudFileAdapter = new CloudFileAdapter(folders.get(position).getFiles());
             cloudFileAdapter.setCloudFileConsumer(fileConsumer);
+            cloudFileAdapter.setOnDeleteFileListener(deleteFile);
             holder.getFiles().setAdapter(cloudFileAdapter);
         } else {
             adapter.update(folders.get(position).getFiles());
@@ -53,6 +57,7 @@ public class CloudFolderAdapter extends RecyclerView.Adapter<CloudFolderAdapter.
         holder.uploadMore.setOnClickListener((v) -> {
             action.accept(folders.get(position).getUuid());
         });
+        holder.deleteFolder.setOnClickListener((v) -> deleteFolder.accept(folders.get(position)));
     }
 
     @Override
@@ -73,6 +78,7 @@ public class CloudFolderAdapter extends RecyclerView.Adapter<CloudFolderAdapter.
         private ImageView arrow;
         private View layout;
         private View folderLayout;
+        private ImageView deleteFolder;
 
         public ViewHolder(View view) {
             super(view);
@@ -83,6 +89,7 @@ public class CloudFolderAdapter extends RecyclerView.Adapter<CloudFolderAdapter.
             arrow = view.findViewById(R.id.files_list_button);
             layout = view.findViewById(R.id.files_layout);
             folderLayout = view.findViewById(R.id.folder_layout);
+            deleteFolder = view.findViewById(R.id.delete_folder);
             updateButtonAction();
             updateState();
         }
@@ -117,6 +124,14 @@ public class CloudFolderAdapter extends RecyclerView.Adapter<CloudFolderAdapter.
 
     public void setCloudFileConsumer(Consumer<CloudFile> fileConsumer) {
         this.fileConsumer = fileConsumer;
+    }
+
+    public void setOnDeleteFolderListener(Consumer<CloudFolder> cloudFolderConsumer) {
+        this.deleteFolder = cloudFolderConsumer;
+    }
+
+    public void setOnDeleteFileListener(Consumer<CloudFile> cloudFileConsumer) {
+        this.deleteFile = cloudFileConsumer;
     }
 
 }

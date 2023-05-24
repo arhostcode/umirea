@@ -54,7 +54,7 @@ public class CloudFragment extends Fragment {
             Toasty.info(requireContext(), data).show();
             cloudViewModel.getMessageMutableLiveData().postValue(null);
         });
-        System.out.println(appSharedViewModel.getCloudFolderMutableLiveData().getValue());
+
         binding.folders.setLayoutManager(new LinearLayoutManager(getContext()));
 
         CloudFolderAdapter cloudFolderAdapter = new CloudFolderAdapter(new ArrayList<>(), (val) -> {
@@ -62,9 +62,10 @@ public class CloudFragment extends Fragment {
             cloudViewModel.setCurrentFolder(val);
         });
 
-        cloudFolderAdapter.setCloudFileConsumer((cloudFile) -> {
-            cloudViewModel.openFile(cloudFile);
-        });
+        cloudFolderAdapter.setOnDeleteFolderListener(cloudViewModel::deleteFolder);
+        cloudFolderAdapter.setOnDeleteFileListener(cloudViewModel::deleteFile);
+        cloudFolderAdapter.setCloudFileConsumer(cloudViewModel::openFile);
+
         cloudViewModel.getOpenFileMutableLiveData().observe(getViewLifecycleOwner(), (data) -> {
             if (data == null)
                 return;
@@ -104,14 +105,7 @@ public class CloudFragment extends Fragment {
                 if (uri != null)
                     cloudViewModel.uploadFile(uri);
             });
-    private ActivityResultLauncher<String> requestPermissionLauncher =
-            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-            });
 
-    private void requestPermission() {
-//        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-        requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
-    }
 
 
     @Override

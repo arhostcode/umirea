@@ -89,7 +89,6 @@ public class RemoteDashboardDataSource extends DataSource {
             } else {
                 return new DataResponse<>(null, "Ошибка загрузки основного расписания");
             }
-
         } catch (Exception e) {
             return new DataResponse<>(null, "Ошибка загрузки основного расписания");
         }

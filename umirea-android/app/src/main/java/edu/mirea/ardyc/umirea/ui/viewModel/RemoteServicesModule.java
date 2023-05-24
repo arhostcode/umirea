@@ -25,13 +25,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @InstallIn(SingletonComponent.class)
 public class RemoteServicesModule {
 
+    private static final String serverUrl = "https://umirea.ardyc.online/";
+
     @Singleton
     @Provides
     public AuthRemoteService authRemoteService() {
-        String authServer = "http://84.252.128.74:8081";
-        final OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(1, TimeUnit.SECONDS).build();
+        final OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(1, TimeUnit.SECONDS).callTimeout(1, TimeUnit.SECONDS).readTimeout(1, TimeUnit.SECONDS).build();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(authServer)
+                .baseUrl(serverUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
@@ -41,9 +42,10 @@ public class RemoteServicesModule {
     @Singleton
     @Provides
     public GroupRemoteService groupRemoteService() {
-        String authServer = "http://84.252.128.74:8084";
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(1, TimeUnit.SECONDS).followRedirects(true).build();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(authServer)
+                .baseUrl(serverUrl)
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         return retrofit.create(GroupRemoteService.class);
@@ -52,9 +54,10 @@ public class RemoteServicesModule {
     @Singleton
     @Provides
     public CloudRemoteService cloudRemoteService() {
-        String authServer = "http://84.252.128.74:8086";
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(1, TimeUnit.SECONDS).followRedirects(true).build();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(authServer)
+                .baseUrl(serverUrl)
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         return retrofit.create(CloudRemoteService.class);
@@ -63,10 +66,9 @@ public class RemoteServicesModule {
     @Singleton
     @Provides
     public ChatRemoteService chatRemoteService() {
-        String chatServer = "http://84.252.128.74:8087";
         final OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(2, TimeUnit.SECONDS).build();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(chatServer)
+                .baseUrl(serverUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
@@ -76,10 +78,9 @@ public class RemoteServicesModule {
     @Singleton
     @Provides
     public InfoRemoteService infoRemoteService() {
-        String chatServer = "http://84.252.128.74:8087";
         final OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(2, TimeUnit.SECONDS).build();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(chatServer)
+                .baseUrl(serverUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
@@ -90,10 +91,9 @@ public class RemoteServicesModule {
     @Singleton
     @Provides
     public DashboardRemoteService dashboardRemoteService() {
-        String chatServer = "http://84.252.128.74:8089";
         final OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(2, TimeUnit.SECONDS).build();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(chatServer)
+                .baseUrl(serverUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
