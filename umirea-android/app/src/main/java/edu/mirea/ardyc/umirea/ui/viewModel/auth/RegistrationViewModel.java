@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 import edu.mirea.ardyc.umirea.data.model.auth.User;
 import edu.mirea.ardyc.umirea.data.model.DataResponse;
 import edu.mirea.ardyc.umirea.data.repository.impl.auth.UserRepository;
+import edu.mirea.ardyc.umirea.ui.viewModel.AppViewModel;
 
 @HiltViewModel
 public class RegistrationViewModel extends AndroidViewModel {
@@ -40,7 +41,7 @@ public class RegistrationViewModel extends AndroidViewModel {
             return;
         }
         isRegistering = true;
-        new Thread(() -> {
+        AppViewModel.executorService.execute(() -> {
             DataResponse<User> response = userRepository.register(login, password, firstName, lastName, verificationCode);
             if (response.getData() != null) {
                 userMutableLiveData.postValue(response.getData());
@@ -49,7 +50,7 @@ public class RegistrationViewModel extends AndroidViewModel {
                 errorText.postValue(response.getMessage());
             }
             isRegistering = false;
-        }).start();
+        });
     }
 
 

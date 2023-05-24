@@ -31,7 +31,6 @@ public class DashboardCalendar extends LinearLayout {
 
     private Timetable timetable = null;
 
-    private boolean isInitialized = false;
     private DashboardCalendarBinding dashboardCalendarBinding;
     private TextView currentDateTextView;
     private TextView currentMonthTextView;

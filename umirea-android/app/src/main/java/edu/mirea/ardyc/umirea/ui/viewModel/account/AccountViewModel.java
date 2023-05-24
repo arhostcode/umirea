@@ -38,21 +38,10 @@ public class AccountViewModel extends ViewModel {
     public void removeUserData() {
         UmireaDatabase.databaseWriteExecutor.execute(() -> {
             chatRepository.clear();
-        });
-        UmireaDatabase.databaseWriteExecutor.execute(() -> {
             userRepository.removeUser();
-        });
-        UmireaDatabase.databaseWriteExecutor.execute(() -> {
             groupRepository.removeGroup();
-        });
-        UmireaDatabase.databaseWriteExecutor.execute(() -> {
             dashboardRepository.removeDashboard();
-        });
-
-        UmireaDatabase.databaseWriteExecutor.execute(() -> {
             infoRepository.clear();
-        });
-        UmireaDatabase.databaseWriteExecutor.execute(() -> {
             cloudRepository.clear();
         });
     }

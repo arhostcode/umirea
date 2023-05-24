@@ -29,16 +29,16 @@ public class RemoteChatDataSource extends DataSource {
     }
 
     public DataResponse<List<ChatMessage>> loadData(String userToken, String lastMessageId) {
-        List<ChatMessage> messges = null;
+        List<ChatMessage> messages = null;
         Call<JsonObject> foldersCall = chatRemoteService.getMessages(userToken, lastMessageId);
         try {
             Response<JsonObject> response = foldersCall.execute();
             JsonElement code = response.body().get("code");
             JsonElement message = response.body().get("message");
             if (code.getAsInt() == 0) {
-                messges = new Gson().fromJson(message, new TypeToken<List<ChatMessage>>() {
+                messages = new Gson().fromJson(message, new TypeToken<List<ChatMessage>>() {
                 }.getType());
-                return new DataResponse<>(messges);
+                return new DataResponse<>(messages);
             }
             return new DataResponse<>(null, message.getAsString());
         } catch (Exception e) {
