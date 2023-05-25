@@ -49,7 +49,7 @@ public class CreateGroupViewModel extends AndroidViewModel {
 
     public void createGroup(String groupName, String groupSchedule) {
         String token = getApplication().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("user_token", "");
-        new Thread(() -> {
+        AppViewModel.executorService.execute(() -> {
             DataResponse<Group> groupDataResponse = groupRepository.createGroup(token, groupSchedule, groupName);
             if (groupDataResponse.getData() == null)
                 error.postValue(groupDataResponse.getMessage());
@@ -60,7 +60,7 @@ public class CreateGroupViewModel extends AndroidViewModel {
                         .apply();
             }
             groupMutableLiveData.postValue(groupDataResponse.getData());
-        }).start();
+        });
     }
 
     public MutableLiveData<String> getError() {

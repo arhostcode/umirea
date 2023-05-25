@@ -1,7 +1,5 @@
 package edu.mirea.ardyc.umirea.data.model.group;
 
-import java.util.UUID;
-
 public class Member {
 
     private String firstName;

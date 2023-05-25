@@ -12,13 +12,11 @@ import android.view.ViewGroup;
 
 import edu.mirea.ardyc.umirea.databinding.FragmentGroupMemberSettingsBinding;
 import edu.mirea.ardyc.umirea.ui.view.group.fragments.memberSettings.adapters.MemberListAdapter;
-import edu.mirea.ardyc.umirea.ui.viewModel.group.GroupMemberSettingsViewModel;
 import edu.mirea.ardyc.umirea.ui.viewModel.group.GroupSharedViewModel;
 
 public class GroupMemberSettings extends Fragment {
 
     private FragmentGroupMemberSettingsBinding binding;
-    private GroupMemberSettingsViewModel viewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,7 +27,6 @@ public class GroupMemberSettings extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentGroupMemberSettingsBinding.inflate(getLayoutInflater());
-        viewModel = new ViewModelProvider(requireActivity()).get(GroupMemberSettingsViewModel.class);
         GroupSharedViewModel groupSharedViewModel = new ViewModelProvider(requireActivity()).get(GroupSharedViewModel.class);
         MemberListAdapter adapter = new MemberListAdapter(null);
         adapter.setMemberConsumer(groupSharedViewModel::kickMember);

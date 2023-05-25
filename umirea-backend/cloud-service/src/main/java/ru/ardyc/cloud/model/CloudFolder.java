@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @RegisterForReflection
 public class CloudFolder {
     private String uuid;
@@ -19,14 +21,14 @@ public class CloudFolder {
     private String groupUuid;
 
     @OneToMany
-    private List<CloudFileEntity> files;
+    private List<CloudFile> files;
 
     public String getUuid() {
         return uuid;
     }
 
 
-    public CloudFolder(String uuid, String name, String groupUuid, List<CloudFileEntity> files) {
+    public CloudFolder(String uuid, String name, String groupUuid, List<CloudFile> files) {
         this.uuid = uuid;
         this.name = name;
         this.groupUuid = groupUuid;
@@ -48,12 +50,12 @@ public class CloudFolder {
         return groupUuid;
     }
 
-    public List<CloudFileEntity> getFiles() {
+    public List<CloudFile> getFiles() {
         return files;
     }
 
     public static CloudFolder fromEntity(CloudFolderEntity entity) {
-        return new CloudFolder(entity.getUuid(), entity.getName(), entity.getGroupUuid(), entity.getFiles());
+        return new CloudFolder(entity.getUuid(), entity.getName(), entity.getGroupUuid(), entity.getFiles().stream().map(CloudFile::fromEntity).collect(Collectors.toList()));
     }
 
 }

@@ -95,13 +95,15 @@ public class AppViewModel extends AndroidViewModel {
                 initInfo(user);
                 initCloud(user);
 
-                if (!isHostConnected)
-                    errorMessage.postValue("Соединение с сервером восстановлено");
+                if (!isHostConnected) {
+//                    errorMessage.postValue("Соединение с сервером восстановлено");
+                }
                 isHostConnected = true;
             } catch (Exception e) {
                 e.printStackTrace();
-                if (isHostConnected)
-                    errorMessage.postValue("Соединение с сервером потеряно");
+                if (isHostConnected) {
+//                    errorMessage.postValue("Соединение с сервером потеряно");
+                }
                 isHostConnected = false;
             }
         }, 0, 10, TimeUnit.SECONDS);

@@ -59,6 +59,7 @@ public class RemoteCloudDataSource extends DataSource {
             Call<JsonObject> foldersCall = cloudRemoteService.uploadFileInFolder(fileNameRequest, folderUuidRequest, userTokenRequest, filePart);
 
             Response<JsonObject> response = foldersCall.execute();
+
             JsonElement code = response.body().get("code");
             JsonElement message = response.body().get("message");
             if (code.getAsInt() == 0) {
@@ -95,6 +96,38 @@ public class RemoteCloudDataSource extends DataSource {
         } catch (Exception e) {
             e.printStackTrace();
             return new DataResponse<>(null, "Ошибка создания папки");
+        }
+    }
+
+    public DataResponse<String> deleteFile(String userToken, String uuid) {
+        try {
+            Call<JsonObject> createFolderCall = cloudRemoteService.deleteFile(userToken, uuid);
+            Response<JsonObject> response = createFolderCall.execute();
+            JsonElement code = response.body().get("code");
+            JsonElement message = response.body().get("message");
+            if (code.getAsInt() == 0) {
+                return new DataResponse<>("OK");
+            }
+            return new DataResponse<>(null, message.getAsString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new DataResponse<>(null, "Ошибка удаления файла");
+        }
+    }
+
+    public DataResponse<String> deleteFolder(String userToken, String uuid) {
+        try {
+            Call<JsonObject> createFolderCall = cloudRemoteService.deleteFolder(userToken, uuid);
+            Response<JsonObject> response = createFolderCall.execute();
+            JsonElement code = response.body().get("code");
+            JsonElement message = response.body().get("message");
+            if (code.getAsInt() == 0) {
+                return new DataResponse<>("OK");
+            }
+            return new DataResponse<>(null, message.getAsString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new DataResponse<>(null, "Ошибка удаления папки");
         }
     }
 }

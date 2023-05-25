@@ -44,7 +44,11 @@ public class InfoViewModel extends AndroidViewModel {
             DataResponse<List<InfoMessage>> infos = infoRepository.loadInfo(userToken);
             if (!infos.isError()) {
                 List<InfoMessage> infoMessages = info.getValue();
-                infoMessages.addAll(infos.getData());
+                infos.getData().forEach((message) -> {
+                    if (!infoMessages.stream().anyMatch((m) -> m.getUuid().equals(message.getUuid()))) {
+                        infoMessages.add(message);
+                    }
+                });
                 info.postValue(infoMessages);
             }
         });

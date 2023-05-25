@@ -16,6 +16,10 @@ public class CloudFileEntity {
 
     private String uuid;
 
+    @ManyToOne
+    @JoinColumn
+    private CloudFolderEntity parent;
+
     public CloudFileEntity() {
     }
 
@@ -23,6 +27,13 @@ public class CloudFileEntity {
         this.name = name;
         this.folderId = folderId;
         this.uuid = uuid;
+    }
+
+    public CloudFileEntity(String name, String folderId, String uuid, CloudFolderEntity parent) {
+        this.name = name;
+        this.folderId = folderId;
+        this.uuid = uuid;
+        this.parent = parent;
     }
 
     public Long getId() {
@@ -55,5 +66,13 @@ public class CloudFileEntity {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public CloudFolderEntity getParent() {
+        return parent;
+    }
+
+    public void setParent(CloudFolderEntity parent) {
+        this.parent = parent;
     }
 }

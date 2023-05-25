@@ -31,4 +31,9 @@ public interface CloudRemoteService {
     Call<ResponseBody> downloadFile(@Query("userToken") String userToken, @Query("fileUuid") String fileUuid);
 
 
+    @POST("cloud/file/delete")
+    Call<JsonObject> deleteFile(@Query("userToken") String userToken, @Query("fileUuid") String uuid);
+
+    @POST("cloud/folder/delete")
+    Call<JsonObject> deleteFolder(@Query("userToken") String userToken, @Query("folderUuid") String uuid);
 }

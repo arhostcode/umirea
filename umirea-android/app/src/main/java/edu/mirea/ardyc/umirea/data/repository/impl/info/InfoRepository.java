@@ -33,15 +33,18 @@ public class InfoRepository extends Repository {
     }
 
     public DataResponse<List<InfoMessage>> loadInfo(String userToken) {
-        String lastMessageId = "";
-        InfoMessage chatMessage = infoDataSource.getLastMessage();
-        if (chatMessage != null) {
-            lastMessageId = chatMessage.getUuid();
+        synchronized (this) {
+            String lastMessageId = "";
+            InfoMessage chatMessage = infoDataSource.getLastMessage();
+            if (chatMessage != null) {
+                lastMessageId = chatMessage.getUuid();
+            }
+            DataResponse<List<InfoMessage>> messages = remoteInfoDataSource.loadData(userToken, lastMessageId);
+            if (!messages.isError())
+                infoDataSource.save(messages.getData());
+
+            return messages;
         }
-        DataResponse<List<InfoMessage>> messages = remoteInfoDataSource.loadData(userToken, lastMessageId);
-        if (!messages.isError())
-            infoDataSource.save(messages.getData());
-        return messages;
     }
 
     public DataResponse<InfoMessage> create(String name, String message, String userToken) {

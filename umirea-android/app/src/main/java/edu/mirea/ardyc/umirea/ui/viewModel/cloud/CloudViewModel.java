@@ -38,11 +38,13 @@ public class CloudViewModel extends AndroidViewModel {
     private CloudRepository cloudRepository;
 
     private String currentFolder;
+    private String userToken;
 
     @Inject
     public CloudViewModel(@NonNull Application application, CloudRepository cloudRepository) {
         super(application);
         this.cloudRepository = cloudRepository;
+        userToken = getApplication().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("user_token", "");
     }
 
     public void setCurrentFolder(String currentFolder) {
@@ -70,7 +72,6 @@ public class CloudViewModel extends AndroidViewModel {
                 }
                 inputStream.close();
                 outputStream.close();
-                String userToken = getApplication().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("user_token", "");
                 DataResponse<List<CloudFolder>> cloudFolders = cloudRepository.uploadFileInFolder(currentFolder, userToken, file);
                 if (cloudFolders.isError())
                     return;
@@ -83,7 +84,6 @@ public class CloudViewModel extends AndroidViewModel {
 
     public void openFile(CloudFile cloudFile) {
         new Thread(() -> {
-            String userToken = getApplication().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("user_token", "");
             File folder = new File(getApplication().getFilesDir(), cloudFile.getFolderId());
             File file = new File(folder, cloudFile.getName());
             if (!file.exists()) {
@@ -138,24 +138,48 @@ public class CloudViewModel extends AndroidViewModel {
     public void createFolder(String name) {
         currentFolder = name;
         AppViewModel.executorService.execute(() -> {
-            String userToken = getApplication().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("user_token", "");
             DataResponse<CloudFolder> cloudFolderDataResponse = cloudRepository.createFolder(userToken, name);
             if (cloudFolderDataResponse.isError()) {
                 messageMutableLiveData.postValue(cloudFolderDataResponse.getMessage());
                 return;
             }
-            DataResponse<List<CloudFolder>> cloudFolders = cloudRepository.getData(userToken);
+            updateData();
+        });
+    }
+
+    public void deleteFile(CloudFile cloudFile) {
+        AppViewModel.executorService.execute(() -> {
+            DataResponse<String> cloudFolderDataResponse = cloudRepository.deleteFile(userToken, cloudFile.getUuid());
             if (cloudFolderDataResponse.isError()) {
                 messageMutableLiveData.postValue(cloudFolderDataResponse.getMessage());
                 return;
             }
-            cloudMutableLiveData.postValue(cloudFolders.getData());
+            updateData();
+        });
+    }
 
+    public void deleteFolder(CloudFolder cloudFolder) {
+        AppViewModel.executorService.execute(() -> {
+            DataResponse<String> cloudFolderDataResponse = cloudRepository.deleteFolder(userToken, cloudFolder.getUuid());
+            if (cloudFolderDataResponse.isError()) {
+                messageMutableLiveData.postValue(cloudFolderDataResponse.getMessage());
+                return;
+            }
+            updateData();
         });
     }
 
     public MutableLiveData<List<CloudFolder>> getCloudMutableLiveData() {
         return cloudMutableLiveData;
+    }
+
+    private void updateData() {
+        DataResponse<List<CloudFolder>> cloudFolders = cloudRepository.getData(userToken);
+        if (cloudFolders.isError()) {
+            messageMutableLiveData.postValue(cloudFolders.getMessage());
+            return;
+        }
+        cloudMutableLiveData.postValue(cloudFolders.getData());
     }
 
     public void setCloudMutableLiveData(MutableLiveData<List<CloudFolder>> cloudMutableLiveData) {

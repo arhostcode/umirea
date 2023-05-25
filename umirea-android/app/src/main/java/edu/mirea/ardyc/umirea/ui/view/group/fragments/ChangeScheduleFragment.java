@@ -21,6 +21,8 @@ import es.dmoral.toasty.Toasty;
 @AndroidEntryPoint
 public class ChangeScheduleFragment extends Fragment {
     private FragmentChangeScheduleBinding binding;
+    private GroupChangeScheduleViewModel viewModel;
+    private GroupSharedViewModel groupSharedViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,13 +33,22 @@ public class ChangeScheduleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentChangeScheduleBinding.inflate(getLayoutInflater());
-        GroupChangeScheduleViewModel viewModel = new ViewModelProvider(requireActivity()).get(GroupChangeScheduleViewModel.class);
-        GroupSharedViewModel groupSharedViewModel = new ViewModelProvider(requireActivity()).get(GroupSharedViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(GroupChangeScheduleViewModel.class);
+        groupSharedViewModel = new ViewModelProvider(requireActivity()).get(GroupSharedViewModel.class);
         viewModel.setGroupMutableLiveData(groupSharedViewModel.getGroupMutableLiveData());
+        initObservers();
+        initListeners();
+        return binding.getRoot();
+    }
+
+    private void initObservers() {
         viewModel.getGroups().observe(getViewLifecycleOwner(), (val) -> {
             if (val != null)
                 binding.schedulesList.setAdapter(new ArrayAdapter<>(getContext(), R.layout.group_item, val));
         });
+    }
+
+    private void initListeners() {
         binding.apply.setOnClickListener(v -> {
             String text = binding.schedulesList.getText().toString();
             if (!viewModel.getGroups().getValue().contains(text)) {
@@ -47,6 +58,7 @@ public class ChangeScheduleFragment extends Fragment {
             groupSharedViewModel.changeSchedule(binding.schedulesList.getText().toString());
             NavHostFragment.findNavController(this).popBackStack();
         });
-        return binding.getRoot();
     }
+
+
 }

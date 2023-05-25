@@ -62,7 +62,7 @@ public class CloudService {
             if (cloudFolderEntity.getFiles().stream().anyMatch(cloudFileEntity -> cloudFileEntity.getName().equals(fileName)))
                 return new OutputErrorResponse("Файл с таким именем уже загружен");
 
-            CloudFileEntity cloudFileEntity = new CloudFileEntity(fileName, folderUUID, uuid);
+            CloudFileEntity cloudFileEntity = new CloudFileEntity(fileName, folderUUID, uuid, cloudFolderEntity);
             uploadService.uploadFile(multipartFormDataInput, uuid);
 
             filesRepository.save(cloudFileEntity);

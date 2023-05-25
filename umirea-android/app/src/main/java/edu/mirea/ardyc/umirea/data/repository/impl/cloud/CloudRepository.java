@@ -59,4 +59,12 @@ public class CloudRepository extends Repository {
     public void clear() {
         cloudDataSource.clear();
     }
+
+    public DataResponse<String> deleteFile(String userToken, String uuid) {
+        return remoteDataSource.deleteFile(userToken, uuid);
+    }
+
+    public DataResponse<String> deleteFolder(String userToken, String uuid) {
+        return remoteDataSource.deleteFolder(userToken, uuid);
+    }
 }

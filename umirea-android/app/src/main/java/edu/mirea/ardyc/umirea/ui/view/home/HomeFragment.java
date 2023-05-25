@@ -27,21 +27,28 @@ import edu.mirea.ardyc.umirea.data.model.timetable.TimetableDay;
 import edu.mirea.ardyc.umirea.data.model.timetable.TimetableMonth;
 import edu.mirea.ardyc.umirea.databinding.FragmentHomeBinding;
 import edu.mirea.ardyc.umirea.ui.viewModel.AppSharedViewModel;
-import edu.mirea.ardyc.umirea.ui.viewModel.home.HomeViewModel;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+    private AppSharedViewModel appSharedViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
 
-        AppSharedViewModel appSharedViewModel = new ViewModelProvider(requireActivity()).get(AppSharedViewModel.class);
+        appSharedViewModel = new ViewModelProvider(requireActivity()).get(AppSharedViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        initListeners();
+        initTimetable();
+        initChat();
+        initInfo();
+        initCloud();
+        return root;
+    }
+
+    private void initListeners(){
         binding.allLessons.setOnClickListener((v) -> {
             NavHostFragment.findNavController(this).navigate(R.id.navigation_dashboard, null, null);
         });
@@ -53,7 +60,9 @@ public class HomeFragment extends Fragment {
         binding.allNews.setOnClickListener((v) -> {
             NavHostFragment.findNavController(this).navigate(R.id.action_navigation_home_to_navigation_info, null, null);
         });
+    }
 
+    private void initTimetable(){
         appSharedViewModel.getTimetableMutableLiveData().observe(getViewLifecycleOwner(), timetable -> {
             LocalDateTime time = LocalDateTime.now();
             TimetableMonth month = timetable.getForMonthYear(time.getMonthValue(), time.getYear());
@@ -65,23 +74,19 @@ public class HomeFragment extends Fragment {
                 if (day != null) {
                     for (Lesson l : day.getLessons()) {
                         if (l.getLessonTime() == lessonByTime) {
-                            binding.currentLessonName.setText(l.getName() + " " + l.getRoom());
-                            binding.currentLessonHw.setImageDrawable(l.getHomeWork() == null ? null : ResourcesCompat.getDrawable(getResources(), R.drawable.hw_icon, null));
-                            binding.currentLessonNote.setImageDrawable(l.getTask() == null ? null : ResourcesCompat.getDrawable(getResources(), R.drawable.note_icon, null));
-                            binding.currentLessonType.setImageDrawable(ResourcesCompat.getDrawable(getResources(), l.getLessonIcon(), null));
+                            updateCurrentLesson(l);
                         }
 
                         if (l.getLessonTime() == lessonByTime + 1) {
-                            binding.nextLessonName.setText(l.getName() + " " + l.getRoom());
-                            binding.nextLessonHw.setImageDrawable(l.getHomeWork() == null ? null : ResourcesCompat.getDrawable(getResources(), R.drawable.hw_icon, null));
-                            binding.nextLessonNote.setImageDrawable(l.getTask() == null ? null : ResourcesCompat.getDrawable(getResources(), R.drawable.note_icon, null));
-                            binding.nextLessonType.setImageDrawable(ResourcesCompat.getDrawable(getResources(), l.getLessonIcon(), null));
+                            updateNextLesson(l);
                         }
                     }
                 }
             }
         });
+    }
 
+    private void initChat() {
         appSharedViewModel.getChatMutableLiveData().observe(getViewLifecycleOwner(), chat -> {
             Group group = appSharedViewModel.getGroupMutableLiveData().getValue();
             if (chat.getChatMessages().size() == 0)
@@ -98,7 +103,9 @@ public class HomeFragment extends Fragment {
             }
 
         });
+    }
 
+    private void initInfo() {
         appSharedViewModel.getListInfoMutableLiveData().observe(getViewLifecycleOwner(), infoMessages -> {
             Group group = appSharedViewModel.getGroupMutableLiveData().getValue();
             if (infoMessages == null || infoMessages.size() == 0)
@@ -116,7 +123,9 @@ public class HomeFragment extends Fragment {
             }
 
         });
+    }
 
+    private void initCloud() {
         appSharedViewModel.getCloudFolderMutableLiveData().observe(getViewLifecycleOwner(), cloudFolders -> {
             if (cloudFolders == null || cloudFolders.isEmpty())
                 return;
@@ -128,7 +137,20 @@ public class HomeFragment extends Fragment {
                 return;
             binding.lastFile.setText(file.getName());
         });
-        return root;
+    }
+
+    private void updateCurrentLesson(Lesson l) {
+        binding.currentLessonName.setText(l.getName() + " " + l.getRoom());
+        binding.currentLessonHw.setImageDrawable(l.getHomeWork() == null ? null : ResourcesCompat.getDrawable(getResources(), R.drawable.hw_icon, null));
+        binding.currentLessonNote.setImageDrawable(l.getTask() == null ? null : ResourcesCompat.getDrawable(getResources(), R.drawable.note_icon, null));
+        binding.currentLessonType.setImageDrawable(ResourcesCompat.getDrawable(getResources(), l.getLessonIcon(), null));
+    }
+
+    private void updateNextLesson(Lesson l) {
+        binding.nextLessonName.setText(l.getName() + " " + l.getRoom());
+        binding.nextLessonHw.setImageDrawable(l.getHomeWork() == null ? null : ResourcesCompat.getDrawable(getResources(), R.drawable.hw_icon, null));
+        binding.nextLessonNote.setImageDrawable(l.getTask() == null ? null : ResourcesCompat.getDrawable(getResources(), R.drawable.note_icon, null));
+        binding.nextLessonType.setImageDrawable(ResourcesCompat.getDrawable(getResources(), l.getLessonIcon(), null));
     }
 
     @Override

@@ -24,16 +24,27 @@ import edu.mirea.ardyc.umirea.ui.viewModel.chat.ChatViewModel;
 public class AccountFragment extends Fragment {
 
     private FragmentAccountBinding binding;
+    private AppSharedViewModel appSharedViewModel;
+    private AppViewModel appViewModel;
+    private AccountViewModel accountViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        AccountViewModel accountViewModel =
+        accountViewModel =
                 new ViewModelProvider(requireActivity()).get(AccountViewModel.class);
 
-        String id = requireActivity().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("user_uuid", "");
+        binding = FragmentAccountBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
-        AppSharedViewModel appSharedViewModel = new ViewModelProvider(requireActivity()).get(AppSharedViewModel.class);
-        AppViewModel appViewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+        appSharedViewModel = new ViewModelProvider(requireActivity()).get(AppSharedViewModel.class);
+        appViewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+        initObservers();
+        initListeners();
+        return root;
+    }
+
+    private void initObservers(){
+        String id = requireActivity().getSharedPreferences(AppActivity.APP_PATH, Context.MODE_PRIVATE).getString("user_uuid", "");
         appSharedViewModel.getGroupMutableLiveData().observe(getViewLifecycleOwner(), (val) -> {
             if (val == null || val.getMembers().isEmpty())
                 return;
@@ -47,9 +58,9 @@ public class AccountFragment extends Fragment {
             binding.myName.setText(String.format(getResources().getString(R.string.user_full_name), val.getFirstName(), val.getLastName()));
             binding.myMail.setText(String.format(getResources().getString(R.string.user_login), val.getLogin()));
         });
+    }
 
-        binding = FragmentAccountBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+    private void initListeners(){
         binding.groupSettings.setOnClickListener((view) -> {
             startActivity(new Intent(requireContext(), GroupManagementActivity.class));
             requireActivity().overridePendingTransition(0, 0);
@@ -60,7 +71,6 @@ public class AccountFragment extends Fragment {
             requireActivity().finish();
             accountViewModel.removeUserData();
         });
-        return root;
     }
 
     @Override

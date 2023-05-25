@@ -73,7 +73,6 @@ public class RemoteGroupDataSource extends DataSource {
         try {
             JsonElement code = jsonElement.get("code");
             JsonElement message = jsonElement.get("message");
-            System.out.println(message);
             if (code.getAsInt() == 0) {
                 RemoteGroup remoteGroup = new Gson().fromJson(message.getAsJsonObject(), RemoteGroup.class);
                 Call<JsonObject> groupMembersCall = groupRemoteService.getMembers(userToken);

@@ -20,6 +20,7 @@ public class CloudFileAdapter extends RecyclerView.Adapter<CloudFileAdapter.View
 
     private List<CloudFile> files;
     private Consumer<CloudFile> cloudFileConsumer;
+    private Consumer<CloudFile> deleteFile;
 
     public CloudFileAdapter(List<CloudFile> files) {
         this.files = files;
@@ -39,6 +40,7 @@ public class CloudFileAdapter extends RecyclerView.Adapter<CloudFileAdapter.View
         holder.getFileName().setText(files.get(position).getName());
         holder.getFileIcon().setImageDrawable(ResourcesCompat.getDrawable(holder.fileIcon.getResources(), R.drawable.hw_icon, null));
         holder.getItemView().setOnClickListener(v -> cloudFileConsumer.accept(files.get(position)));
+        holder.deleteFile.setOnClickListener(v -> deleteFile.accept(files.get(position)));
     }
 
     @Override
@@ -50,6 +52,7 @@ public class CloudFileAdapter extends RecyclerView.Adapter<CloudFileAdapter.View
 
         private final TextView fileName;
         private final ImageView fileIcon;
+        private final ImageView deleteFile;
 
         private final View itemView;
 
@@ -57,6 +60,7 @@ public class CloudFileAdapter extends RecyclerView.Adapter<CloudFileAdapter.View
             super(view);
             fileName = view.findViewById(R.id.file_name);
             fileIcon = view.findViewById(R.id.file_icon);
+            deleteFile = view.findViewById(R.id.delete_file);
             itemView = view;
         }
 
@@ -80,5 +84,9 @@ public class CloudFileAdapter extends RecyclerView.Adapter<CloudFileAdapter.View
 
     public void setCloudFileConsumer(Consumer<CloudFile> cloudFileConsumer) {
         this.cloudFileConsumer = cloudFileConsumer;
+    }
+
+    public void setOnDeleteFileListener(Consumer<CloudFile> cloudFileConsumer) {
+        this.deleteFile = cloudFileConsumer;
     }
 }

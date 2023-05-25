@@ -15,7 +15,7 @@ public class CloudFolderEntity {
 
     private String groupUuid;
 
-    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CloudFileEntity> files;
 
     public Long getId() {

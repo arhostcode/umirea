@@ -48,10 +48,7 @@ public class RegistrationFragment extends Fragment {
         binding.enterButton.setOnClickListener(view -> {
 //            if (binding.code.getText().toString().isEmpty()) {
 //                Toast.makeText(getActivity().getApplicationContext(), "Получите код подтверждения на почту. Проверьте папку спам.", Toast.LENGTH_SHORT).show();
-//            } else {
-//
 //            }
-//
 //            registerViewModel.register(binding.loginText.getText().toString(), binding.passwordText.getText().toString(), binding.firstName.getText().toString(), binding.lastName.getText().toString(), binding.code.getText().toString());
             registerViewModel.register(binding.loginText.getText().toString(), binding.passwordText.getText().toString(), binding.firstName.getText().toString(), binding.lastName.getText().toString(), "");
         });

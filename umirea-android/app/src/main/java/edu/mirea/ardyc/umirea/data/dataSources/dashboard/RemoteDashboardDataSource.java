@@ -89,7 +89,6 @@ public class RemoteDashboardDataSource extends DataSource {
             } else {
                 return new DataResponse<>(null, "Ошибка загрузки основного расписания");
             }
-
         } catch (Exception e) {
             return new DataResponse<>(null, "Ошибка загрузки основного расписания");
         }
@@ -120,7 +119,6 @@ public class RemoteDashboardDataSource extends DataSource {
             JsonObject main = dashboardRemoteService.getBaseUserSchedule(userToken).execute().body();
             return main.toString().hashCode();
         } catch (Exception e) {
-            e.printStackTrace();
             return 0;
         }
     }
@@ -146,7 +144,6 @@ public class RemoteDashboardDataSource extends DataSource {
                                 .build());
                 list.add(dateLesson);
             }
-            System.out.println(list);
             return new DataResponse<>(list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -191,11 +188,10 @@ public class RemoteDashboardDataSource extends DataSource {
                         new Task(object.get("text").getAsString()));
                 list.add(dateLesson);
             }
-            System.out.println(list);
             return new DataResponse<>(list);
         } catch (Exception e) {
             e.printStackTrace();
-            return new DataResponse<>(null, "Ошибка загрузки личного расписания");
+            return new DataResponse<>(null, "Ошибка загрузки домашних заданий");
         }
     }
 
@@ -235,7 +231,6 @@ public class RemoteDashboardDataSource extends DataSource {
                         new Task(object.get("text").getAsString()));
                 list.add(dateLesson);
             }
-            System.out.println(list);
             return new DataResponse<>(list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -254,7 +249,7 @@ public class RemoteDashboardDataSource extends DataSource {
             return new DataResponse<>("Заметка добавлена");
         } catch (Exception e) {
             e.printStackTrace();
-            return new DataResponse<>(null, "Ошибка загрузки домашних заданий");
+            return new DataResponse<>(null, "Ошибка загрузки заметок заданий");
         }
     }
 }

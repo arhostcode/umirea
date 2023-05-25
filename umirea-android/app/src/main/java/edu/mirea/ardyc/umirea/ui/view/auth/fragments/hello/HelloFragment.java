@@ -19,18 +19,16 @@ import android.view.ViewGroup;
 import edu.mirea.ardyc.umirea.R;
 import edu.mirea.ardyc.umirea.databinding.FragmentHelloBinding;
 import edu.mirea.ardyc.umirea.ui.view.AppActivity;
-import edu.mirea.ardyc.umirea.ui.viewModel.auth.HelloViewModel;
 
 public class HelloFragment extends Fragment {
 
-    private HelloViewModel viewModel;
     private FragmentHelloBinding fragmentHelloBinding;
+    private final int SLEEP_TIME = 2000;
     private MutableLiveData<Boolean> isInitialized = new MutableLiveData<>(false);
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        viewModel = new ViewModelProvider(this).get(HelloViewModel.class);
         fragmentHelloBinding = FragmentHelloBinding.inflate(getLayoutInflater(), container, false);
         initObservers();
         sleepNavigate();
@@ -59,7 +57,7 @@ public class HelloFragment extends Fragment {
     private void sleepNavigate() {
         new Thread(() -> {
             try {
-                Thread.sleep(2000);
+                Thread.sleep(SLEEP_TIME);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

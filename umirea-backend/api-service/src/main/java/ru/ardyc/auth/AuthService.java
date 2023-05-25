@@ -8,21 +8,42 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.ardyc.auth.AuthClient;
 
 import javax.inject.Inject;
+import javax.ws.rs.core.Response;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping
 public class AuthService {
     @Inject
     @RestClient
     AuthClient authClient;
 
-    @GetMapping(path = "/login")
-    public String login(@RequestParam String login, @RequestParam String password) {
+    @GetMapping(path = "auth/login")
+    public Response login(@RequestParam String login, @RequestParam String password) {
         return authClient.login(login, password);
     }
 
-    @GetMapping(path = "/register")
-    public String register(@RequestParam String login, @RequestParam String password, @RequestParam String educationGroup, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String imageId, @RequestParam String role) {
-        return authClient.register(login, password, educationGroup, firstName, lastName, imageId, role);
+    @GetMapping(path = "auth/register")
+    public Response register(@RequestParam String login, @RequestParam String password,  @RequestParam String firstName, @RequestParam String lastName, @RequestParam String verificationCode) {
+        return authClient.register(login, password, firstName, lastName, verificationCode);
+    }
+
+    @GetMapping(path = "auth/verify")
+    public Response verify(@RequestParam String login, @RequestParam String password, @RequestParam String firstName, @RequestParam String lastName) {
+        return authClient.verify(login, password, firstName, lastName);
+    }
+
+    @GetMapping(path = "auth/verifyReset")
+    public Response verifyReset(@RequestParam String login) {
+        return authClient.verifyResetPassword(login);
+    }
+
+    @GetMapping(path = "auth/reset")
+    public Response reset(@RequestParam String login, @RequestParam String newPassword, @RequestParam String verificationCode) {
+        return authClient.resetPassword(login, newPassword, verificationCode);
+    }
+
+    @GetMapping(path = "user/getInfo")
+    public Response getInfo(@RequestParam String token) {
+        return authClient.getInfo(token);
     }
 }
